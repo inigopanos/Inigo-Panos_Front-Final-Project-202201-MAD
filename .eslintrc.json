@@ -1,0 +1,39 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/vue3-essential",
+    "@vue/airbnb",
+    "@vue/typescript/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "no-use-before-define": "off",
+    "no-restricted-globals": "off",
+    "import/prefer-default-export": "off",
+    "newline-per-chained-call": "off",
+    // "comma-dangle": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-console": "off",
+    "no-parsing-error": "off",
+    "no-underscore-dangle": "off",
+    "prefer-destructuring": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/*.{j,t}s?(x)",
+        "**/tests/unit/**/*.spec.{j,t}s?(x)"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}
