@@ -31,9 +31,12 @@
         <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
       </div>
       <div class="texts">
-        <button class="btn btn-primary btn-login" type="submit">Login</button>
+        <button class="btn-login" type="submit">Login</button>
+      </div>
+      <div class="texts">
         |
         <router-link to="/register" class="btn btn-link">Register</router-link>
+        |
       </div>
     </form>
   </div>
@@ -111,7 +114,34 @@ export default defineComponent({
 .texts {
   // display: flex;
   // justify-content: space-evenly;
+  padding-top: 4rem;
   padding-left: 3rem;
   padding-right: 3rem;
+
+  .btn-login{
+    background-color: #85d273b8;
+    border-radius: 8px;
+    border-width: 0;
+    color: #4a8452;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 12px;
+    text-align: center;
+    transition: all 200ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
 }
+
+
+
 </style>
