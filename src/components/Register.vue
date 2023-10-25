@@ -4,29 +4,29 @@
     <form @submit.prevent="handleSubmit" class="register-card">
       <div class="form-group">
         <label for="userName">
-          <input type="text" v-model="user.userName" id="userName" name="userName" />Nombre de
-          usuario
+          <input type="text" v-model="user.userName" id="userName" name="userName" placeholder="Nombre de usuario"/>
         </label>
         <div v-show="submitted && !user.userName" class="invalid-feedback">Campo requerido</div>
       </div>
 
       <div class="form-group">
         <label for="password">
-          <input type="password" v-model="user.password" name="password" />Contraseña</label
+          <input type="password" v-model="user.password" name="password" placeholder="Contraseña"/></label
         >
         <div v-show="submitted && !user.password" class="invalid-feedback">Campo requerido</div>
       </div>
 
       <div class="form-group">
-        <label for="isAdmin">
-          <input type="text" v-model="user.isAdmin" id="isAdmin" name="isAdmin" />Administrador
-        </label>
+        <!-- <label for="isAdmin">
+          <input type="text" id="isAdmin" name="isAdmin" placeholder="Contraseña"/>
+        </label> -->
         <div v-show="submitted && !user.isAdmin" class="invalid-feedback">Campo requerido</div>
       </div>
 
+      <div>
+        <button class="btn-register">Registro</button>
+      </div>
       <div class="form-group">
-        <button class="btn btn-primary">Registro</button>
-        |
         <router-link to="/login" class="btn btn-link">Login</router-link> |
         <router-link to="/" class="btn btn-link">Cancelar</router-link>
       </div>
@@ -81,4 +81,26 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
+.btn-register{
+    background-color: #85d273b8;
+    border-radius: 8px;
+    border-width: 0;
+    color: #4a8452;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 12px;
+    text-align: center;
+    transition: all 200ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
 </style>
