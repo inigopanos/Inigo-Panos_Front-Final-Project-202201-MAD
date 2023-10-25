@@ -17,8 +17,8 @@ export default {
     // We need to set mapbox-gl library here in order to use it in template
     console.log('No se ha creado un mapa: ');
 
-    this.mapbox = Mapbox;
-    console.log('Esto es el mapbox, ', this.mapbox);
+    // this.mapbox = Mapbox;
+    // console.log('Esto es el mapbox, ', this.mapbox);
 
     const map = new Mapbox.Map({
       container: 'map', // container ID

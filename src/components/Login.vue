@@ -6,12 +6,13 @@
         <label for="userName">
           <input
             type="text"
+            placeholder="Nombre de usuario"
             id="userName"
             v-model="userName"
             name="userName"
             class="form-control"
             :class="{ 'is-invalid': submitted && !userName }"
-          />userName</label
+          /></label
         >
         <div v-show="submitted && !userName" class="invalid-feedback">userName is required</div>
       </div>
@@ -19,12 +20,13 @@
         <label for="password">
           <input
             id="password"
+            placeholder="Contraseña"
             type="password"
             v-model="password"
             name="password"
             class="form-control"
             :class="{ 'is-invalid': submitted && !password }"
-          />Password
+          />
         </label>
         <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
       </div>

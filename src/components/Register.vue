@@ -7,21 +7,21 @@
           <input type="text" v-model="user.userName" id="userName" name="userName" />Nombre de
           usuario
         </label>
-        <div v-show="submitted && !userName" class="invalid-feedback">Campo requerido</div>
+        <div v-show="submitted && !user.userName" class="invalid-feedback">Campo requerido</div>
       </div>
 
       <div class="form-group">
         <label for="password">
           <input type="password" v-model="user.password" name="password" />Contraseña</label
         >
-        <div v-show="submitted && !password" class="invalid-feedback">Campo requerido</div>
+        <div v-show="submitted && !user.password" class="invalid-feedback">Campo requerido</div>
       </div>
 
       <div class="form-group">
         <label for="isAdmin">
           <input type="text" v-model="user.isAdmin" id="isAdmin" name="isAdmin" />Administrador
         </label>
-        <div v-show="submitted && !isAdmin" class="invalid-feedback">Campo requerido</div>
+        <div v-show="submitted && !user.isAdmin" class="invalid-feedback">Campo requerido</div>
       </div>
 
       <div class="form-group">
