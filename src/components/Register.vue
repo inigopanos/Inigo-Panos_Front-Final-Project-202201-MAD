@@ -19,8 +19,8 @@
       <div class="form-group">
         <!-- <label for="isAdmin">
           <input type="text" id="isAdmin" name="isAdmin" placeholder="Contraseña"/>
-        </label> -->
-        <div v-show="submitted && !user.isAdmin" class="invalid-feedback">Campo requerido</div>
+        </label> 
+        <div v-show="submitted && !user.isAdmin" class="invalid-feedback">Campo requerido</div>-->
       </div>
 
       <div>
@@ -58,6 +58,7 @@ export default defineComponent({
     handleSubmit() {
       this.submitted = true;
       if (this.user.userName !== undefined && this.user.password !== undefined) {
+        // Mostrar en pantalla que se ha registrado el usuario de forma exitosa. 
         this.register(this.user);
       }
     },
@@ -102,5 +103,14 @@ export default defineComponent({
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+  }
+  .invalid-feedback{
+    background-color: rgb(252, 102, 102);
+    background-size: 1rem;
+    width: 9.3rem;
+    border-radius: 5px;
+    border-width: 0;
+    margin-top: 1rem;
+    padding: 10px 12px;
   }
 </style>
