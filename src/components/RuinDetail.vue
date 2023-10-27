@@ -70,16 +70,17 @@
     </ul>
     <div class="icons-container">
       <div class="icons-container__icon">
-        <button type="button" class="favoriteButton" v-on:click="ruinFavorites()">
-          <img
-            src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=fe00aee2-c848-4302-8d09-de9f19742d6d"
-            alt="empty-heart-icon"
-          />
+        <button type="button"  v-on:click="ruinFavorites()">
+          <img 
+          id="favoriteButton"
+          src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad"
+          alt="favorited-heart-icon" />
         </button>
       </div>
       <div class="icons-container__icon">
-        <button type="button" class="visitedButton" v-on:click="ruinVisited()">
+        <button type="button"  v-on:click="ruinVisited()">
           <img
+            id="visitedButton"
             src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5"
             alt="visited-icon"
           />
@@ -104,7 +105,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -156,7 +157,25 @@ export default defineComponent({
     ruinFavorites() {
       this.addRuinToFavorites(this.ruinDetails._id);
       
-      this.checkForFavoritedRuin();
+      this.favorited = !this.favorited;
+
+      if (!this.favorited)
+      {
+
+        // document.getElementById("favoriteButton")?.setAttribute('src', 'https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad');
+        console.log('Ha cambiado de imagen a vacío', this.favorited);
+
+        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad";
+      } else {
+
+        // document.getElementById("favoriteButton")?.setAttribute('src', 'https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7');
+        console.log('Ha cambiado de imagen a lleno', this.favorited);
+
+
+        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7";
+      };
     },
 
     ruinVisited() {
@@ -182,27 +201,6 @@ export default defineComponent({
       };
       this.addCommentToRuin(payload);
     },
-
-    checkForFavoritedRuin(){
-      console.log('User data en ruina:', this.userData);
-      const userFavorites = this.userData?.userFound?.favorites;
-      console.log('Favoritos del usuario:', userFavorites)
-
-      for (let i = 0; i <= userFavorites; i+=1){
-        console.log('Se entra en el bucle for de checkForFavoritedRuin');
-        // Se ejecuta antes que la mutation de ruins.modules.ts
-
-        if (userFavorites[i] === this.ruinInfo._id){
-          console.log('Esta ruina se elimina de favoritos:', this.ruinInfo._id, this.ruinInfo.name);
-          // Cambiar el icono de lleno a vacío, pues se ha quitdado
-          this.favorited = false;
-        } else {
-          // No estaba en favoritos, y ahora sí
-          console.log('Se ha añadido esta ruina a favoritos.');
-          this.favorited = true;
-        }
-      };
-    }
   },
 
   mounted() {
@@ -217,7 +215,17 @@ export default defineComponent({
 <style lang="scss">
 button {
   all: unset;
+
+
 }
+
+.favoriteButton::before{
+  content: url("https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=fe00aee2-c848-4302-8d09-de9f19742d6d");
+}
+.favoriteButton::af{
+  content: url("https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7");
+}
+
 .update-delete {
   display: flex;
   flex-direction: column;
