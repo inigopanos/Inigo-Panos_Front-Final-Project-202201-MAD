@@ -1,4 +1,4 @@
-import { CreateRuinI } from '@/_helpers/interfaces';
+import { CreateRuinI, UserI } from '@/_helpers/interfaces';
 import { ruinsServices } from '../router/ruins.service';
 import router from '../router/index';
 
@@ -131,13 +131,14 @@ const actions = {
 };
 
 const mutations = {
-  addRuinToFavoritesSuccess(state: any, userData: any) {
-    console.log('Ruina modificado en visitados');
 
+  addRuinToFavoritesSuccess(state: any, data: any) {
+    console.log('Ruina modificado en visitados', data);
+    state.user = data;
     // Aquí no se actualiza el estado de favoritos del usuario. 
   },
 
-  addRuinToVisitedSuccess(state: any, userData: any) {
+  addRuinToVisitedSuccess(state: any, data: any) {
     console.log('Ruina añadida a visitados con éxito');
   },
 

@@ -183,9 +183,14 @@ export default defineComponent({
     },
 
     checkForFavoritedRuin(){
-      const userFavorites = this.userData.favorites;
+      console.log('User data en ruina:', this.userData);
+      const userFavorites = this.userData?.userFound?.favorites;
       console.log('Favoritos del usuario:', userFavorites)
-      for (let i = 0; i < userFavorites; i+=1){
+
+      for (let i = 0; i <= userFavorites; i+=1){
+        console.log('Se entra en el bucle for de checkForFavoritedRuin');
+        // Se ejecuta antes que la mutation de ruins.modules.ts
+
         if (userFavorites[i] === this.ruinInfo._id){
           console.log('Esta ruina se elimina de favoritos:', this.ruinInfo._id, this.ruinInfo.name);
           // Cambiar el icono de lleno a vacío, pues se ha quitdado
@@ -196,8 +201,6 @@ export default defineComponent({
           this.favorited = true;
         }
       };
-
-      // User data.favorites y this.ruinInfo._id
     }
   },
 
