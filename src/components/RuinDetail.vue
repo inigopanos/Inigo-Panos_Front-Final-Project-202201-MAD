@@ -161,18 +161,9 @@ export default defineComponent({
 
       if (!this.favorited)
       {
-
-        // document.getElementById("favoriteButton")?.setAttribute('src', 'https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad');
-        console.log('Ha cambiado de imagen a vacío', this.favorited);
-
         const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
         favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad";
       } else {
-
-        // document.getElementById("favoriteButton")?.setAttribute('src', 'https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7');
-        console.log('Ha cambiado de imagen a lleno', this.favorited);
-
-
         const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
         favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7";
       };
@@ -180,6 +171,17 @@ export default defineComponent({
 
     ruinVisited() {
       this.addRuinToVisited(this.ruinDetails._id);
+
+      this.visited = !this.visited;
+
+      if (!this.visited)
+      {
+        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5";
+      } else {
+        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack_filled.png?alt=media&token=2b0034f4-63fc-450d-a1c5-231da984ea9b";
+      };
     },
 
     deleteRuinComment(id: string) {
