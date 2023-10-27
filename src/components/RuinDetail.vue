@@ -155,6 +155,7 @@ export default defineComponent({
 
     ruinFavorites() {
       this.addRuinToFavorites(this.ruinDetails._id);
+      
       this.checkForFavoritedRuin();
     },
 
