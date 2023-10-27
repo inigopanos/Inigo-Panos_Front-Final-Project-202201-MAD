@@ -22,7 +22,11 @@
         </label> 
         <div v-show="submitted && !user.isAdmin" class="invalid-feedback">Campo requerido</div>-->
       </div>
-
+      
+      <div class ="register-succesful" v-show="submitted && user.userName && user.password">
+        Usuario registrado correctamente
+      </div>
+      
       <div>
         <button class="btn-register">Registro</button>
       </div>
@@ -59,6 +63,7 @@ export default defineComponent({
       this.submitted = true;
       if (this.user.userName !== undefined && this.user.password !== undefined) {
         // Mostrar en pantalla que se ha registrado el usuario de forma exitosa. 
+        setTimeout(() => 1000);
         this.register(this.user);
       }
     },

@@ -14,7 +14,7 @@
             :class="{ 'is-invalid': submitted && !userName }"
           /></label
         >
-        <div v-show="submitted && !userName" class="invalid-feedback">userName is required</div>
+        <div v-show="submitted && !userName" class="invalid-feedback">Campo requerido</div>
       </div>
       <div class="form-group">
         <label for="password">
@@ -28,7 +28,8 @@
             :class="{ 'is-invalid': submitted && !password }"
           />
         </label>
-        <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
+        <div v-show="submitted && !password" class="invalid-feedback">Campo requerido
+        </div>
       </div>
       <div class="texts">
         <button class="btn-login" type="submit">Login</button>

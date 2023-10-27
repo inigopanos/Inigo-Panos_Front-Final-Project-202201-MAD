@@ -34,7 +34,7 @@
           </router-link>
         </li>
       </ul>
-      <router-link @click="this.resetStorage()" to="/login" class="btn btn-link logout"
+      <router-link @click="resetStorage()" to="/login" class="btn btn-link logout"
         >Logout</router-link
       >
     </ul>

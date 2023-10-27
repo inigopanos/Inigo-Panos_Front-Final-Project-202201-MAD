@@ -5,7 +5,7 @@
   </div>
 
   <main>
-    <ul v-if="this.ruinDetails" class="ul-ruin-details">
+    <ul v-if="ruinDetails" class="ul-ruin-details">
       <li><span class="bold">Nombre:</span> {{ ruinDetails?.name }}</li>
       <li><span class="bold">Localización:</span> {{ ruinDetails?.location }}</li>
       <li><span class="bold">Descripción:</span> {{ ruinDetails?.description }}</li>
@@ -15,7 +15,7 @@
         <img v-bind:src="ruinDetails?.images" alt="" />
       </li>
 
-      <template v-if="this.ruinDetails">
+      <template v-if="ruinDetails">
         <span class="bold" v-if="ruinDetails.comments > 1"> Comentarios:</span>
         <ul class="ruin-details__comment-card-container">
           <div
@@ -58,7 +58,7 @@
           <form @submit.prevent="handleSubmit">
             <div class="form-group">
               <label for="comment">
-                <input type="comment" v-model="this.newComment" name="comment" /> |
+                <input type="comment" v-model="newComment" name="comment" /> |
                 <button class="comment-button" type="button" v-on:click="handleSubmit">
                   Enviar comentario
                 </button>
@@ -87,8 +87,8 @@
       </div>
     </div>
 
-    <div v-if="this.userData?.userFound?.isAdmin" class="update-delete">
-      <router-link :to="`/ruinUpdate/${this?.ruinDetails?._id}`">
+    <div v-if="userData?.userFound?.isAdmin" class="update-delete">
+      <router-link :to="`/ruinUpdate/${ruinDetails?._id}`">
         <a>Actualizar datos</a>
       </router-link>
       |
@@ -126,6 +126,8 @@ export default defineComponent({
         prueba: '',
       },
       newComment: '',
+      favorited: false,
+      visited: false,
     };
   },
 
@@ -153,6 +155,7 @@ export default defineComponent({
 
     ruinFavorites() {
       this.addRuinToFavorites(this.ruinDetails._id);
+      this.checkForFavoritedRuin();
     },
 
     ruinVisited() {
@@ -173,12 +176,29 @@ export default defineComponent({
       idUsuario = JSON.parse(idUsuario as string);
       const payload = {
         author_id: idUsuario,
-        // eslint-disable-next-line no-underscore-dangle
         ruin_id: this.ruinDetails._id,
         text: this.newComment,
       };
       this.addCommentToRuin(payload);
     },
+
+    checkForFavoritedRuin(){
+      const userFavorites = this.userData.favorites;
+      console.log('Favoritos del usuario:', userFavorites)
+      for (let i = 0; i < userFavorites; i+=1){
+        if (userFavorites[i] === this.ruinInfo._id){
+          console.log('Esta ruina se elimina de favoritos:', this.ruinInfo._id, this.ruinInfo.name);
+          // Cambiar el icono de lleno a vacío, pues se ha quitdado
+          this.favorited = false;
+        } else {
+          // No estaba en favoritos, y ahora sí
+          console.log('Se ha añadido esta ruina a favoritos.');
+          this.favorited = true;
+        }
+      };
+
+      // User data.favorites y this.ruinInfo._id
+    }
   },
 
   mounted() {

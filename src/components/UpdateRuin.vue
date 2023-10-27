@@ -2,7 +2,7 @@
   <div>
     <h2>
       Modifique la ruina: <br />
-      {{ this.ruinDetails?.name }}
+      {{ ruinDetails?.name }}
     </h2>
 
     <form @submit.prevent="handleSubmit" v-if="ruinDetails">
@@ -30,14 +30,11 @@
       </div>
 
       <div class="ruinImage">
-        <p><span class="bold">Imagen</span></p>
-
         <img v-bind:src="ruinDetails?.images" alt="ruin" />
         <label for="images">
           <input
             type="file"
             accept="image/*"
-            @change="handleImageChange"
             name="images"
             placeholder="Imágenes"
         /></label>

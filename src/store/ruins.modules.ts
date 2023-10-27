@@ -131,11 +131,13 @@ const actions = {
 };
 
 const mutations = {
-  addRuinToFavoritesSuccess(state: any, ruinData: any) {
-    console.log('Ruina añadida a visitados con éxito');
+  addRuinToFavoritesSuccess(state: any, userData: any) {
+    console.log('Ruina modificado en visitados');
+
+    // Aquí no se actualiza el estado de favoritos del usuario. 
   },
 
-  addRuinToVisitedSuccess(state: any, ruinData: any) {
+  addRuinToVisitedSuccess(state: any, userData: any) {
     console.log('Ruina añadida a visitados con éxito');
   },
 
