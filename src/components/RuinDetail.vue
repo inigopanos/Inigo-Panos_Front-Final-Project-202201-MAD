@@ -69,7 +69,7 @@
       </template>
     </ul>
     <div class="icons-container">
-      <div class="icons-container__icon">
+      <div class="icons-container__icon" v-if="userData?.userFound">
         <button type="button"  v-on:click="ruinFavorites()">
           <img 
           id="favoriteButton"
@@ -77,7 +77,7 @@
           alt="favorited-heart-icon" />
         </button>
       </div>
-      <div class="icons-container__icon">
+      <div class="icons-container__icon" v-if="userData?.userFound">
         <button type="button"  v-on:click="ruinVisited()">
           <img
             id="visitedButton"
