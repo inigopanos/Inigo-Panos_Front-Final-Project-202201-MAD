@@ -56,7 +56,7 @@
             </div>
           </div>
           <form @submit.prevent="handleSubmit">
-            <div class="form-group">
+            <div class="form-group" v-if="userData?.userFound">
               <label for="comment">
                 <input type="comment" v-model="newComment" name="comment" /> |
                 <button class="comment-button" type="button" v-on:click="handleSubmit">
@@ -203,6 +203,28 @@ export default defineComponent({
       };
       this.addCommentToRuin(payload);
     },
+
+    checkRuinFavorited(){
+      if (!this.favorited)
+      {
+        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad";
+      } else {
+        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7";
+      };
+    },
+
+    checkRuinVisited(){
+      if (!this.visited)
+      {
+        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5";
+      } else {
+        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack_filled.png?alt=media&token=2b0034f4-63fc-450d-a1c5-231da984ea9b";
+      };
+    }
   },
 
   mounted() {
@@ -211,6 +233,8 @@ export default defineComponent({
     console.log(id, 'id ruina');
     this.getRuinDetails(id);
     this.getAllRuins();
+    // this.checkRuinFavorited();
+    // this.checkRuinVisited();
   },
 });
 </script>
