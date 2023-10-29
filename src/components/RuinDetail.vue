@@ -71,17 +71,31 @@
     <div class="icons-container">
       <div class="icons-container__icon" v-if="userData?.userFound">
         <button type="button"  v-on:click="ruinFavorites()">
-          <img 
-          id="favoriteButton"
+          <img
+          v-if="favorited"
+          id="favoriteButton"         
           src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad"
           alt="favorited-heart-icon" />
+          <img
+          v-else
+          id="favoriteButton"         
+          src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7"
+          alt="favorited-heart-icon" />
+          
         </button>
       </div>
       <div class="icons-container__icon" v-if="userData?.userFound">
         <button type="button"  v-on:click="ruinVisited()">
           <img
+            v-if="visited"
             id="visitedButton"
             src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5"
+            alt="visited-icon"
+          />
+          <img
+            v-else
+            id="visitedButton"
+            src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack_filled.png?alt=media&token=2b0034f4-63fc-450d-a1c5-231da984ea9b"
             alt="visited-icon"
           />
         </button>
@@ -202,39 +216,17 @@ export default defineComponent({
         text: this.newComment,
       };
       this.addCommentToRuin(payload);
-    },
-
-    checkRuinFavorited(){
-      if (!this.favorited)
-      {
-        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
-        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad";
-      } else {
-        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
-        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7";
-      };
-    },
-
-    checkRuinVisited(){
-      if (!this.visited)
-      {
-        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
-        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5";
-      } else {
-        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
-        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack_filled.png?alt=media&token=2b0034f4-63fc-450d-a1c5-231da984ea9b";
-      };
-    }
+    }, 
   },
 
   mounted() {
     const route = useRoute();
     const { id } = route.params;
-    console.log(id, 'id ruina');
+    console.log(id, 'id ruina', route.params);
     this.getRuinDetails(id);
     this.getAllRuins();
-    // this.checkRuinFavorited();
-    // this.checkRuinVisited();
+
+    console.log('Favorited:', this.favorited, 'visited: ', this.visited);
   },
 });
 </script>
