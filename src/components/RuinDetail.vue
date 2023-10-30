@@ -72,7 +72,7 @@
       <div class="icons-container__icon" v-if="userData?.userFound">
         <button type="button"  v-on:click="ruinFavorites()">
           <img
-          v-if="favorited"
+          v-if="userData?.userFound?.favorites"
           id="favoriteButton"         
           src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad"
           alt="favorited-heart-icon" />
@@ -225,10 +225,10 @@ export default defineComponent({
       {
         if (this.userData?.userFound?.favorites[i] === this.ruinInfo?._id)
         {
-          return true;
+          this.favorited = true;
         } 
       }
-      return false;
+      this.favorited = false;
     },
 
     checkVisited() {
@@ -238,10 +238,10 @@ export default defineComponent({
       {
         if (this.userData?.userFound?.visited[i] === this.ruinInfo?._id)
         {
-          return true;
+          this.visited = true;
         } 
       }
-      return false;
+      this.visited = false;
     },
   },
 
@@ -251,10 +251,8 @@ export default defineComponent({
     console.log(id, 'id ruina', route.params);
     this.getRuinDetails(id);
     this.getAllRuins();
-
-    // this.favorited = this.checkFavorited();
-    // this.visited = this.checkVisited();
-    console.log('Favorited:', this.favorited, 'visited: ', this.visited);
+    this.checkFavorited();
+    this.checkVisited();
   },
 });
 </script>
