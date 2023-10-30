@@ -220,10 +220,13 @@ export default defineComponent({
 
     checkFavorited() {
       if (this.userData?.userFound?.favorites.length > 0){
-        console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinInfo);
+        console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinDetails._id);
+        console.log('Tipo id', typeof(this.userData?.userFound?.favorites[0]?._id), typeof(this.ruinDetails._id));
 
-        for(let i = 0; i <= this.userData?.userFound?.favorites; i+=1)
+        for(let i = 0; i <= this.userData?.userFound?.favorites.length; i+=1)
         {
+          console.log('Entra en el for loop de checkFavorited!!!', i);
+          
           if (this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id)
           {
             console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id);
@@ -233,12 +236,12 @@ export default defineComponent({
           console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id);
         } 
       } 
-
+      console.log('Tercera opción de checkFavorited!', this.userData?.userFound?.favorites.length);
       this.favorited = false;
     },
 
     checkVisited() {
-      console.log(this.userData?.userFound?.visited, 'Ruinas Visitadas');
+      // console.log(this.userData?.userFound?.visited, 'Ruinas Visitadas');
       if (this.userData.userFound.visited){
         for(let i = 0; i <= this.userData.userFound.visited; i+=1)
         {
@@ -248,7 +251,7 @@ export default defineComponent({
           } 
         }
       }
-     
+      // console.log('Tercera opción de checkVisited!');
       this.visited = false;
     },
   },
