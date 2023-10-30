@@ -23,7 +23,8 @@
     "no-console": "off",
     "no-parsing-error": "off",
     "no-underscore-dangle": "off",
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
+    "eqeqeq": "off"
   },
   "overrides": [
     {

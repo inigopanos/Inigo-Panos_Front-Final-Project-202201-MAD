@@ -220,23 +220,23 @@ export default defineComponent({
 
     checkFavorited() {
       if (this.userData?.userFound?.favorites.length > 0){
-        console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinDetails._id);
-        console.log('Tipo id', typeof(this.userData?.userFound?.favorites[0]?._id), typeof(this.ruinDetails._id));
+        console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinDetails?._id);
+        console.log('Tipo id', typeof(this.userData?.userFound?.favorites[0]?._id), typeof(this.ruinInfo?._id));
 
-        for(let i = 0; i <= this.userData?.userFound?.favorites.length; i+=1)
+        for(let i = 0; i < this.userData?.userFound?.favorites.length; i+=1)
         {
           console.log('Entra en el for loop de checkFavorited!!!', i);
           
-          if (this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id)
+          if (this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id)
           {
-            console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id);
+            console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id === this.ruinDetails?._id);
             this.favorited = true;
           } 
 
-          console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id);
+          console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id === this.ruinDetails?._id);
         } 
       } 
-      console.log('Tercera opción de checkFavorited!', this.userData?.userFound?.favorites.length);
+      console.log('Tercera opción de checkFavorited!', this.userData?.userFound?.favorites);
       this.favorited = false;
     },
 
