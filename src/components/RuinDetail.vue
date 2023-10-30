@@ -242,7 +242,7 @@ export default defineComponent({
     },
 
     checkVisited() {
-      if (this.userData.userFound.visited.length > 0)
+      if (this.userData?.userFound?.visited?.length > 0)
       {
         for(let i = 0; i < this.userData?.userFound?.visited.length; i+=1)
         {
@@ -266,7 +266,7 @@ export default defineComponent({
     this.checkFavorited();
     this.checkVisited();
 
-    console.log(this.userData.userFound, 'Datos del usuario');
+    console.log(this.userData?.userFound, 'Datos del usuario');
   },
 });
 </script>
