@@ -87,7 +87,7 @@
       <div class="icons-container__icon" v-if="userData?.userFound">
         <button type="button"  v-on:click="ruinVisited()">
           <img
-            v-if="visited"
+            v-if="!visited"
             id="visitedButton"
             src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5"
             alt="visited-empty-icon"
