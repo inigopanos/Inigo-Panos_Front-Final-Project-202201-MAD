@@ -219,28 +219,35 @@ export default defineComponent({
     }, 
 
     checkFavorited() {
-      console.log(this.userData?.userFound?.favorites, 'Ruinas Favoritas');
-      // eslint-disable-next-line no-cond-assign
-      for(let i = 0; i = this.userData?.userFound?.favorites; i+=1)
-      {
-        if (this.userData?.userFound?.favorites[i] === this.ruinInfo?._id)
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      console.log([...this.userData?.userFound?.favorites], 'Ruinas Favoritas');
+      if (this.userData.userFound.favorites){
+         // eslint-disable-next-line no-cond-assign
+        for(let i = 0; i = this.userData?.userFound?.favorites; i+=1)
         {
-          this.favorited = true;
+          if (this.userData?.userFound?.favorites[i] === this.ruinInfo?._id)
+          {
+            this.favorited = true;
+          } 
         } 
-      }
+      } 
+      
       this.favorited = false;
     },
 
     checkVisited() {
       console.log(this.userData?.userFound?.visited, 'Ruinas Visitadas');
-      // eslint-disable-next-line no-cond-assign
-      for(let i = 0; i = this.userData?.userFound?.visited; i+=1)
-      {
-        if (this.userData?.userFound?.visited[i] === this.ruinInfo?._id)
+      if (this.userData.userFound.visited){
+         // eslint-disable-next-line no-cond-assign
+        for(let i = 0; i = this.userData?.userFound?.visited; i+=1)
         {
-          this.visited = true;
-        } 
+          if (this.userData?.userFound?.visited[i] === this.ruinInfo?._id)
+          {
+            this.visited = true;
+          } 
+        }
       }
+     
       this.visited = false;
     },
   },
