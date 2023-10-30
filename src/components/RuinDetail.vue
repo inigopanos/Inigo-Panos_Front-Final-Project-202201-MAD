@@ -72,10 +72,10 @@
       <div class="icons-container__icon" v-if="userData?.userFound">
         <button type="button"  v-on:click="ruinFavorites()">
           <img
-          v-if="userData?.userFound?.favorites"
+          v-if="!favorited"
           id="favoriteButton"         
           src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad"
-          alt="favorited-heart-icon" />
+          alt="favorited-empty-heart-icon" />
           <img
           v-else
           id="favoriteButton"         
@@ -90,7 +90,7 @@
             v-if="visited"
             id="visitedButton"
             src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5"
-            alt="visited-icon"
+            alt="visited-empty-icon"
           />
           <img
             v-else
@@ -220,40 +220,39 @@ export default defineComponent({
 
     checkFavorited() {
       if (this.userData?.userFound?.favorites.length > 0){
-        console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinDetails?._id);
-        console.log('Tipo id', typeof(this.userData?.userFound?.favorites[0]?._id), typeof(this.ruinInfo?._id));
+        // console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinDetails?._id);
+        // console.log('Tipo id', typeof(this.userData?.userFound?.favorites[0]?._id), typeof(this.ruinInfo?._id));
 
         for(let i = 0; i < this.userData?.userFound?.favorites.length; i+=1)
         {
-          console.log('Entra en el for loop de checkFavorited!!!', i);
-          console.log(this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id);
+          // console.log('Entra en el for loop de checkFavorited!!!', i);
+          // console.log(this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id);
 
           if (this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id)
           {
-            console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
+            // console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
             this.favorited = true;
             return;
           } 
-
-          console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
+          // console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
         } 
       } 
-      console.log('Tercera opción de checkFavorited!', this.userData?.userFound?.favorites);
+      // console.log('Tercera opción de checkFavorited!', this.userData?.userFound?.favorites);
       this.favorited = false;
     },
 
     checkVisited() {
-      // console.log(this.userData?.userFound?.visited, 'Ruinas Visitadas');
-      if (this.userData.userFound.visited){
-        for(let i = 0; i <= this.userData.userFound.visited; i+=1)
+      if (this.userData.userFound.visited.length > 0)
+      {
+        for(let i = 0; i < this.userData?.userFound?.visited.length; i+=1)
         {
-          if (this.userData?.userFound?.visited[i]._id === this.ruinDetails?._id)
+          if (this.userData?.userFound?.visited[i]._id == this.ruinDetails?._id)
           {
             this.visited = true;
+            return;
           } 
         }
       }
-      // console.log('Tercera opción de checkVisited!');
       this.visited = false;
     },
   },
