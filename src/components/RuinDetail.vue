@@ -226,14 +226,16 @@ export default defineComponent({
         for(let i = 0; i < this.userData?.userFound?.favorites.length; i+=1)
         {
           console.log('Entra en el for loop de checkFavorited!!!', i);
-          
+          console.log(this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id);
+
           if (this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id)
           {
-            console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id === this.ruinDetails?._id);
+            console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
             this.favorited = true;
+            return;
           } 
 
-          console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id === this.ruinDetails?._id);
+          console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
         } 
       } 
       console.log('Tercera opción de checkFavorited!', this.userData?.userFound?.favorites);
