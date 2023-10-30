@@ -217,6 +217,32 @@ export default defineComponent({
       };
       this.addCommentToRuin(payload);
     }, 
+
+    checkFavorited() {
+      console.log(this.userData?.userFound?.favorites, 'Ruinas Favoritas');
+      // eslint-disable-next-line no-cond-assign
+      for(let i = 0; i = this.userData?.userFound?.favorites; i+=1)
+      {
+        if (this.userData?.userFound?.favorites[i] === this.ruinInfo?._id)
+        {
+          return true;
+        } 
+      }
+      return false;
+    },
+
+    checkVisited() {
+      console.log(this.userData?.userFound?.visited, 'Ruinas Visitadas');
+      // eslint-disable-next-line no-cond-assign
+      for(let i = 0; i = this.userData?.userFound?.visited; i+=1)
+      {
+        if (this.userData?.userFound?.visited[i] === this.ruinInfo?._id)
+        {
+          return true;
+        } 
+      }
+      return false;
+    },
   },
 
   mounted() {
@@ -226,6 +252,8 @@ export default defineComponent({
     this.getRuinDetails(id);
     this.getAllRuins();
 
+    // this.favorited = this.checkFavorited();
+    // this.visited = this.checkVisited();
     console.log('Favorited:', this.favorited, 'visited: ', this.visited);
   },
 });
@@ -233,8 +261,6 @@ export default defineComponent({
 <style lang="scss">
 button {
   all: unset;
-
-
 }
 
 .favoriteButton::before{
