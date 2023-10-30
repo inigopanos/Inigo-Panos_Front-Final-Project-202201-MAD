@@ -219,10 +219,8 @@ export default defineComponent({
     }, 
 
     checkFavorited() {
-      // eslint-disable-next-line no-unsafe-optional-chaining
-      console.log([...this.userData?.userFound?.favorites], 'Ruinas Favoritas');
-      if (this.userData.userFound.favorites){
-        console.log('Tiene favoritos el usuario', this.userData.userFound.favorites[0]._id, this.ruinDetails?._id);
+      if (this.userData?.userFound?.favorites.length > 0){
+        console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinInfo);
 
         for(let i = 0; i <= this.userData?.userFound?.favorites; i+=1)
         {
