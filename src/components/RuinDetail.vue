@@ -222,26 +222,29 @@ export default defineComponent({
       // eslint-disable-next-line no-unsafe-optional-chaining
       console.log([...this.userData?.userFound?.favorites], 'Ruinas Favoritas');
       if (this.userData.userFound.favorites){
-         // eslint-disable-next-line no-cond-assign
-        for(let i = 0; i = this.userData?.userFound?.favorites; i+=1)
+        console.log('Tiene favoritos el usuario', this.userData.userFound.favorites[0]._id, this.ruinDetails?._id);
+
+        for(let i = 0; i <= this.userData?.userFound?.favorites; i+=1)
         {
-          if (this.userData?.userFound?.favorites[i] === this.ruinInfo?._id)
+          if (this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id)
           {
+            console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id);
             this.favorited = true;
           } 
+
+          console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]._id === this.ruinDetails?._id);
         } 
       } 
-      
+
       this.favorited = false;
     },
 
     checkVisited() {
       console.log(this.userData?.userFound?.visited, 'Ruinas Visitadas');
       if (this.userData.userFound.visited){
-         // eslint-disable-next-line no-cond-assign
-        for(let i = 0; i = this.userData?.userFound?.visited; i+=1)
+        for(let i = 0; i <= this.userData.userFound.visited; i+=1)
         {
-          if (this.userData?.userFound?.visited[i] === this.ruinInfo?._id)
+          if (this.userData?.userFound?.visited[i]._id === this.ruinDetails?._id)
           {
             this.visited = true;
           } 
@@ -260,6 +263,8 @@ export default defineComponent({
     this.getAllRuins();
     this.checkFavorited();
     this.checkVisited();
+
+    console.log(this.userData.userFound, 'Datos del usuario');
   },
 });
 </script>
