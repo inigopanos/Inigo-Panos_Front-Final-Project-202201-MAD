@@ -119,7 +119,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -257,17 +257,25 @@ export default defineComponent({
     },
   },
 
+  onMounted() {
+    console.log('The component is now mounted', this.userData?.userFound);
+    this.checkFavorited();
+    this.checkVisited();
+  },
+
   mounted() {
     const route = useRoute();
     const { id } = route.params;
     console.log(id, 'id ruina', route.params);
     this.getRuinDetails(id);
     this.getAllRuins();
-    this.checkFavorited();
-    this.checkVisited();
+   
 
     console.log(this.userData?.userFound, 'Datos del usuario');
   },
+
+ 
+
 });
 </script>
 <style lang="scss">
