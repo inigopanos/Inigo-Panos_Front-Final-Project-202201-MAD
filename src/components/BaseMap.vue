@@ -1,6 +1,6 @@
 <template>
   <head>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script> -->
   </head>
   <div id="map"></div>
 </template>
@@ -8,9 +8,10 @@
 <script lang="ts">
   import mapboxgl from 'mapbox-gl';
   import 'mapbox-gl/dist/mapbox-gl.css';
+  import { defineComponent } from 'vue';
   import { tokenMap } from '../_helpers/config';
 
-export default {
+export default defineComponent({
   components: {},
   data() {
     return {
@@ -31,6 +32,8 @@ export default {
       console.log('Se ha creado un mapa: ', map);
     }
 
+    initMap();
+
   },
-};
+});
 </script>

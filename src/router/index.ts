@@ -6,7 +6,7 @@ import UserData from '../components/UserData.vue';
 import CreateRuin from '../components/CreateRuin.vue';
 import RuinDetail from '../components/RuinDetail.vue';
 import UpdateRuin from '../components/UpdateRuin.vue';
-// import BaseMap from '../components/BaseMap.vue';
+import BaseMap from '../components/BaseMap.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,11 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: RuinList,
   },
-  // {
-  //   path: '/map',
-  //   name: 'map',
-  //   component: BaseMap,
-  // },
+  {
+    path: '/map',
+    name: 'map',
+    component: BaseMap,
+  },
   {
     path: '/register',
     name: 'register',
