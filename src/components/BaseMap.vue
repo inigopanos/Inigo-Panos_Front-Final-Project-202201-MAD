@@ -9,6 +9,7 @@
   import mapboxgl from 'mapbox-gl';
   import 'mapbox-gl/dist/mapbox-gl.css';
   import { defineComponent } from 'vue';
+  import {userPlacesStore} from '../router/places.service'
   import { tokenMap } from '../_helpers/config';
 
 export default defineComponent({
@@ -17,6 +18,10 @@ export default defineComponent({
     return {
       
     };
+  },
+
+  setup() {
+    userPlacesStore();
   },
 
   mounted() {
@@ -31,6 +36,8 @@ export default defineComponent({
       });
       console.log('Se ha creado un mapa: ', map);
     }
+
+    
 
     initMap();
 
