@@ -24,7 +24,3 @@ export interface CreateRuinI {
   score: number;
   comments: [];
 }
-export interface PlacesStateI{
-  isLoading: boolean;
-  userLocation?: [number, number];
-}

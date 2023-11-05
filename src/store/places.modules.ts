@@ -1,8 +1,11 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import { MutationTree, GetterTree, Commit } from "vuex";
-import { PlacesStateI } from "@/_helpers/interfaces";
 
-function state(): PlacesStateI{
+export interface PlacesStateI{
+    isLoading: boolean;
+    userLocation?: [number, number];
+}
+
+function estado(): PlacesStateI{
     return {
         isLoading: true,
         userLocation: undefined,
@@ -30,7 +33,7 @@ const mutations: MutationTree<PlacesStateI> = {
     }
 };
 
-const getters: GetterTree<PlacesStateI, PlacesStateI> = {
+const getters = {
     isUserlocationReady(state: PlacesStateI) {
         console.log('Is userLocationReady:', !!state.userLocation);
         return !!state.userLocation;
@@ -39,6 +42,7 @@ const getters: GetterTree<PlacesStateI, PlacesStateI> = {
 
 export const places = {
     namespaced: true,
+    estado,
     actions,
     mutations,
     getters,
