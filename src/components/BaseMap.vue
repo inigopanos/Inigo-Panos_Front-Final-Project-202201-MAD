@@ -1,7 +1,7 @@
 <template>
   <head>
-    <p>{{ places }}</p>
-    <p>{{ userLocation }}, {{ isLoading }}</p>
+    <p>3: {{ places }}</p>
+    <p>1: {{ userLocation }}, 2: {{ isLoading }}</p>
   </head>
   <div id="map"></div>
 </template>
@@ -28,7 +28,7 @@ export default defineComponent({
 
   setup() {
     const { isLoading, userLocation,} = userPlacesStore();
-
+    console.log(isLoading, userLocation)
     return { 
       isLoading,
       userLocation, 
