@@ -1,4 +1,4 @@
-import { CreateRuinI } from '@/_helpers/interfaces';
+import { CreateRuinI, UserI } from '@/_helpers/interfaces';
 import { ruinsServices } from '../router/ruins.service';
 import router from '../router/index';
 
@@ -83,8 +83,8 @@ const actions = {
 
   addRuinToFavorites({ dispatch, commit }: { dispatch: any; commit: any }, id: string) {
     ruinsServices.addToFavoritesToggle(id).then(
-      (ruinData: any) => {
-        commit('addRuinToFavoritesSuccess', ruinData);
+      (userData: any) => {
+        commit('addRuinToFavoritesSuccess', userData);
       },
       (error) => {
         dispatch('alert/error', error, { root: true });
@@ -94,8 +94,8 @@ const actions = {
 
   addRuinToVisited({ dispatch, commit }: { dispatch: any; commit: any }, id: string) {
     ruinsServices.addToVisitedToggle(id).then(
-      (ruinData: any) => {
-        commit('addRuinToVisitedSuccess', ruinData);
+      (userData: any) => {
+        commit('addRuinToVisitedSuccess', userData);
       },
       (error) => {
         dispatch('alert/error', error, { root: true });
@@ -131,11 +131,20 @@ const actions = {
 };
 
 const mutations = {
-  addRuinToFavoritesSuccess(state: any, ruinData: any) {
-    console.log('Ruina añadida a visitados con éxito');
+
+  addRuinToFavoritesSuccess(state: any, user: any) {
+    console.log('Ruina modificado en visitados', user);
+    state.userInformation = {
+      userName: user.data.userName,
+      favorites: user.data.favorites,
+      visited: user.data.visited,
+      comments: user.data.comments,
+      isAdmin: user.data.isAdmin,
+    };
+    // Aquí no se actualiza el estado de favoritos del usuario. 
   },
 
-  addRuinToVisitedSuccess(state: any, ruinData: any) {
+  addRuinToVisitedSuccess(state: any, data: any) {
     console.log('Ruina añadida a visitados con éxito');
   },
 

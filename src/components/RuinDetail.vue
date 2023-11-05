@@ -5,7 +5,7 @@
   </div>
 
   <main>
-    <ul v-if="this.ruinDetails" class="ul-ruin-details">
+    <ul v-if="ruinDetails" class="ul-ruin-details">
       <li><span class="bold">Nombre:</span> {{ ruinDetails?.name }}</li>
       <li><span class="bold">Localización:</span> {{ ruinDetails?.location }}</li>
       <li><span class="bold">Descripción:</span> {{ ruinDetails?.description }}</li>
@@ -15,7 +15,7 @@
         <img v-bind:src="ruinDetails?.images" alt="" />
       </li>
 
-      <template v-if="this.ruinDetails">
+      <template v-if="ruinDetails">
         <span class="bold" v-if="ruinDetails.comments > 1"> Comentarios:</span>
         <ul class="ruin-details__comment-card-container">
           <div
@@ -56,9 +56,9 @@
             </div>
           </div>
           <form @submit.prevent="handleSubmit">
-            <div class="form-group">
+            <div class="form-group" v-if="userData?.userFound">
               <label for="comment">
-                <input type="comment" v-model="this.newComment" name="comment" /> |
+                <input type="comment" v-model="newComment" name="comment" /> |
                 <button class="comment-button" type="button" v-on:click="handleSubmit">
                   Enviar comentario
                 </button>
@@ -69,26 +69,41 @@
       </template>
     </ul>
     <div class="icons-container">
-      <div class="icons-container__icon">
-        <button type="button" class="favoriteButton" v-on:click="ruinFavorites()">
+      <div class="icons-container__icon" v-if="userData?.userFound">
+        <button type="button"  v-on:click="ruinFavorites()">
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=fe00aee2-c848-4302-8d09-de9f19742d6d"
-            alt="empty-heart-icon"
-          />
+          v-if="!favorited"
+          id="favoriteButton"         
+          src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad"
+          alt="favorited-empty-heart-icon" />
+          <img
+          v-else
+          id="favoriteButton"         
+          src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7"
+          alt="favorited-heart-icon" />
+          
         </button>
       </div>
-      <div class="icons-container__icon">
-        <button type="button" class="visitedButton" v-on:click="ruinVisited()">
+      <div class="icons-container__icon" v-if="userData?.userFound">
+        <button type="button"  v-on:click="ruinVisited()">
           <img
+            v-if="!visited"
+            id="visitedButton"
             src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5"
+            alt="visited-empty-icon"
+          />
+          <img
+            v-else
+            id="visitedButton"
+            src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack_filled.png?alt=media&token=2b0034f4-63fc-450d-a1c5-231da984ea9b"
             alt="visited-icon"
           />
         </button>
       </div>
     </div>
 
-    <div v-if="this.userData?.userFound?.isAdmin" class="update-delete">
-      <router-link :to="`/ruinUpdate/${this?.ruinDetails?._id}`">
+    <div v-if="userData?.userFound?.isAdmin" class="update-delete">
+      <router-link :to="`/ruinUpdate/${ruinDetails?._id}`">
         <a>Actualizar datos</a>
       </router-link>
       |
@@ -104,7 +119,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -126,6 +141,8 @@ export default defineComponent({
         prueba: '',
       },
       newComment: '',
+      favorited: false,
+      visited: false,
     };
   },
 
@@ -153,10 +170,32 @@ export default defineComponent({
 
     ruinFavorites() {
       this.addRuinToFavorites(this.ruinDetails._id);
+      
+      this.favorited = !this.favorited;
+
+      if (!this.favorited)
+      {
+        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=7da07779-588f-4a3b-9012-660ecaf7dcad";
+      } else {
+        const favoriteButton = document.getElementById("favoriteButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7";
+      };
     },
 
     ruinVisited() {
       this.addRuinToVisited(this.ruinDetails._id);
+
+      this.visited = !this.visited;
+
+      if (!this.visited)
+      {
+        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack.png?alt=media&token=d589e556-9ac6-4c96-95e2-755b125763d5";
+      } else {
+        const favoriteButton = document.getElementById("visitedButton") as HTMLImageElement;
+        favoriteButton.src = "https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/thumbtack_filled.png?alt=media&token=2b0034f4-63fc-450d-a1c5-231da984ea9b";
+      };
     },
 
     deleteRuinComment(id: string) {
@@ -173,27 +212,84 @@ export default defineComponent({
       idUsuario = JSON.parse(idUsuario as string);
       const payload = {
         author_id: idUsuario,
-        // eslint-disable-next-line no-underscore-dangle
         ruin_id: this.ruinDetails._id,
         text: this.newComment,
       };
       this.addCommentToRuin(payload);
+    }, 
+
+    checkFavorited() {
+      if (this.userData?.userFound?.favorites.length > 0){
+        // console.log('Tiene favoritos el usuario', this.userData?.userFound?.favorites[0]?._id, this.ruinDetails?._id);
+        // console.log('Tipo id', typeof(this.userData?.userFound?.favorites[0]?._id), typeof(this.ruinInfo?._id));
+
+        for(let i = 0; i < this.userData?.userFound?.favorites.length; i+=1)
+        {
+          // console.log('Entra en el for loop de checkFavorited!!!', i);
+          // console.log(this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id);
+
+          if (this.userData?.userFound?.favorites[i]._id == this.ruinDetails?._id)
+          {
+            // console.log('Coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
+            this.favorited = true;
+            return;
+          } 
+          // console.log('No coincide el id de ruina', this.userData?.userFound?.favorites[i]?._id == this.ruinDetails?._id);
+        } 
+      } 
+      // console.log('Tercera opción de checkFavorited!', this.userData?.userFound?.favorites);
+      this.favorited = false;
     },
+
+    checkVisited() {
+      if (this.userData?.userFound?.visited?.length > 0)
+      {
+        for(let i = 0; i < this.userData?.userFound?.visited.length; i+=1)
+        {
+          if (this.userData?.userFound?.visited[i]._id == this.ruinDetails?._id)
+          {
+            this.visited = true;
+            return;
+          } 
+        }
+      }
+      this.visited = false;
+    },
+  },
+
+  onMounted() {
+    console.log('The component is now mounted', this.userData?.userFound);
+    this.checkFavorited();
+    this.checkVisited();
   },
 
   mounted() {
     const route = useRoute();
     const { id } = route.params;
-    console.log(id, 'id ruina');
+    console.log(id, 'id ruina', route.params);
     this.getRuinDetails(id);
     this.getAllRuins();
+   
+
+    console.log(this.userData?.userFound, 'Datos del usuario');
   },
+
+ 
+
 });
 </script>
 <style lang="scss">
 button {
   all: unset;
 }
+
+.favoriteButton::before{
+  content: url("https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart.png?alt=media&token=fe00aee2-c848-4302-8d09-de9f19742d6d");
+}
+.favoriteButton::af{
+  content: url("https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/heart%20(1).png?alt=media&token=391a8dfa-e83a-46de-b396-970fccc7e7a7");
+}
+
 .update-delete {
   display: flex;
   flex-direction: column;

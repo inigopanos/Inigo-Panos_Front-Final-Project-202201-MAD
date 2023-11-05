@@ -12,7 +12,8 @@ export const usersService = {
 };
 
 function getToken() {
-  return localStorage.getItem('token');
+  console.log('Token = ', localStorage.getItem('token'), typeof(localStorage.getItem('token')));
+  return localStorage.getItem('token'); 
 }
 
 export function register(user: UserRegisterI) {

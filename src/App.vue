@@ -81,6 +81,7 @@ export default {
   text-decoration: none;
   list-style-type: none;
   line-height: 1.5;
+  min-height: 100%;
 }
 #app {
   width: 100%;
@@ -119,6 +120,7 @@ export default {
     margin-top: 15px;
     justify-content: space-evenly;
     opacity: 0.5;
+    // margin-top:auto;
   }
 
   font-family: Cinzel, sans-serif;

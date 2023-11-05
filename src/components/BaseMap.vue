@@ -1,32 +1,39 @@
 <template>
-  <MglMap :accessToken="tokenMap" :mapStyle="mapStyle" />
+  <head>
+    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script> -->
+  </head>
+  <h1>Map View</h1>
+  <p>IsLoading: {{ isLoading }}, userLocation: {{ userLocation }}</p>
   <div id="map"></div>
 </template>
 
 <script lang="ts">
-import Mapbox from 'mapbox-gl';
-import { tokenMap } from '../_helpers/config';
+  import 'mapbox-gl/dist/mapbox-gl.css';
+  import { defineComponent } from 'vue';
+  import { mapMutations, mapGetters, mapState } from 'vuex';
+  import {userPlacesStore} from '../router/places.service'
 
-export default {
-  components: {},
-  data() {
-    return {};
+export default defineComponent({
+  name: 'BaseMap',
+
+  data(){
+    return{
+      isLoading: Boolean,
+      userLocation:[Number, Number]
+    }
+  },
+  
+  computed: {
+    ...mapGetters('places', ['isUserlocationReady']),
+    ...mapMutations('places', ['setLngLat']),
+    ...mapState(['state'])
   },
 
-  mounted() {
-    // We need to set mapbox-gl library here in order to use it in template
-    console.log('No se ha creado un mapa: ');
+  setup() {
 
-    this.mapbox = Mapbox;
-    console.log('Esto es el mapbox, ', this.mapbox);
+    const { isLoading, userLocation } = userPlacesStore();
 
-    const map = new Mapbox.Map({
-      container: 'map', // container ID
-      style: 'mapbox://styles/mapbox/streets-v11', // style URL
-      center: [40.416775, -3.70379], // starting position [lng, lat]
-      zoom: 9, // starting zoom
-    });
-    console.log('Se ha creado un mapa: ', map);
+    console.log('Is Loading:', isLoading,'UserLocation:', userLocation);
   },
-};
+});
 </script>
