@@ -24,11 +24,11 @@ export default defineComponent({
   },
 
   setup() {
-    const {userLocation, isLoading} = userPlacesStore();
+    const { isLoading, userLocation,} = userPlacesStore();
 
-    return {
+    return { 
+      isLoading,
       userLocation, 
-      isLoading
     }
   },
 
