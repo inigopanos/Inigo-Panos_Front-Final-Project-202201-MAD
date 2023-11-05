@@ -1,6 +1,6 @@
 <template>
   <head>
-    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script> -->
+    <p>{{ userLocation }}, {{ isLoading }}</p>
   </head>
   <div id="map"></div>
 </template>
@@ -12,7 +12,7 @@
   import {userPlacesStore} from '../router/places.service'
 
 export default defineComponent({
-  components: {},
+  components: { },
   data() {
     return {
       userLocation: [Number, Number],
@@ -21,7 +21,6 @@ export default defineComponent({
   },
 
   computed:{
-    ...mapState('places'),
   },
 
   setup() {

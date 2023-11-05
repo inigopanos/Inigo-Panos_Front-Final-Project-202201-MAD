@@ -1,7 +1,5 @@
-import axios from 'axios';
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { PlacesStateI } from "@/_helpers/interfaces";
-
 import { useStore } from 'vuex';
 
 export const userPlacesStore = () => {
@@ -17,6 +15,7 @@ export const userPlacesStore = () => {
     })
 
     return{
-
+        isLoading: computed(() => store.state.isLoading),
+        userLocation: computed(() => store.state.userLocation),
     }
 }
