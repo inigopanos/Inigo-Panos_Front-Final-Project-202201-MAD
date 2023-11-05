@@ -1,5 +1,6 @@
 <template>
   <head>
+    <p>{{ places }}</p>
     <p>{{ userLocation }}, {{ isLoading }}</p>
   </head>
   <div id="map"></div>
@@ -7,8 +8,8 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import {mapState} from 'vuex';
-  import { defineComponent } from 'vue';
+  import {mapState, mapGetters} from 'vuex';
+  import { computed, defineComponent } from 'vue';
   import {userPlacesStore} from '../router/places.service'
 
 export default defineComponent({
@@ -21,6 +22,8 @@ export default defineComponent({
   // },
 
   computed:{
+    ...mapGetters('places', ['isUserlocationReady']),
+    ...mapState(['places']),
   },
 
   setup() {
