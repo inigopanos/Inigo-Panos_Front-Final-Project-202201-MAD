@@ -6,41 +6,27 @@
 </template>
 
 <script lang="ts">
-  import mapboxgl from 'mapbox-gl';
   import 'mapbox-gl/dist/mapbox-gl.css';
+  import {mapState} from 'vuex';
   import { defineComponent } from 'vue';
   import {userPlacesStore} from '../router/places.service'
-  import { tokenMap } from '../_helpers/config';
 
 export default defineComponent({
   components: {},
   data() {
     return {
-      
+      userLocation: [Number, Number],
+      isLoading: Boolean,
     };
+  },
+
+  computed:{
+    ...mapState('places'),
   },
 
   setup() {
     userPlacesStore();
   },
 
-  mounted() {
-
-    const initMap = () => {
-
-        const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: [40.416775, -3.70379], // starting position [lng, lat]
-        zoom: 9, // starting zoom
-      });
-      console.log('Se ha creado un mapa: ', map);
-    }
-
-    
-
-    initMap();
-
-  },
 });
 </script>

@@ -1,9 +1,5 @@
 import { MutationTree, GetterTree, Commit } from "vuex";
-
-export interface PlacesStateI{
-    isLoading: boolean;
-    userLocation?: [number, number];
-}
+import { PlacesStateI } from "@/_helpers/interfaces";
 
 function estado(): PlacesStateI{
     return {

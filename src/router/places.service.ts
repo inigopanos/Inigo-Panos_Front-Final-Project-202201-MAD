@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { onMounted } from 'vue';
-import { PlacesStateI } from '@/store/places.modules';
+import { PlacesStateI } from "@/_helpers/interfaces";
+
 import { useStore } from 'vuex';
 
 export const userPlacesStore = () => {
@@ -16,6 +17,6 @@ export const userPlacesStore = () => {
     })
 
     return{
-        // todo: 
+
     }
 }
