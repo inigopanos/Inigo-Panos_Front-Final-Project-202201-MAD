@@ -1,6 +1,6 @@
 <template>
   <head>
-    <p>3: {{ places }}</p>
+
     <p>1: {{ userLocation }}, 2: {{ isLoading }}</p>
   </head>
   <div id="map"></div>
@@ -28,12 +28,17 @@ export default defineComponent({
 
   setup() {
     const { isLoading, userLocation,} = userPlacesStore();
-    console.log(isLoading, userLocation)
+
     return { 
       isLoading,
       userLocation, 
     }
   },
+
+  mounted(){
+    this.isUserlocationReady();
+    console.log(this.isLoading, this.userLocation);
+  }
 
 });
 </script>
