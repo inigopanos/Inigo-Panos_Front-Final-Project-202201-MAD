@@ -13,18 +13,23 @@
 
 export default defineComponent({
   components: { },
-  data() {
-    return {
-      userLocation: [Number, Number],
-      isLoading: Boolean,
-    };
-  },
+  // data() {
+  //   return {
+  //     userLocation: [Number, Number],
+  //     isLoading: Boolean,
+  //   };
+  // },
 
   computed:{
   },
 
   setup() {
-    userPlacesStore();
+    const {userLocation, isLoading} = userPlacesStore();
+
+    return {
+      userLocation, 
+      isLoading
+    }
   },
 
 });

@@ -6,10 +6,8 @@ export const userPlacesStore = () => {
     const store = useStore<PlacesStateI>();
 
     onMounted(() => {
-        console.log("Se llama a placesStore, onMounted");
         if (!store.getters['places/isUserlocationReady'])
         {
-            console.log('No hay storeGetters places IsUserlocation');
             store.dispatch('places/getInitialLocation');
         }
     })
