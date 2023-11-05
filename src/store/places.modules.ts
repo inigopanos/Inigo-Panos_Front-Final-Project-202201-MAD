@@ -16,7 +16,7 @@ const actions = {
     getInitialLocation({ commit }: {commit: Commit}) {
         // todo: colocar loading
         navigator.geolocation.watchPosition(
-            ( coords ) => commit('setLngLat', coords),
+            ( {coords} ) => commit('setLngLat', {lng: coords.longitude, lat: coords.latitude}), // Se llama a la mutación
             (err) => {
                 console.error(err);
                 throw new Error('No geolocation');
@@ -26,9 +26,9 @@ const actions = {
 }
 
 const mutations: MutationTree<PlacesStateI> = {
-    setLngLat(state: PlacesStateI, coords){
-        console.log('Coordenadas usuario:', {coords});
-        state.userLocation = coords;
+    setLngLat(state: PlacesStateI, {lng, lat}: {lng: number, lat: number}){
+        console.log('Coordenadas usuario:', {lng, lat});
+        state.userLocation = [lng, lat];
         state.isLoading = false;
     }
 };
