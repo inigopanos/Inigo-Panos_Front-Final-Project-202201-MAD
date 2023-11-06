@@ -11,7 +11,7 @@
       </div>
   </div>
   
-  <div v-else class="map" ref="mapElement"/>
+  <div v-show="isUserlocationReady" class="map" ref="mapElement"/>
 
 </template>
 
@@ -54,8 +54,7 @@ export default defineComponent({
   },
 
   mounted() {
-    const { isLoading, userLocation } = userPlacesStore();
-    console.log('Prueba1:', isLoading.value, userLocation.value);
+    console.log(this.mapElement);
   }
 
 });
