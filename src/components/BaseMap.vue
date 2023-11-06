@@ -11,14 +11,14 @@
       </div>
   </div>
   
-  <div v-else class="map"/>
+  <div v-else class="map" ref="mapElement"/>
 
 </template>
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
   import {mapActions, mapState, mapGetters} from 'vuex';
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import {userPlacesStore} from '../router/places.service'
 
 
@@ -43,13 +43,13 @@ export default defineComponent({
   },
 
   setup() {
+    const mapElement = ref<HTMLDivElement>();
     const { isLoading, userLocation,} = userPlacesStore();
-
-    console.log('Polla', isLoading.value, userLocation.value);
 
     return { 
       isLoading,
       userLocation, 
+      mapElement,
     }
   },
 
