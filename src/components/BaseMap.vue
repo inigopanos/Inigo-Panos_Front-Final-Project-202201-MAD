@@ -1,14 +1,18 @@
 <template>
-  <div class="loading-map">
+  <div
+  v-if="!isUserlocationReady"
+  class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
+        <p>1: {{ places.userLocation }}, </p>
+        <p> 2: {{ places.isLoading }},</p>
+        <p>3: {{ places }}</p>
       </div>
   </div>
-  <p>1: {{ places.userLocation }}, </p>
-  <p> 2: {{ places.isLoading }},</p>
-  <p>3: {{ places }}</p>
-  <div id="map"></div>
+  
+  <div v-else class="map"/>
+
 </template>
 
 <script lang="ts">
@@ -65,15 +69,23 @@ export default defineComponent({
   position: fixed;
   top: 0px;
   width: 100vw;
-  z-index: 999;
+  z-index: 9999;
   display:flex;
   justify-content: center;
   align-items: center;
 
   .loading-text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
+ }
 }
+.map {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: red;
 }
-
 
 </style>
