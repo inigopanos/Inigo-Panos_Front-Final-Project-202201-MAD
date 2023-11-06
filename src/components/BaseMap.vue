@@ -1,8 +1,12 @@
 <template>
-  <head>
-  </head>
-  <p>1: {{ userLocation }}, </p>
-  <p> 2: {{ isLoading }},</p>
+  <div class="loading-map">
+      <div class="loading-text">
+        <h3>Espere por favor</h3>
+        <span>Localizando</span>
+      </div>
+  </div>
+  <p>1: {{ places.userLocation }}, </p>
+  <p> 2: {{ places.isLoading }},</p>
   <p>3: {{ places }}</p>
   <div id="map"></div>
 </template>
@@ -52,3 +56,24 @@ export default defineComponent({
 
 });
 </script>
+<style lang="scss">
+.loading-map {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  z-index: 999;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+  .loading-text {
+    text-align: center;
+}
+}
+
+
+</style>
