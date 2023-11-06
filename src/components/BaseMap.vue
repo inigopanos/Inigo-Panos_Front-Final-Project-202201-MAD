@@ -3,7 +3,7 @@
   </head>
   <p>1: {{ userLocation }}, </p>
   <p> 2: {{ isLoading }},</p>
-  <p>3: {{ prueba1 }}</p>
+  <p>3: {{ places }}</p>
   <div id="map"></div>
 </template>
 
@@ -23,8 +23,9 @@ export default defineComponent({
   },
 
   computed:{
+    ...mapActions('places', ['getInitialLocation']),
     ...mapGetters('places', ['isUserlocationReady']),
-    ...mapState(['store']),
+    ...mapState(['places']),
   },
 
   methods:{
@@ -36,7 +37,7 @@ export default defineComponent({
   setup() {
     const { isLoading, userLocation,} = userPlacesStore();
 
-    console.log('Polla', isLoading, userLocation);
+    console.log('Polla', isLoading.value, userLocation.value);
 
     return { 
       isLoading,
@@ -46,7 +47,7 @@ export default defineComponent({
 
   mounted() {
     const { isLoading, userLocation } = userPlacesStore();
-    console.log('Prueba1:', isLoading, userLocation);
+    console.log('Prueba1:', isLoading.value, userLocation.value);
   }
 
 });
