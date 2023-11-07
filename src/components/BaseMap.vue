@@ -32,34 +32,34 @@ export default defineComponent({
     ...mapActions('places', [
       'isUserlocationReady'
     ]),
-
-    initMap(){
-      if (!this.mapElement) return;
-      if (!this.userLocation) return;
-
-      const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        style: 'mapbox://styles/mapbox/streets-v12', // style URL
-        center: this.userLocation, // starting position [lng, lat]
-        zoom: 9, // starting zoom 
-      }); 
-    },
   },
-  
 
   setup() {
     const mapElement = ref<HTMLDivElement>();
     const { isLoading, userLocation,} = userPlacesStore();
 
+    const initMap = () => {
+      if (!mapElement.value) return;
+      if (!userLocation) return;
+
+      const map = new mapboxgl.Map({
+        container: mapElement.value, // container ID
+        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        center: userLocation.value, // starting position [lng, lat]
+        zoom: 9, // starting zoom 
+      }); 
+    }
+
     return { 
       isLoading,
       userLocation, 
       mapElement,
+      initMap
     }
   },
 
   // eslint-disable-next-line consistent-return
-  mounted() {
+  onMounted() {
     if (this.isUserlocationReady){
       console.log('Se ha montado el mapa');
       return this.initMap();
