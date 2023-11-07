@@ -43,12 +43,14 @@ export default defineComponent({
       if (!userLocation) return;
 
       await Promise.resolve();
+      
+      console.log('Valor de localización del usuario en initMap()', {userLocation});
 
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: userLocation.value, // starting position [lng, lat]
-        zoom: 15, // starting zoom 
+        zoom: 5, // starting zoom 
       }); 
 
       map.scrollZoom.disable();

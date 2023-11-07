@@ -13,7 +13,7 @@ export const userPlacesStore = () => {
     })
 
     console.log('En userPlacesStore:', {...store.state});
-
+    
     return{
         isLoading: computed(() => store.state.isLoading),
         userLocation: computed(() => store.state.userLocation),
