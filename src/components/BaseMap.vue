@@ -17,6 +17,7 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
+  import mapboxgl from 'mapbox-gl';
   import {mapActions, mapState, mapGetters} from 'vuex';
   import { defineComponent, ref } from 'vue';
   import {userPlacesStore} from '../router/places.service'
@@ -39,8 +40,21 @@ export default defineComponent({
   methods:{
     ...mapActions('places', [
       'isUserlocationReady'
-    ])
+    ]),
+
+    initMap(){
+      if (!this.mapElement) return;
+      if (!this.userLocation) return;
+
+      const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        center: this.userLocation, // starting position [lng, lat]
+        zoom: 9, // starting zoom 
+      }); 
   },
+  },
+  
 
   setup() {
     const mapElement = ref<HTMLDivElement>();
