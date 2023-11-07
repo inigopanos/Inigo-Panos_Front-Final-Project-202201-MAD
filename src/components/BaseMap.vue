@@ -38,16 +38,21 @@ export default defineComponent({
     const mapElement = ref<HTMLDivElement>();
     const { isLoading, userLocation,} = userPlacesStore();
 
-    const initMap = () => {
+    const initMap = async () => {
       if (!mapElement.value) return;
       if (!userLocation) return;
 
+      await Promise.resolve();
+
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
-        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: userLocation.value, // starting position [lng, lat]
-        zoom: 9, // starting zoom 
+        zoom: 15, // starting zoom 
       }); 
+
+      map.scrollZoom.disable();
+      map.boxZoom.enable();
     }
 
     return { 
@@ -79,7 +84,6 @@ export default defineComponent({
       {
         this.initMap();
       }
-      // return console.log({newValue});
     }, 
   }
 
