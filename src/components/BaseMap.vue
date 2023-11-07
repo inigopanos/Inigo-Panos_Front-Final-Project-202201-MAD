@@ -1,4 +1,7 @@
 <template>
+  <header>  
+    <h3>{{ places }}</h3>
+  </header>
   <div
   v-if="!isUserlocationReady"
   class="loading-map">
@@ -44,7 +47,7 @@ export default defineComponent({
 
       await Promise.resolve();
       
-      console.log('Valor de localización del usuario en initMap()', {userLocation});
+      console.log('Valor de localización del usuario en initMap()', );
 
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
