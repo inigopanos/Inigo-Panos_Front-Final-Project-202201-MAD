@@ -5,9 +5,6 @@
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
-        <p>1: {{ places.userLocation }}, </p>
-        <p> 2: {{ places.isLoading }},</p>
-        <p>3: {{ places }}</p>
       </div>
   </div>
   
@@ -19,15 +16,14 @@
   import 'mapbox-gl/dist/mapbox-gl.css';
   import mapboxgl from 'mapbox-gl';
   import {mapActions, mapState, mapGetters} from 'vuex';
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, watch } from 'vue';
   import {userPlacesStore} from '../router/places.service'
-
 
 export default defineComponent({
   components: { },
   data() {
     return {
-      prueba1: ""
+      isUserlocationReady: ''
     };
   },
 
@@ -52,7 +48,7 @@ export default defineComponent({
         center: this.userLocation, // starting position [lng, lat]
         zoom: 9, // starting zoom 
       }); 
-  },
+    },
   },
   
 
@@ -67,12 +63,29 @@ export default defineComponent({
     }
   },
 
+  // eslint-disable-next-line consistent-return
   mounted() {
-    console.log(this.mapElement);
+    if (this.isUserlocationReady){
+      console.log('Se ha montado el mapa');
+      return this.initMap();
+    }
+
+    console.log(this.isUserlocationReady, ' localización del jugador');
+  },
+
+  watch:{
+    ...mapActions('places', [
+      'isUserlocationReady'
+    ]),
+    
+    isUserlocationReady(oldValue, newValue) {
+      console.log('Valor de isUserLocationReady en el watcher', oldValue, newValue);
+    }
   }
 
 });
 </script>
+
 <style lang="scss">
 .loading-map {
   background-color: rgba(0, 0, 0, 0.8);
