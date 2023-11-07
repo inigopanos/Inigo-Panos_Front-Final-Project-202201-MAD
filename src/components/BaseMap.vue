@@ -21,11 +21,6 @@
 
 export default defineComponent({
   components: { },
-  data() {
-    return {
-      isUserlocationReady: ''
-    };
-  },
 
   computed:{
     ...mapActions('places', ['getInitialLocation']),
@@ -74,13 +69,18 @@ export default defineComponent({
   },
 
   watch:{
-    ...mapActions('places', [
+    ...mapGetters('places', [
       'isUserlocationReady'
     ]),
     
-    isUserlocationReady(oldValue, newValue) {
-      console.log('Valor de isUserLocationReady en el watcher', oldValue, newValue);
-    }
+    isUserlocationReady(newValue) {
+      console.log('Valor de isUserLocationReady en el watcher', {newValue});
+      if (newValue)
+      {
+        this.initMap();
+      }
+      // return console.log({newValue});
+    }, 
   }
 
 });
