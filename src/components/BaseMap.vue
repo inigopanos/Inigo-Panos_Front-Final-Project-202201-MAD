@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl from 'mapbox-gl';
+  import mapboxgl, { MercatorCoordinate } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref, watch } from 'vue';
   import {userPlacesStore} from '../router/places.service'
@@ -66,11 +66,12 @@ export default defineComponent({
         container: mapElement.value, // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: userLocation, // starting position [lng, lat]
-        zoom: 5, // starting zoom 
+        zoom: 15, // starting zoom 
       }); 
 
-      map.scrollZoom.disable();
-      map.boxZoom.enable();
+      map.scrollZoom.enable();
+      map.boxZoom.disable();
+      map.dragPan.disable();
     }
 
     return { 
@@ -115,7 +116,7 @@ export default defineComponent({
   position: fixed;
   top: 0px;
   width: 100vw;
-  z-index: 9999;
+  // z-index: 9999;
   display:flex;
   justify-content: center;
   align-items: center;
