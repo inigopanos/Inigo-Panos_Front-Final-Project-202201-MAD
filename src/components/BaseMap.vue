@@ -18,18 +18,19 @@
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
   import mapboxgl from 'mapbox-gl';
-  import {mapActions, mapState, mapGetters} from 'vuex';
+  import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref, watch } from 'vue';
   import {userPlacesStore} from '../router/places.service'
 
 export default defineComponent({
   components: { },
 
-  // data() {
-  //   return {
-  //     userLocation: [],
-  //   }
-  // },
+  data() {
+    return {
+      isLoading: false,
+      userLocation: [],
+    }
+  },
 
   computed:{
     ...mapActions('places', ['getInitialLocation']),
@@ -46,17 +47,21 @@ export default defineComponent({
   },
 
   setup() {
-    
+    const store = useStore();
+    console.log('Store: ', store?.state?.places);
+    // Objeto proxy
+
     const mapElement = ref<HTMLDivElement>();
     // const { isLoading, userLocation} = userPlacesStore();
-
-    const datosStore = {...this.places.isUserLocationReady}
 
     const initMap = async () => {
       if (!mapElement.value) return;
       // if (!this.userLocation) return;
 
       await Promise.resolve();
+
+      const isLoading = store?.state?.places?.isLoading;
+      const userLocation = store?.state?.places?.userLocation;
       
       console.log('Se ha resuelto la promesa del mapa');
 
@@ -72,8 +77,6 @@ export default defineComponent({
     }
 
     return { 
-      isLoading,
-      userLocation, 
       mapElement,
       initMap
     }
@@ -98,6 +101,7 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
+        // this.userLocation es proxy array
         console.log(this.userLocation, ' localización del usuario al ejecutar el watcher.');
         this.initMap();
       }
