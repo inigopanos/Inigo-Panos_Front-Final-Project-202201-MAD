@@ -1,6 +1,6 @@
 <template>
   <header>  
-    <h3>{{ places }}</h3>
+    <h3>{{ places }}, {{ isUserlocationReady }}</h3>
   </header>
   <div
   v-if="!isUserlocationReady"
@@ -25,6 +25,12 @@
 export default defineComponent({
   components: { },
 
+  // data() {
+  //   return {
+  //     userLocation: [],
+  //   }
+  // },
+
   computed:{
     ...mapActions('places', ['getInitialLocation']),
     ...mapGetters('places', ['isUserlocationReady']),
@@ -35,19 +41,24 @@ export default defineComponent({
     ...mapActions('places', [
       'isUserlocationReady'
     ]),
+    ...mapGetters('places', ['isUserlocationReady']),
+    ...mapState(['places']),
   },
 
   setup() {
+    
     const mapElement = ref<HTMLDivElement>();
-    const { isLoading, userLocation,} = userPlacesStore();
+    // const { isLoading, userLocation} = userPlacesStore();
+
+    const datosStore = {...this.places.isUserLocationReady}
 
     const initMap = async () => {
       if (!mapElement.value) return;
-      if (!userLocation) return;
+      // if (!this.userLocation) return;
 
       await Promise.resolve();
       
-      console.log('Valor de localización del usuario en initMap()', );
+      console.log('Se ha resuelto la promesa del mapa');
 
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
@@ -87,6 +98,7 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
+        console.log(this.userLocation, ' localización del usuario al ejecutar el watcher.');
         this.initMap();
       }
     }, 
