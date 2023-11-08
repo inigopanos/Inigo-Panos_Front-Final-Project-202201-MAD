@@ -66,12 +66,13 @@ export default defineComponent({
         container: mapElement.value, // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: userLocation, // starting position [lng, lat]
-        zoom: 15, // starting zoom 
-      }); 
-
+        zoom: 15, // starting zoom
+        }); 
+      
       map.scrollZoom.enable();
-      map.boxZoom.disable();
-      map.dragPan.disable();
+      map.boxZoom.enable();
+      map.dragPan.enable();
+      
     }
 
     return { 
@@ -130,8 +131,8 @@ export default defineComponent({
 }
 .map {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  width: 80vw;
+  height: 80vh;
   background-color: red;
 }
 
