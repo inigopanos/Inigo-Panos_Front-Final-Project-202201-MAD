@@ -52,23 +52,20 @@ export default defineComponent({
     // Objeto proxy
 
     const mapElement = ref<HTMLDivElement>();
-    // const { isLoading, userLocation} = userPlacesStore();
 
-    const initMap = async () => {
+    const initMap = async (userLocationFromWatcher: [number, number]) => {
       if (!mapElement.value) return;
-      // if (!this.userLocation) return;
 
       await Promise.resolve();
 
-      const isLoading = store?.state?.places?.isLoading;
-      const userLocation = store?.state?.places?.userLocation;
+      const userLocation = userLocationFromWatcher;
       
       console.log('Se ha resuelto la promesa del mapa');
 
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
-        center: userLocation.value, // starting position [lng, lat]
+        center: userLocation, // starting position [lng, lat]
         zoom: 5, // starting zoom 
       }); 
 
@@ -86,10 +83,8 @@ export default defineComponent({
   onMounted() {
     if (this.isUserlocationReady){
       console.log('Se ha montado el mapa');
-      return this.initMap();
+      return this.initMap(this.places.userLocation);
     }
-
-    console.log(this.isUserlocationReady, ' localización del jugador');
   },
 
   watch:{
@@ -101,9 +96,9 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        // this.userLocation es proxy array
-        console.log(this.userLocation, ' localización del usuario al ejecutar el watcher.');
-        this.initMap();
+        // this.userLocation es proxy array de 0
+        console.log(this.places.userLocation, ' localización del usuario al ejecutar el watcher.');
+        this.initMap(this.places.userLocation);
       }
     }, 
   }
