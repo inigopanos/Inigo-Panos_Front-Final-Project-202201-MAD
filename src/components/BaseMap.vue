@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl, { MercatorCoordinate } from 'mapbox-gl';
+  import mapboxgl, { LngLat, MercatorCoordinate } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
@@ -49,9 +49,10 @@ export default defineComponent({
   setup() {
     
     const route = useRoute();
-    const { ruinCoords } = route.params;
+    
+    const ruinCoords = route.params.coords;
 
-    console.log('Coordenadas de la ruina: ', typeof({ruinCoords}));
+    console.log('Coordenadas de la ruina: ', {ruinCoords});
 
     const store = useStore();
     console.log('Store: ', store?.state?.places);
