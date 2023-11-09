@@ -51,7 +51,7 @@ export default defineComponent({
     const route = useRoute();
     const { ruinCoords } = route.params;
 
-    console.log('Coordenadas de la ruina: ', route.params);
+    console.log('Coordenadas de la ruina: ', typeof({ruinCoords}));
 
     const store = useStore();
     console.log('Store: ', store?.state?.places);
@@ -66,6 +66,8 @@ export default defineComponent({
       
       if (!mapElement.value) throw new Error('Div Element no existe');
       if (!userLocation) throw new Error('User Location no existe');
+      if (!ruinCoords) console.log('No hay coordenadas de ruinas');
+
       console.log('Se ha resuelto la promesa del mapa', userLocation);
 
       const map = new mapboxgl.Map({
@@ -86,10 +88,8 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
-      const meridaCoords = [-6.338274148947501, 38.91655681214613];
-
       const ruinLocationMarker = new mapboxgl.Marker()
-      .setLngLat([-6.338274148947501, 38.91655681214613])
+      .setLngLat(ruinCoords)
       .addTo(map);
 
       const myLocationMarker = new mapboxgl.Marker()
