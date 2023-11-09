@@ -47,9 +47,8 @@ export default defineComponent({
   },
 
   setup() {
-
+    
     const store = useStore();
-    console.log('Se llama a setup()', store.getters.isUserLocationReady); // Undefined en setup()
     console.log('Store: ', store?.state?.places);
    
     const mapElement = ref<HTMLDivElement>();
@@ -84,22 +83,22 @@ export default defineComponent({
   },
 
   mounted() {
+    const test = this.isUserlocationReady; // No puedo usar este getter
+    
+    console.log('Hola desde el onMounted()', test);
 
-    alert('Hola desde el onMounted()');
-
-    if (this.isUserlocationReady.value){
-      console.log('Se ha montado el mapa');
+    if (test){
       return this.initMap(this.places.userLocation);
     }
 
-    return console.log('No se ha montado el mapa en OnMounted():', this.isUserlocationReady.value);
+    return console.log('No se ha montado el mapa en OnMounted():', test);
   },
 
   watch:{
     ...mapGetters('places', [
       'isUserlocationReady'
     ]),
-    
+      
     isUserlocationReady(newValue) {
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
