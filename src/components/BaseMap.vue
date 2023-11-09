@@ -1,6 +1,6 @@
 <template>
   <header>  
-    <h3>{{ places }}, Is userLocationReady{{ isUserlocationReady }}</h3>
+    <h3>{{ places }}, Is userLocationReady: {{ isUserlocationReady }}</h3>
   </header>
   <div
   v-if="!isUserlocationReady"
@@ -47,10 +47,11 @@ export default defineComponent({
   },
 
   setup() {
+
     const store = useStore();
+    console.log('Se llama a setup()', store.getters.isUserLocationReady); // Undefined en setup()
     console.log('Store: ', store?.state?.places);
-    // Objeto proxy
-    // No carga al principio y se queda en rojo, ¿por qué?
+   
     const mapElement = ref<HTMLDivElement>();
 
     const initMap = async (userLocationFromWatcher: [number, number]) => {
@@ -82,12 +83,16 @@ export default defineComponent({
     }
   },
 
-  // eslint-disable-next-line consistent-return
-  onMounted() {
+  mounted() {
+
+    alert('Hola desde el onMounted()');
+
     if (this.isUserlocationReady.value){
       console.log('Se ha montado el mapa');
       return this.initMap(this.places.userLocation);
     }
+
+    return console.log('No se ha montado el mapa en OnMounted():', this.isUserlocationReady.value);
   },
 
   watch:{
@@ -134,7 +139,6 @@ export default defineComponent({
   position: fixed;
   width: 80vw;
   height: 80vh;
-  background-color: red;
 }
 
 </style>
