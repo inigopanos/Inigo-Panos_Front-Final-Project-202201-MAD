@@ -98,9 +98,9 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
-      const ruinLocationMarker = new mapboxgl.Marker()
-      .setLngLat(route.params.coords)
-      .addTo(map);
+      // const ruinLocationMarker = new mapboxgl.Marker()
+      // .setLngLat(route.params.coords)
+      // .addTo(map);
 
       const myLocationMarker = new mapboxgl.Marker()
       .setLngLat(userLocation)
