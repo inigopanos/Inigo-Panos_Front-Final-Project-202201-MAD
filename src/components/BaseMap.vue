@@ -61,19 +61,36 @@ export default defineComponent({
       
       if (!mapElement.value) throw new Error('Div Element no existe');
       if (!userLocation) throw new Error('User Location no existe');
-      console.log('Se ha resuelto la promesa del mapa');
+      console.log('Se ha resuelto la promesa del mapa', userLocation);
 
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
-        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        style: 'mapbox://styles/mapbox/streets-v12', // style URL
         center: userLocation, // starting position [lng, lat]
-        zoom: 15, // starting zoom
+        zoom: 13, // starting zoom
         }); 
       
       map.scrollZoom.enable();
       map.boxZoom.enable();
       map.dragPan.enable();
       
+      const myLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
+      .setLngLat(userLocation)
+      .setHTML(`
+      <h4> Aquí estoy </h4>
+      <p>${userLocation}</p>
+      `);
+
+      const meridaCoords = [-6.338274148947501, 38.91655681214613];
+
+      const ruinLocationMarker = new mapboxgl.Marker()
+      .setLngLat([-6.338274148947501, 38.91655681214613])
+      .addTo(map);
+
+      const myLocationMarker = new mapboxgl.Marker()
+      .setLngLat(userLocation)
+      .setPopup(myLocationPopup)
+      .addTo(map);
     }
 
     return { 
@@ -84,13 +101,9 @@ export default defineComponent({
 
   mounted() {
     const test = this.isUserlocationReady; // No puedo usar este getter
-    
-    console.log('Hola desde el onMounted()', test);
-
     if (test){
       return this.initMap(this.places.userLocation);
     }
-
     return console.log('No se ha montado el mapa en OnMounted():', test);
   },
 
@@ -103,7 +116,6 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        // this.userLocation es proxy array de 0
         console.log(this.places.userLocation, ' localización del usuario al ejecutar el watcher.');
         this.initMap(this.places.userLocation);
       }

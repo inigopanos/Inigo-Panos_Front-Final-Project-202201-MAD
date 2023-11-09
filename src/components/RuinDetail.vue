@@ -15,6 +15,12 @@
         <img v-bind:src="ruinDetails?.images" alt="" />
       </li>
 
+      <div class="map-link">
+        <router-link :to="`/map`">
+        <a>Ver en el mapa</a>
+      </router-link>
+      </div>
+
       <template v-if="ruinDetails">
         <span class="bold" v-if="ruinDetails.comments > 1"> Comentarios:</span>
         <ul class="ruin-details__comment-card-container">
