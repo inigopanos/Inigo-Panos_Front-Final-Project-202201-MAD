@@ -50,11 +50,18 @@ export default defineComponent({
     
     const route = useRoute();
     
-    const ruinCoords = route.params.coords;
+    let ruinCoords: [{lng: number}, {lat: number}]
 
-    console.log('Coordenadas de la ruina: ', {ruinCoords});
+    const lngParams = route.params.coords[0];
+    const latParams = route.params.coords[1];
+
+    // ruinCoords = [lngParams, latParams];
 
     
+
+    console.log('Coordenadas de la ruina: ', route.params.coords);
+
+
 
     const store = useStore();
     console.log('Store: ', store?.state?.places);
@@ -91,9 +98,9 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
-      // const ruinLocationMarker = new mapboxgl.Marker()
-      // .setLngLat(ruinCoords)
-      // .addTo(map);
+      const ruinLocationMarker = new mapboxgl.Marker()
+      .setLngLat(route.params.coords)
+      .addTo(map);
 
       const myLocationMarker = new mapboxgl.Marker()
       .setLngLat(userLocation)
