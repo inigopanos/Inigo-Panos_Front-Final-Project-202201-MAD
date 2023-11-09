@@ -56,7 +56,7 @@
             placeholder="Coordenadas lng lat"
         /></label>
         <div v-show="submitted && !ruin.coords" class="invalid-feedback">
-          Es necesario que introduzca una descripción
+          Es necesario que introduzca unas coordenadas válidas
         </div>
       </div>
 

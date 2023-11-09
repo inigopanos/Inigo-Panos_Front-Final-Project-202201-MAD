@@ -18,7 +18,7 @@
       <div class="map-link">
         <router-link :to="`/map/`">
         <a>Ver en el mapa</a>
-      </router-link>
+      </router-link >
       </div>
 
       <template v-if="ruinDetails">
@@ -140,6 +140,7 @@ export default defineComponent({
         location: '',
         description: '',
         images: '',
+        coords: ['', ''],
         score: '',
         comments: [],
         isAdmin: false,

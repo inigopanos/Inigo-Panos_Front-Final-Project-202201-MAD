@@ -51,6 +51,7 @@ export default defineComponent({
     const route = useRoute();
     const { ruinCoords } = route.params;
 
+    console.log('Coordenadas de la ruina: ', route.params);
 
     const store = useStore();
     console.log('Store: ', store?.state?.places);
