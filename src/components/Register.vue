@@ -16,12 +16,12 @@
         <div v-show="submitted && !user.password" class="invalid-feedback">Campo requerido</div>
       </div>
 
-      <div class="form-group">
-        <!-- <label for="isAdmin">
-          <input type="text" id="isAdmin" name="isAdmin" placeholder="Contraseña"/>
+      <!-- <div class="form-group">
+        <label for="isAdmin">
+          <input type="text" id="isAdmin" name="isAdmin" placeholder="Administrador / true / false"/>
         </label> 
-        <div v-show="submitted && !user.isAdmin" class="invalid-feedback">Campo requerido</div>-->
-      </div>
+        <div v-show="submitted && !user.isAdmin" class="invalid-feedback">Campo requerido</div>
+      </div> -->
       
       <div class ="register-succesful" v-show="submitted && user.userName && user.password">
         Usuario registrado correctamente
