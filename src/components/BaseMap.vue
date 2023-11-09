@@ -1,6 +1,6 @@
 <template>
   <header>  
-    <h3>{{ places }}, Is userLocationReady {{ isUserlocationReady }}</h3>
+    <h3>{{ places }}, Is userLocationReady{{ isUserlocationReady }}</h3>
   </header>
   <div
   v-if="!isUserlocationReady"
