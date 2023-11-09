@@ -20,7 +20,7 @@
   import mapboxgl, { MercatorCoordinate } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref, watch } from 'vue';
-  import {userPlacesStore} from '../router/places.service'
+  import { useRoute } from 'vue-router';
 
 export default defineComponent({
   components: { },
@@ -48,6 +48,10 @@ export default defineComponent({
 
   setup() {
     
+    const route = useRoute();
+    const { ruinCoords } = route.params;
+
+
     const store = useStore();
     console.log('Store: ', store?.state?.places);
    
