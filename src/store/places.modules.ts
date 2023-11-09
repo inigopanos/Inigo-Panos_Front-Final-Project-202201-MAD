@@ -23,7 +23,7 @@ const actions = {
 
 const mutations: MutationTree<PlacesStateI> = {
     setLngLat(state: PlacesStateI, {lng, lat}: {lng: number, lat: number}){
-        console.log('Coordenadas usuario:', {lat, lng});
+        // console.log('Coordenadas usuario:', {lat, lng});
         state.userLocation = [lng, lat];
         state.isLoading = false;
     }
@@ -31,7 +31,7 @@ const mutations: MutationTree<PlacesStateI> = {
 
 const getters = {
     isUserlocationReady(state: PlacesStateI) {
-        console.log('Is userLocationReady:',!!state.userLocation);
+        // console.log('Is userLocationReady:',!!state.userLocation);
         return !!state.userLocation;
     },
 };
