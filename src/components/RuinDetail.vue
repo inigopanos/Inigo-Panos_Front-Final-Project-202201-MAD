@@ -16,7 +16,7 @@
       </li>
 
       <div class="map-link">
-        <router-link :to="`/map/`">
+        <router-link :to="`/map/${ruinDetails?.coords}`">
         <a>Ver en el mapa</a>
       </router-link >
       </div>
