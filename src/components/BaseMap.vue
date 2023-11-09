@@ -50,16 +50,17 @@ export default defineComponent({
     const store = useStore();
     console.log('Store: ', store?.state?.places);
     // Objeto proxy
-
+    // No carga al principio y se queda en rojo, ¿por qué?
     const mapElement = ref<HTMLDivElement>();
 
     const initMap = async (userLocationFromWatcher: [number, number]) => {
-      if (!mapElement.value) return;
-
+      
       await Promise.resolve();
-
+      
       const userLocation = userLocationFromWatcher;
       
+      if (!mapElement.value) throw new Error('Div Element no existe');
+      if (!userLocation) throw new Error('User Location no existe');
       console.log('Se ha resuelto la promesa del mapa');
 
       const map = new mapboxgl.Map({
@@ -83,7 +84,7 @@ export default defineComponent({
 
   // eslint-disable-next-line consistent-return
   onMounted() {
-    if (this.isUserlocationReady){
+    if (this.isUserlocationReady.value){
       console.log('Se ha montado el mapa');
       return this.initMap(this.places.userLocation);
     }
@@ -117,7 +118,7 @@ export default defineComponent({
   position: fixed;
   top: 0px;
   width: 100vw;
-  // z-index: 9999;
+  z-index: 9999;
   display:flex;
   justify-content: center;
   align-items: center;
