@@ -31,7 +31,7 @@ const mutations: MutationTree<PlacesStateI> = {
 
 const getters = {
     isUserlocationReady(state: PlacesStateI) {
-        console.log('Is userLocationReady:', state.userLocation);
+        console.log('Is userLocationReady:',!!state.userLocation);
         return !!state.userLocation;
     },
 };
