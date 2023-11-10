@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl, { LngLat } from 'mapbox-gl';
+  import mapboxgl from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
@@ -47,20 +47,16 @@ export default defineComponent({
   },
 
   setup() {
-    
+  
     const route = useRoute();
-    
-    
 
     console.log('Coordenadas de la ruina: ', route.params.coords, typeof(route.params.coords));
 
     let ruinCoordinates = route.params.coords;
     ruinCoordinates = (ruinCoordinates as string).split(' ');
     
-    const lngRuin = parseFloat(ruinCoordinates[0]);
-    const latRuin = parseFloat(ruinCoordinates[1]);
-
-    
+    const lngRuin = parseFloat(ruinCoordinates[1]);
+    const latRuin = parseFloat(ruinCoordinates[0]);
 
     const ruinCoords: [lng: number, lat: number] = [lngRuin, latRuin]
     
@@ -93,6 +89,13 @@ export default defineComponent({
       map.scrollZoom.enable();
       map.boxZoom.enable();
       map.dragPan.enable();
+
+      const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
+      .setLngLat(ruinCoords)
+      .setHTML(`
+      <h4> Aquí se encuentra la ruina </h4>
+      <p> ${ruinCoords} </p>
+      `);
       
       const myLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
       .setLngLat(userLocation)
@@ -101,21 +104,20 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
-      const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
-      .setLngLat(ruinCoords)
-      .setHTML(`
-      <h4> Aquí se encuentra la ruina </h4>
-      `);
+      
 
       const ruinLocationMarker = new mapboxgl.Marker()
       .setLngLat(ruinCoords)
-      .setPopup(ruinLocationPopup);
-      // .addTo(map);
+      .setPopup(ruinLocationPopup)
+      .addTo(map);
 
       const myLocationMarker = new mapboxgl.Marker()
       .setLngLat(userLocation)
       .setPopup(myLocationPopup)
       .addTo(map);
+
+      console.log('Marcadores:', 'Ruina:', ruinLocationMarker, 'Usuario:', myLocationMarker);
+      console.log('Popups: ', 'Ruina:', ruinLocationPopup, 'Usuario:', myLocationPopup);
     }
 
     return { 
