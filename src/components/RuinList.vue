@@ -2,7 +2,7 @@
   <div>
     <h1>Lista de ruinas</h1>
   </div>
-  <main class="ruin-list__main">
+  <main class="main__body">
     <ul v-if="listOfRuinsData">
       <li v-for="ruin in listOfRuinsData" :key="ruin._id">
         <div class="ruin-list__card">
@@ -51,7 +51,7 @@ ul {
   list-style-type: none;
 }
 
-.ruin-list__main {
+.main__body {
 
   display: flex;
   flex-direction: row;
@@ -59,6 +59,8 @@ ul {
   align-content: center;
   justify-content: space-between;
   align-items: center;
+  flex: 1 1 auto;
+  
 
   
   .ruin-list__card {
@@ -72,10 +74,10 @@ ul {
     padding-right: 6rem;
     padding-left: 6rem;
 
-    background-color: rgba(243, 208, 208, 1);
+    background-color: white;
     opacity: 0.8;
 
-    border-radius: 50px;
+    border-radius: 3px;
 
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -86,7 +88,7 @@ ul {
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
     text-decoration: none;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
   }
 
