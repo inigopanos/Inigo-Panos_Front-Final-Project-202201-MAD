@@ -1,7 +1,4 @@
 <template>
-  <header>  
-    <h3>{{ places }}, Is userLocationReady: {{ isUserlocationReady }}</h3>
-  </header>
   <div
   v-if="!isUserlocationReady"
   class="loading-map">
@@ -64,8 +61,6 @@ export default defineComponent({
       const latRuin = parseFloat(ruinCoordinates[0]);
 
       ruinCoords = [lngRuin, latRuin]
-      
-      console.log('Coordenadas: ', ruinCoords, typeof(ruinCoords));
     }
 
     const store = useStore();
@@ -108,8 +103,6 @@ export default defineComponent({
       <h4> Aquí estoy </h4>
       <p>${userLocation}</p>
       `);
-
-      
 
       const ruinLocationMarker = new mapboxgl.Marker()
       .setLngLat(ruinCoords)

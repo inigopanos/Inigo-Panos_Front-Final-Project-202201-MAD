@@ -2,7 +2,7 @@
   <div>
     <h1>Lista de ruinas</h1>
   </div>
-  <main>
+  <main class="ruin-list__main">
     <ul v-if="listOfRuinsData">
       <li v-for="ruin in listOfRuinsData" :key="ruin._id">
         <div class="ruin-list__card">
@@ -12,8 +12,11 @@
         </div>
       </li>
     </ul> 
+
+     <div class="map">
+      <BaseMap/>
+    </div>
   </main> 
-  <BaseMap/>
 </template>
 
 <script lang="ts">
@@ -41,36 +44,53 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+
+
+
 ul {
   list-style-type: none;
 }
 
-.ruin-list__card {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  margin-right: 2rem;
-  margin-left: 2rem;
-  // margin: 3rem, 2rem, 3rem, 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  padding-right: 6rem;
-  padding-left: 6rem;
+.ruin-list__main {
 
-  background-color: rgba(243, 208, 208, 1);
-  opacity: 0.8;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
 
-  border-radius: 50px;
+  
+  .ruin-list__card {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    // margin: 3rem, 2rem, 3rem, 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-right: 6rem;
+    padding-left: 6rem;
 
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  & :hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgba(243, 208, 208, 1);
+    opacity: 0.8;
+
+    border-radius: 50px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    & :hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+    & :focus {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+    text-decoration: none;
+    font-size: 30px;
+    text-align: center;
   }
-  & :focus {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-  text-decoration: none;
-  font-size: 30px;
-  text-align: center;
+
 }
+
+
 </style>
