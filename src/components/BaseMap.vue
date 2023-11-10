@@ -50,7 +50,7 @@ export default defineComponent({
     
     const route = useRoute();
     
-    let ruinCoords: [{lng: number}, {lat: number}]
+    let ruinCoords: [lng: number, lat: number]
 
     const lngParams = route.params.coords[0];
     const latParams = route.params.coords[1];
@@ -98,9 +98,9 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
-      // const ruinLocationMarker = new mapboxgl.Marker()
-      // .setLngLat(route.params.coords)
-      // .addTo(map);
+      const ruinLocationMarker = new mapboxgl.Marker()
+      .setLngLat(ruinCoords)
+      .addTo(map);
 
       const myLocationMarker = new mapboxgl.Marker()
       .setLngLat(userLocation)
@@ -115,7 +115,7 @@ export default defineComponent({
   },
 
   mounted() {
-    const test = this.isUserlocationReady; // No puedo usar este getter
+    const test = this.isUserlocationReady; 
     if (test){
       return this.initMap(this.places.userLocation);
     }
