@@ -29,7 +29,7 @@
     "register-service-worker": "^1.7.2",
     "uuid": "^8.3.2",
     "vee-validate": "^4.5.10",
-    "vue": "^3.2.13",
+    "vue": "^3.2.31",
     "vue-mapbox-gl": "^0.0.1",
     "vue-mapbox-ts": "^0.8.0",
     "vue-router": "^4.0.3",

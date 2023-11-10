@@ -1,7 +1,5 @@
 <template>
-  <header>  
-    <h3>{{ places }}, Is userLocationReady: {{ isUserlocationReady }}</h3>
-  </header>
+  
   <div
   v-if="!isUserlocationReady"
   class="loading-map">
@@ -19,7 +17,7 @@
   import 'mapbox-gl/dist/mapbox-gl.css';
   import mapboxgl from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
-  import { defineComponent, ref, watch } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
 
 export default defineComponent({
@@ -104,8 +102,6 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
-      
-
       const ruinLocationMarker = new mapboxgl.Marker()
       .setLngLat(ruinCoords)
       .setPopup(ruinLocationPopup)
@@ -122,7 +118,7 @@ export default defineComponent({
 
     return { 
       mapElement,
-      initMap
+      initMap,
     }
   },
 
@@ -173,10 +169,10 @@ export default defineComponent({
  }
 }
 .map {
-  display: flex;
-  align-items: center;
+  position: fixed;
   width: 80vw;
   height: 80vh;
+  margin-left: 8%;
 }
 
 </style>
