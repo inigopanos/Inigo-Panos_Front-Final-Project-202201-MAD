@@ -102,8 +102,6 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
-      
-
       const ruinLocationMarker = new mapboxgl.Marker()
       .setLngLat(ruinCoords)
       .setPopup(ruinLocationPopup)
@@ -171,10 +169,10 @@ export default defineComponent({
  }
 }
 .map {
-  display: flex;
-  align-items: center;
+  position: fixed;
   width: 80vw;
   height: 80vh;
+  margin-left: 8%;
 }
 
 </style>
