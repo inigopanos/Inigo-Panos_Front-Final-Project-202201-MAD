@@ -265,7 +265,6 @@ export default defineComponent({
   },
 
   onMounted() {
-    console.log('The component is now mounted', this.userData?.userFound);
     this.checkFavorited();
     this.checkVisited();
   },
@@ -277,7 +276,7 @@ export default defineComponent({
     this.getRuinDetails(id);
     this.getAllRuins();
    
-
+    console.log('The component is now mounted', this.ruinDetails);
     console.log(this.userData?.userFound, 'Datos del usuario');
   },
 

@@ -87,7 +87,7 @@ export default defineComponent({
         location: '',
         description: '',
         images: '',
-        coords: ['', '']
+        coords: [Number, Number]
       },
       isAdmin: false,
       id: '',

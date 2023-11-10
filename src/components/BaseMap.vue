@@ -51,7 +51,6 @@ export default defineComponent({
     const route = useRoute();
     
     let ruinCoords: [lng: number, lat: number]
-    // ruinCoords = [lngParams, latParams];
 
     console.log('Coordenadas de la ruina: ', route.params.coords);
 
@@ -92,9 +91,16 @@ export default defineComponent({
       <p>${userLocation}</p>
       `);
 
+      const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
+      .setLngLat(ruinCoords)
+      .setHTML(`
+      <h4> Aquí se encuentra la ruina </h4>
+      `);
+
       const ruinLocationMarker = new mapboxgl.Marker()
       .setLngLat(ruinCoords)
-      .addTo(map);
+      .setPopup(ruinLocationPopup);
+      // .addTo(map);
 
       const myLocationMarker = new mapboxgl.Marker()
       .setLngLat(userLocation)
@@ -156,7 +162,8 @@ export default defineComponent({
  }
 }
 .map {
-  position: fixed;
+  display: flex;
+  align-items: center;
   width: 80vw;
   height: 80vh;
 }
