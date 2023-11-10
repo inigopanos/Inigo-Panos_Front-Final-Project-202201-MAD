@@ -11,34 +11,33 @@
           </router-link>
         </div>
       </li>
-    </ul>
-  </main>
+    </ul> 
+  </main> 
+  <BaseMap/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
+import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
-  name: 'ruins-list',
-
-  data() {
-    return {
-      name: '',
-    };
-  },
-
-  computed: {
-    ...mapGetters('ruins', ['listOfRuinsData']),
-  },
-
-  mounted() {
-    this.getAllRuins();
-  },
-
-  methods: {
-    ...mapActions('ruins', ['getAllRuins']),
-  },
+    name: 'ruins-list',
+    data() {
+        return {
+            name: '',
+        };
+    },
+    computed: {
+        ...mapGetters('ruins', ['listOfRuinsData']),
+    },
+    mounted() {
+        this.getAllRuins();
+    },
+    methods: {
+        ...mapActions('ruins', ['getAllRuins']),
+    },
+    components: { BaseMap }
 });
 </script>
 <style lang="scss">

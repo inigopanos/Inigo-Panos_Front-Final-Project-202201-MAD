@@ -52,15 +52,21 @@ export default defineComponent({
 
     console.log('Coordenadas de la ruina: ', route.params.coords, typeof(route.params.coords));
 
-    let ruinCoordinates = route.params.coords;
-    ruinCoordinates = (ruinCoordinates as string).split(' ');
-    
-    const lngRuin = parseFloat(ruinCoordinates[1]);
-    const latRuin = parseFloat(ruinCoordinates[0]);
+    let ruinCoordinates;
+    let ruinCoords: [lng: number, lat: number];
 
-    const ruinCoords: [lng: number, lat: number] = [lngRuin, latRuin]
-    
-    console.log('Coordenadas: ', ruinCoords, typeof(ruinCoords));
+    if (route?.params?.coords)
+    {  
+      ruinCoordinates = route.params.coords;
+      ruinCoordinates = (ruinCoordinates as string).split(' ');
+      
+      const lngRuin = parseFloat(ruinCoordinates[1]);
+      const latRuin = parseFloat(ruinCoordinates[0]);
+
+      ruinCoords = [lngRuin, latRuin]
+      
+      console.log('Coordenadas: ', ruinCoords, typeof(ruinCoords));
+    }
 
     const store = useStore();
     console.log('Store: ', store?.state?.places);
@@ -75,7 +81,6 @@ export default defineComponent({
       
       if (!mapElement.value) throw new Error('Div Element no existe');
       if (!userLocation) throw new Error('User Location no existe');
-      if (!ruinCoords) console.log('No hay coordenadas de ruinas');
 
       console.log('Se ha resuelto la promesa del mapa', userLocation);
 
