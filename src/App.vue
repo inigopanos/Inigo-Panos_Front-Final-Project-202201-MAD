@@ -5,10 +5,10 @@
       <nav>
         <router-link to="/ruins">Lista de ruinas</router-link> |
         <router-link to="/map">MapBox</router-link> |
-        <router-link to="/addRuin" v-if="this.userData?.userFound?.isAdmin"
+        <router-link to="/addRuin" v-if="userData?.userFound?.isAdmin"
           >Crear Ruinas</router-link
         >
-        <div v-if="this.userLoggedStatus?.loggedIn === true">
+        <div v-if="userLoggedStatus?.loggedIn === true">
           <router-link to="/userData">
             <img
               class="profile_image"
@@ -48,8 +48,9 @@
   </body>
 </template>
 
-<script>
+<script lang="ts">
 import { mapActions, mapGetters, mapState } from 'vuex';
+import { userPlacesStore } from './router/places.service';
 
 export default {
   data() {
@@ -69,6 +70,10 @@ export default {
     logOutUser() {
       this.logout();
     },
+  },
+
+  setup(){
+    userPlacesStore();
   },
 };
 </script>

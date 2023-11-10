@@ -24,9 +24,7 @@
     "no-parsing-error": "off",
     "no-underscore-dangle": "off",
     "prefer-destructuring": "off",
-    "eqeqeq": "off",
-    "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"]
+    "eqeqeq": "off"
   },
   "overrides": [
     {

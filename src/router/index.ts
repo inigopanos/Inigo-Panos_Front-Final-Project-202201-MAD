@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: RuinList,
   },
   {
-    path: '/map',
+    path: '/map/:coords?',
     name: 'map',
     component: BaseMap,
   },

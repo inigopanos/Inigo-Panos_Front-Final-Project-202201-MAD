@@ -48,6 +48,19 @@
       </div>
 
       <div class="form-group">
+        <label for="coords">
+          <input
+            type="coords"
+            v-model="ruin.coords"
+            name="coords"
+            placeholder="Coordenadas lng lat"
+        /></label>
+        <div v-show="submitted && !ruin.coords" class="invalid-feedback">
+          Es necesario que introduzca unas coordenadas válidas
+        </div>
+      </div>
+
+      <div class="form-group">
         <button class="btn btn-primary">Añadir</button>
         |
         <router-link to="/" class="btn btn-link">Cancel</router-link>
@@ -74,6 +87,7 @@ export default defineComponent({
         location: '',
         description: '',
         images: '',
+        coords: [Number, Number]
       },
       isAdmin: false,
       id: '',

@@ -31,6 +31,7 @@ const actions = {
   getRuinDetails({ dispatch, commit }: { dispatch: any; commit: any }, id: string) {
     ruinsServices.getRuinDetails(id).then(
       (ruinsDetails) => {
+        console.log('getRuinDetailsSuccess:', ruinsDetails);
         commit('getRuinDetailsSuccess', ruinsDetails);
       },
 

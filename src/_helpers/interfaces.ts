@@ -23,6 +23,7 @@ export interface CreateRuinI {
   images: string;
   score: number;
   comments: [];
+  coords:[];
 }
 export interface PlacesStateI{
   isLoading: boolean;

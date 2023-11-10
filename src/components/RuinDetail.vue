@@ -15,6 +15,12 @@
         <img v-bind:src="ruinDetails?.images" alt="" />
       </li>
 
+      <div class="map-link">
+        <router-link :to="`/map/${ruinDetails?.coords}`">
+        <a>Ver en el mapa</a>
+      </router-link >
+      </div>
+
       <template v-if="ruinDetails">
         <span class="bold" v-if="ruinDetails.comments > 1"> Comentarios:</span>
         <ul class="ruin-details__comment-card-container">
@@ -119,7 +125,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from 'vue';
+import { defineComponent } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
 
@@ -134,6 +140,7 @@ export default defineComponent({
         location: '',
         description: '',
         images: '',
+        coords: ['', ''],
         score: '',
         comments: [],
         isAdmin: false,
@@ -258,7 +265,6 @@ export default defineComponent({
   },
 
   onMounted() {
-    console.log('The component is now mounted', this.userData?.userFound);
     this.checkFavorited();
     this.checkVisited();
   },
@@ -270,7 +276,7 @@ export default defineComponent({
     this.getRuinDetails(id);
     this.getAllRuins();
    
-
+    console.log('The component is now mounted', this.ruinDetails);
     console.log(this.userData?.userFound, 'Datos del usuario');
   },
 
