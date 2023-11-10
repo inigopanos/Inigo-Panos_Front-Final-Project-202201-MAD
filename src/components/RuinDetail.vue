@@ -16,7 +16,7 @@
       </li>
 
       <div class="map-link">
-        <router-link :to="`/map/${ruinDetails?.coords[0]}`">
+        <router-link :to="`/map/${ruinDetails?.coords}`">
         <a>Ver en el mapa</a>
       </router-link >
       </div>
@@ -125,7 +125,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from 'vue';
+import { defineComponent } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
 
