@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl from 'mapbox-gl';
+  import mapboxgl, { LngLat } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref, watch } from 'vue';
   import { useRoute } from 'vue-router';
@@ -50,11 +50,21 @@ export default defineComponent({
     
     const route = useRoute();
     
-    let ruinCoords: [lng: number, lat: number]
+    
 
-    console.log('Coordenadas de la ruina: ', route.params.coords);
+    console.log('Coordenadas de la ruina: ', route.params.coords, typeof(route.params.coords));
 
+    let ruinCoordinates = route.params.coords;
+    ruinCoordinates = (ruinCoordinates as string).split(' ');
+    
+    const lngRuin = parseFloat(ruinCoordinates[0]);
+    const latRuin = parseFloat(ruinCoordinates[1]);
 
+    
+
+    const ruinCoords: [lng: number, lat: number] = [lngRuin, latRuin]
+    
+    console.log('Coordenadas: ', ruinCoords, typeof(ruinCoords));
 
     const store = useStore();
     console.log('Store: ', store?.state?.places);
@@ -131,7 +141,6 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        console.log(this.places.userLocation, ' localización del usuario al ejecutar el watcher.');
         this.initMap(this.places.userLocation);
       }
     }, 
