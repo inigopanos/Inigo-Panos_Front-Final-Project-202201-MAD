@@ -14,9 +14,9 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl from 'mapbox-gl';
+  import mapboxgl, { LngLat, LngLatBoundsLike } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
-  import { defineComponent, ref, watch } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
 
 export default defineComponent({
@@ -79,16 +79,23 @@ export default defineComponent({
 
       console.log('Se ha resuelto la promesa del mapa', userLocation);
 
+      const bounds: [[number, number], [number, number]] = [
+        [-9.465087353810635, 35.31818720563167], // [west, south]
+        // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+        [5.1948353404399747, 44.48518712768742]  // [east, north]
+      ];
+
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
         style: 'mapbox://styles/mapbox/streets-v12', // style URL
-        center: userLocation, // starting position [lng, lat]
-        zoom: 13, // starting zoom
+        center: [-3.7063149940270965, 40.413699966534764], // starting position [lng, lat]
+        zoom: 1, // starting zoom
         }); 
       
       map.scrollZoom.enable();
       map.boxZoom.enable();
       map.dragPan.enable();
+      map.setMaxBounds(bounds);
 
       const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
       .setLngLat(ruinCoords)
@@ -145,7 +152,6 @@ export default defineComponent({
       }
     }, 
   }
-
 });
 </script>
 
@@ -173,8 +179,9 @@ export default defineComponent({
 .map {
   display: flex;
   align-items: center;
-  width: 80vw;
+  width: 60vw;
   height: 80vh;
+  margin-right: 1%;
 }
 
 </style>
