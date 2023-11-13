@@ -14,7 +14,7 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl, { LngLat, LngLatBoundsLike } from 'mapbox-gl';
+  import mapboxgl, { LngLat } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
@@ -75,17 +75,12 @@ export default defineComponent({
    
     const mapElement = ref<HTMLDivElement>();
 
-    const initMap = async (userLocationFromWatcher: [number, number]) => {
+    const initMap = async () => {
       
       await Promise.resolve();
-      
-      const userLocation = userLocationFromWatcher;
-      
+          
       if (!mapElement.value) throw new Error('Div Element no existe');
-      if (!userLocation) throw new Error('User Location no existe');
-
-      console.log('Se ha resuelto la promesa del mapa', userLocation);
-
+  
       const bounds: [[number, number], [number, number]] = [
         [-9.465087353810635, 35.31818720563167], // [west, south]
         // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
@@ -111,21 +106,9 @@ export default defineComponent({
       <p> ${ruinCoords} </p>
       `);
       
-      const myLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
-      .setLngLat(userLocation)
-      .setHTML(`
-      <h4> Aquí estoy </h4>
-      <p>${userLocation}</p>
-      `);
-
       const ruinLocationMarker = new mapboxgl.Marker()
       .setLngLat(ruinCoords)
       .setPopup(ruinLocationPopup)
-      .addTo(map);
-
-      const myLocationMarker = new mapboxgl.Marker()
-      .setLngLat(userLocation)
-      .setPopup(myLocationPopup)
       .addTo(map);
     }
 
@@ -141,10 +124,9 @@ export default defineComponent({
     const allRuinsCoords = []
     console.log('datosRuinas:', datosRuinas);
 
-    for (let i = 0; i < datosRuinas.length; i+=1){
+    for (let i = 0; i < datosRuinas?.length; i+=1){
       if ('coords' in datosRuinas[i]){
         allRuinsCoords.push(datosRuinas[i].coords);
-
       }
 
       console.log('Coordenadas de ruinas: ', allRuinsCoords);
