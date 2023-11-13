@@ -1,14 +1,14 @@
 <template>
-  <div
+  <!-- <div
   v-if="!isUserlocationReady"
   class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
       </div>
-  </div>
+  </div> -->
   
-  <div v-show="isUserlocationReady" class="map" ref="mapElement"/>
+  <div class="map" ref="mapElement"/>
 
 </template>
 
@@ -144,7 +144,10 @@ export default defineComponent({
     for (let i = 0; i < datosRuinas.length; i+=1){
       if ('coords' in datosRuinas[i]){
         allRuinsCoords.push(datosRuinas[i].coords);
+
       }
+
+      console.log('Coordenadas de ruinas: ', allRuinsCoords);
     }
 
     if (allRuinsCoords){
