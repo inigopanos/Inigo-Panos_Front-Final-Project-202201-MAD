@@ -53,50 +53,41 @@ export default defineComponent({
 
     getRuinCoordinates(){
       const datosRuinas = this.ruins?.allRuinsData;
-
       const allRuinsCoords: [number,number][] = [];
 
       for (let i = 0; i < datosRuinas?.length; i+=1){
 
-        console.log('1:', datosRuinas[i].name, datosRuinas[i].coords); 
-
-        if ('coords' in datosRuinas[i]) {
-          
-          console.log('2: ', datosRuinas[i].coords.length);
+        if ('coords' in datosRuinas[i]) {       
           const coords = datosRuinas[i].coords;
 
-          if (datosRuinas[i].coords.length >= 1){
-
-            console.log('3: ', coords);
-            
+          if (datosRuinas[i].coords.length >= 1){   
             allRuinsCoords.push(coords);
-            console.log('4: ', allRuinsCoords);
           }
         }
       }
 
       return allRuinsCoords;
     },
+
+    ruinCoordsFromStringToNumber(ruinCoordinatesString: string){
+      let ruinCoords: [lng: number, lat: number] = [0, 0];
+
+      if (ruinCoordinatesString)
+      {  
+        const separatedRuinCoordinatesString = (ruinCoordinatesString as string).split(' ');
+        
+        const lngRuin = parseFloat(separatedRuinCoordinatesString[1]);
+        const latRuin = parseFloat(separatedRuinCoordinatesString[0]);
+
+        ruinCoords = [lngRuin, latRuin]
+        
+      }
+      return ruinCoords;
+    },
   },
 
   setup() {
     const route = useRoute();
-
-    console.log('Coordenadas de la ruina: ', route.params.coords, typeof(route.params.coords));
-
-    let ruinCoordinates;
-    let ruinCoords: [lng: number, lat: number];
-
-    if (route?.params?.coords)
-    {  
-      ruinCoordinates = route.params.coords;
-      ruinCoordinates = (ruinCoordinates as string).split(' ');
-      
-      const lngRuin = parseFloat(ruinCoordinates[1]);
-      const latRuin = parseFloat(ruinCoordinates[0]);
-
-      ruinCoords = [lngRuin, latRuin]
-    }
 
     const store = useStore();
     console.log('Store: ', store?.state?.places);
@@ -110,7 +101,8 @@ export default defineComponent({
       await Promise.resolve();
           
       if (!mapElement.value) throw new Error('Div Element no existe');
-  
+      console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
+
       const bounds: [[number, number], [number, number]] = [
         [-9.465087353810635, 35.31818720563167], // [west, south]
         // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
@@ -118,10 +110,10 @@ export default defineComponent({
       ];
 
       const map = new mapboxgl.Map({
-        container: mapElement.value, // container ID
-        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        container: mapElement.value,
+        style: 'mapbox://styles/mapbox/streets-v12', 
         center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
-        zoom: 1, // starting zoom
+        zoom: 1, 
         }); 
       
       map.scrollZoom.enable();
@@ -129,17 +121,17 @@ export default defineComponent({
       map.dragPan.enable();
       map.setMaxBounds(bounds);
 
-      const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
-      .setLngLat(ruinCoords)
-      .setHTML(`
-      <h4> Aquí se encuentra la ruina </h4>
-      <p> ${ruinCoords} </p>
-      `);
+      // const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
+      // .setLngLat(ruinCoords)
+      // .setHTML(`
+      // <h4> Aquí se encuentra la ruina </h4>
+      // <p> ${ruinCoords} </p>
+      // `);
       
-      const ruinLocationMarker = new mapboxgl.Marker()
-      .setLngLat(ruinCoords)
-      .setPopup(ruinLocationPopup)
-      .addTo(map);
+      // const ruinLocationMarker = new mapboxgl.Marker()
+      // .setLngLat(ruinCoords)
+      // .setPopup(ruinLocationPopup)
+      // .addTo(map);
     }
 
     return { 
@@ -166,7 +158,7 @@ export default defineComponent({
     ]),
       
     isUserlocationReady(newValue) {
-      
+
       if (newValue)
       {
         const coordinates = this.getRuinCoordinates();
