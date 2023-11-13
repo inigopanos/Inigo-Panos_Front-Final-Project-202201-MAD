@@ -78,7 +78,7 @@ export default defineComponent({
 
     // CREACIÓN DEL MAPA
 
-    const initMap = async (allRuinsCoords: []) => {
+    const initMap = async (allRuinsCoords: [number, number][]) => {
       
       await Promise.resolve();
           
@@ -139,9 +139,9 @@ export default defineComponent({
       }
     }
 
-    if (allRuinsCoords){
+    if (allRuinsCoords.length > 0){
       return this.initMap(allRuinsCoords);
-    }
+    } 
     
     return {
       allRuinsCoords,
@@ -157,7 +157,7 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        this.initMap();
+        this.initMap(this.allRuinsCoords);
       }
     }, 
   },
