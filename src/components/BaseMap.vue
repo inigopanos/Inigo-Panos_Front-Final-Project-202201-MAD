@@ -26,6 +26,7 @@ export default defineComponent({
     return {
       isLoading: false,
       userLocation: [],
+      allRuinsCoords: []
     }
   },
 
@@ -75,7 +76,9 @@ export default defineComponent({
    
     const mapElement = ref<HTMLDivElement>();
 
-    const initMap = async () => {
+    // CREACIÓN DEL MAPA
+
+    const initMap = async (allRuinsCoords: []) => {
       
       await Promise.resolve();
           
@@ -121,21 +124,28 @@ export default defineComponent({
   mounted() {
 
     const datosRuinas = this.ruins?.allRuinsData;
-    const allRuinsCoords = []
-    console.log('datosRuinas:', datosRuinas);
+
+    type Coordenada = { x: number; y: number };
+    const allRuinsCoords: [number,number][] = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
-      if ('coords' in datosRuinas[i]){
-        allRuinsCoords.push(datosRuinas[i].coords);
+      if ('coords' in datosRuinas[i]) {
+        const coords = datosRuinas[i].coords as Coordenada;
+      
+        if ('x' in coords && 'y' in coords) 
+          {
+            allRuinsCoords.push([coords.x, coords.y]);
+          }
       }
-
-      console.log('Coordenadas de ruinas: ', allRuinsCoords);
     }
 
     if (allRuinsCoords){
-      return this.initMap(this.places.userLocation);
+      return this.initMap(allRuinsCoords);
     }
-    return console.log('No se ha montado el mapa en OnMounted():', allRuinsCoords);
+    
+    return {
+      allRuinsCoords,
+    }
   },
 
   watch:{
@@ -147,7 +157,7 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        this.initMap(this.places.userLocation);
+        this.initMap();
       }
     }, 
   },
