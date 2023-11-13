@@ -125,21 +125,32 @@ export default defineComponent({
 
     const datosRuinas = this.ruins?.allRuinsData;
 
-    type Coordenada = { x: number; y: number };
     const allRuinsCoords: [number,number][] = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
+
+      console.log('1:', datosRuinas[i].name, datosRuinas[i].coords); 
+
       if ('coords' in datosRuinas[i]) {
-        const coords = datosRuinas[i].coords as Coordenada;
-      
-        if ('x' in coords && 'y' in coords) 
-          {
-            allRuinsCoords.push([coords.x, coords.y]);
-          }
+        
+        console.log('2: ', datosRuinas[i].coords.length);
+        const coords = datosRuinas[i].coords;
+
+        if (datosRuinas[i].coords.length >= 1){
+
+          console.log('3: ', coords);
+          
+          if ('x' in coords && 'y' in coords) 
+            {
+              allRuinsCoords.push(coords);
+              console.log('4: ', allRuinsCoords);
+            }
+        }
       }
     }
 
     if (allRuinsCoords.length > 0){
+      console.log('Se llama a initMap desde mounted:', allRuinsCoords);
       return this.initMap(allRuinsCoords);
     } 
     
@@ -157,6 +168,7 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
+        console.log('Se llama a initMap desde el watch:', this.allRuinsCoords);
         this.initMap(this.allRuinsCoords);
       }
     }, 
