@@ -151,7 +151,7 @@ export default defineComponent({
         this.initMap(this.places.userLocation);
       }
     }, 
-  }
+  },
 });
 </script>
 
