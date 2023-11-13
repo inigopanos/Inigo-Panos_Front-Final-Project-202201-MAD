@@ -31,8 +31,13 @@ export default defineComponent({
 
   computed:{
     ...mapActions('places', ['getInitialLocation']),
+    ...mapActions('ruins', ['getAllRuins']),
+
     ...mapGetters('places', ['isUserlocationReady']),
+    ...mapGetters('ruins', ['listOfRuinsData']),
+
     ...mapState(['places']),
+    ...mapState(['ruins']),
   },
 
   methods:{
@@ -41,10 +46,12 @@ export default defineComponent({
     ]),
     ...mapGetters('places', ['isUserlocationReady']),
     ...mapState(['places']),
+
+    ...mapGetters('ruins', ['listOfRuinsData']),
+    ...mapState(['ruins']),
   },
 
   setup() {
-  
     const route = useRoute();
 
     console.log('Coordenadas de la ruina: ', route.params.coords, typeof(route.params.coords));
@@ -129,11 +136,21 @@ export default defineComponent({
   },
 
   mounted() {
-    const test = this.isUserlocationReady; 
-    if (test){
+
+    const datosRuinas = this.ruins?.allRuinsData;
+    const allRuinsCoords = []
+    console.log('datosRuinas:', datosRuinas);
+
+    for (let i = 0; i < datosRuinas.length; i+=1){
+      if ('coords' in datosRuinas[i]){
+        allRuinsCoords.push(datosRuinas[i].coords);
+      }
+    }
+
+    if (allRuinsCoords){
       return this.initMap(this.places.userLocation);
     }
-    return console.log('No se ha montado el mapa en OnMounted():', test);
+    return console.log('No se ha montado el mapa en OnMounted():', allRuinsCoords);
   },
 
   watch:{
