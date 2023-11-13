@@ -88,7 +88,7 @@ export default defineComponent({
       const map = new mapboxgl.Map({
         container: mapElement.value, // container ID
         style: 'mapbox://styles/mapbox/streets-v12', // style URL
-        center: [-3.7063149940270965, 40.413699966534764], // starting position [lng, lat]
+        center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
         zoom: 1, // starting zoom
         }); 
       
@@ -120,9 +120,6 @@ export default defineComponent({
       .setLngLat(userLocation)
       .setPopup(myLocationPopup)
       .addTo(map);
-
-      console.log('Marcadores:', 'Ruina:', ruinLocationMarker, 'Usuario:', myLocationMarker);
-      console.log('Popups: ', 'Ruina:', ruinLocationPopup, 'Usuario:', myLocationPopup);
     }
 
     return { 
