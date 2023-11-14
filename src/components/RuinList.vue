@@ -7,19 +7,19 @@
       <li v-for="ruin in listOfRuinsData" :key="ruin._id" class="ruin-list__wrapper">
         <div class="ruin-list__card">
           <router-link :to="`/ruinDetails/${ruin._id}`">
-            <div class="trail-card__header">
+            <div class="ruin-card__header">
               <a class="card-name">{{ ruin.name }}</a>
             </div>
-            <div class="trail-card__body">
-              <div class="trail-card__left">
-                <div class="trail-card__left-item">
+            <div class="ruin-card__body">
+              <div class="ruin-card__left">
+                <div class="ruin-card__left-item">
                   <a class="card-location">{{ ruin.location }}</a>
                 </div>
-                <div class="trail-card__left-item"></div>
-                <div class="trail-card__left-item"></div>
+                <div class="ruin-card__left-item"></div>
+                <div class="ruin-card__left-item"></div>
               </div>
-              <div class="trail-card__right">
-                <div class="trail-card__right__image"></div>
+              <div class="ruin-card__right">
+                <div class="ruin-card__right__image"></div>
               </div>
             </div>
            
@@ -63,7 +63,7 @@ export default defineComponent({
 <style lang="scss">
 
 @media(min-width: 1300px) {
-    .trail--fullscreen-right {
+    .ruin--fullscreen-right {
         margin-left:0!important
     }
 }
@@ -84,10 +84,10 @@ ul {
   
 
   // wrapper {
-  //   .trail:hover {
+  //   .ruin:hover {
   //   cursor: pointer;
   //   }
-  //   .trail--highlight, .trail:hover {
+  //   .ruin--highlight, .ruin:hover {
   //       border: 1px solid #dcdcdc;
   //       box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   //   }
@@ -129,10 +129,15 @@ ul {
       text-decoration: none;
       font-size: 20px;
       text-align: center;
+
+      &__body{
+        @extend .ruin-list__card;
+        height: 120px;
+        background-color: red;
+      }
+
     }
   }
-
-  
 
 }
 
