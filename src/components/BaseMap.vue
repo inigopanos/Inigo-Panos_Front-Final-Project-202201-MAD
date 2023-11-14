@@ -50,40 +50,6 @@ export default defineComponent({
 
     ...mapGetters('ruins', ['listOfRuinsData']),
     ...mapState(['ruins']),
-
-    getRuinCoordinates(){
-      const datosRuinas = this.ruins?.allRuinsData;
-      const allRuinsCoords: [number,number][] = [];
-
-      for (let i = 0; i < datosRuinas?.length; i+=1){
-
-        if ('coords' in datosRuinas[i]) {       
-          const coords = datosRuinas[i].coords;
-
-          if (datosRuinas[i].coords.length >= 1){   
-            allRuinsCoords.push(coords);
-          }
-        }
-      }
-
-      return allRuinsCoords;
-    },
-
-    ruinCoordsFromStringToNumber(ruinCoordinatesString: string){
-      let ruinCoords: [lng: number, lat: number] = [0, 0];
-
-      if (ruinCoordinatesString)
-      {  
-        const separatedRuinCoordinatesString = (ruinCoordinatesString as string).split(' ');
-        
-        const lngRuin = parseFloat(separatedRuinCoordinatesString[1]);
-        const latRuin = parseFloat(separatedRuinCoordinatesString[0]);
-
-        ruinCoords = [lngRuin, latRuin]
-        
-      }
-      return ruinCoords;
-    },
   },
 
   setup() {
@@ -142,14 +108,40 @@ export default defineComponent({
 
   mounted() {
 
-    const coordinates = this.getRuinCoordinates();
+    const datosRuinas = this.ruins?.allRuinsData;
 
-    if (coordinates.length > 0){
-      console.log('Se llama a initMap desde mounted:', coordinates);
-      return this.initMap(coordinates);
+    const allRuinsCoords: [number,number][] = [];
+
+    for (let i = 0; i < datosRuinas?.length; i+=1){
+
+      console.log('1:', datosRuinas[i].name, datosRuinas[i].coords); 
+
+      if ('coords' in datosRuinas[i]) {
+        
+        console.log('2: ', datosRuinas[i].coords.length);
+        const coords = datosRuinas[i].coords;
+
+        if (datosRuinas[i].coords.length >= 1){
+
+          console.log('3: ', coords);
+          
+          if ('x' in coords && 'y' in coords) 
+            {
+              allRuinsCoords.push(coords);
+              console.log('4: ', allRuinsCoords);
+            }
+        }
+      }
+    }
+
+    if (allRuinsCoords.length > 0){
+      console.log('Se llama a initMap desde mounted:', allRuinsCoords);
+      return this.initMap(allRuinsCoords);
     } 
     
-    return { }
+    return {
+      allRuinsCoords,
+    }
   },
 
   watch:{
@@ -158,12 +150,11 @@ export default defineComponent({
     ]),
       
     isUserlocationReady(newValue) {
-
+      console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        const coordinates = this.getRuinCoordinates();
-        console.log('Se llama a initMap desde el watch:', coordinates);
-        this.initMap(coordinates);
+        console.log('Se llama a initMap desde el watch:', this.allRuinsCoords);
+        this.initMap(this.allRuinsCoords);
       }
     }, 
   },
