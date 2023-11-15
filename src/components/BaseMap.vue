@@ -103,18 +103,15 @@ export default defineComponent({
 
       // Marcadores
 
-      
-
-      const markers = [];
-      for (let i = 0; i < allRuinsCoords.length; i +=1 ){
-        console.log(allRuinsCoords[i], ' de tipo: ', typeof(allRuinsCoords[i]));
-        const markerCoords = this.setLngLatCoordinates();
+      const markerCoords = this.setLngLatCoordinates();
+      const markers: mapboxgl.Marker[] = [];
+      for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
+        console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
+        
         markers[i] = new mapboxgl.Marker()
-          .setLngLat((markerCoords[i]))
+          .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
           .addTo(map);
       }
-
-      console.log('Se crea el mapa0');
     },
 
     async initializeMap() {
