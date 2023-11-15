@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl, { LngLat } from 'mapbox-gl';
+  import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
@@ -55,6 +55,26 @@ export default defineComponent({
     ...mapGetters('ruins', ['listOfRuinsData']),
     ...mapState(['ruins']),
 
+    setLngLatCoordinates(){
+      let ruinCoords: [number, number][] = [];
+      ruinCoords = this.allRuinsCoords;
+      
+      const ruinCoordsMarkers: { [key: string]: LngLatLike } = {};
+
+      for (let i = 0; i < ruinCoords.length; i += 1){
+        const separatedRuinCoordinatesString = (ruinCoords[i][0] as unknown as string).split(' ');
+        
+        const lngRuin = parseFloat(separatedRuinCoordinatesString[1]);
+        const latRuin = parseFloat(separatedRuinCoordinatesString[0]);
+
+        const ruinCoordsMarker: LngLatLike = { lng: lngRuin, lat: latRuin };
+        ruinCoordsMarkers[`ruinCoordsMarker${i}`] = ruinCoordsMarker;
+      }
+
+      console.log('RuinCoordsMarkers:', ruinCoordsMarkers);
+      return ruinCoordsMarkers;
+    },
+
 
     async initMap(allRuinsCoords: [number, number][]) {
 
@@ -75,20 +95,30 @@ export default defineComponent({
       center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
       zoom: 1, 
       }); 
-      
 
       map.scrollZoom.enable();
       map.boxZoom.enable();
       map.dragPan.enable();
       map.setMaxBounds(bounds);
 
+      // Marcadores
+
+      
+
+      const markers = [];
+      for (let i = 0; i < allRuinsCoords.length; i +=1 ){
+        console.log(allRuinsCoords[i], ' de tipo: ', typeof(allRuinsCoords[i]));
+        const markerCoords = this.setLngLatCoordinates();
+        markers[i] = new mapboxgl.Marker()
+          .setLngLat((markerCoords[i]))
+          .addTo(map);
+      }
+
       console.log('Se crea el mapa0');
     },
 
     async initializeMap() {
       await Promise.resolve(); // Wait for the DOM to update
-      
-      // if (!this.mapElement) throw new Error('Div Element no existe');
       console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
 
       this.initMap(this.allRuinsCoords);
@@ -104,36 +134,24 @@ export default defineComponent({
   },
 
   mounted() {
-    
     const datosRuinas = this.ruins?.allRuinsData;
 
     console.log('Se llama a mounted()', datosRuinas);
     this.allRuinsCoords = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
-
-      // console.log('1:', datosRuinas[i].name, datosRuinas[i].coords); 
-
       if ('coords' in datosRuinas[i]) {
-        
-        // console.log('2: ', datosRuinas[i].coords.length);
         const coords = datosRuinas[i].coords;
 
         if (datosRuinas[i].coords.length >= 1){
-
-          // console.log('3: ', coords);
-               
           this.allRuinsCoords.push(coords);
-          // console.log('4: ', this.allRuinsCoords);
+          console.log('4: ', this.allRuinsCoords);
         }
       }
     }
 
-    if (this.allRuinsCoords.length > 0){
-      console.log('Se llama a initalizeMap desde mounted:', this.allRuinsCoords);
-      this.initializeMap();
-    } 
-    
+    this.initializeMap();
+   
     return {
       allRuinsCoords: this.allRuinsCoords,
     }
