@@ -26,7 +26,7 @@ export default defineComponent({
     return {
       isLoading: false,
       userLocation: [],
-      allRuinsCoords: []
+      allRuinsCoords: [] // Moved the definition here
     }
   },
 
@@ -55,7 +55,8 @@ export default defineComponent({
     initMap: async (allRuinsCoords: [number, number][]) => {
       const mapElement = ref<HTMLDivElement>();
       await Promise.resolve();
-          
+      await this.$nextTick();
+
       if (!mapElement.value) throw new Error('Div Element no existe');
       console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
@@ -104,7 +105,8 @@ export default defineComponent({
 
     const datosRuinas = this.ruins?.allRuinsData;
 
-    const allRuinsCoords: [number,number][] = [];
+    // No need to redefine allRuinsCoords here, just assign it a new value
+    this.allRuinsCoords = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
 
@@ -121,20 +123,20 @@ export default defineComponent({
           
           if ('x' in coords && 'y' in coords) 
             {
-              allRuinsCoords.push(coords);
-              console.log('4: ', allRuinsCoords);
+              this.allRuinsCoords.push(coords);
+              console.log('4: ', this.allRuinsCoords);
             }
         }
       }
     }
 
-    if (allRuinsCoords.length > 0){
-      console.log('Se llama a initMap desde mounted:', allRuinsCoords);
-      return this.initMap(allRuinsCoords);
+    if (this.allRuinsCoords.length > 0){
+      console.log('Se llama a initMap desde mounted:', this.allRuinsCoords);
+      return this.initMap(this.allRuinsCoords);
     } 
     
     return {
-      allRuinsCoords,
+      allRuinsCoords: this.allRuinsCoords,
     }
   },
 
