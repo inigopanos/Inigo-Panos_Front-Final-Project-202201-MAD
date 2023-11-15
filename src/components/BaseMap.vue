@@ -1,41 +1,48 @@
 <template>
-  <header>  
-    <h3>{{ places }}, Is userLocationReady: {{ isUserlocationReady }}</h3>
-  </header>
-  <div
+  <!-- <div
   v-if="!isUserlocationReady"
   class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
       </div>
-  </div>
+  </div> -->
   
-  <div v-show="isUserlocationReady" class="map" ref="mapElement"/>
+  <div
+    class="map" 
+    ref="mapElement"
+    id = "mapElementId"> </div>
 
 </template>
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl from 'mapbox-gl';
+  import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
-  import { defineComponent, ref, watch } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
 
 export default defineComponent({
   components: { },
 
   data() {
+    console.log('Data');
     return {
       isLoading: false,
       userLocation: [],
+      allRuinsCoords: [] as any[],
     }
   },
 
   computed:{
     ...mapActions('places', ['getInitialLocation']),
+    ...mapActions('ruins', ['getAllRuins']),
+
     ...mapGetters('places', ['isUserlocationReady']),
+    ...mapGetters('ruins', ['listOfRuinsData']),
+
     ...mapState(['places']),
+    ...mapState(['ruins']),
   },
 
   methods:{
@@ -44,94 +51,107 @@ export default defineComponent({
     ]),
     ...mapGetters('places', ['isUserlocationReady']),
     ...mapState(['places']),
-  },
 
-  setup() {
-  
-    const route = useRoute();
+    ...mapGetters('ruins', ['listOfRuinsData']),
+    ...mapState(['ruins']),
 
-    console.log('Coordenadas de la ruina: ', route.params.coords, typeof(route.params.coords));
-
-    let ruinCoordinates = route.params.coords;
-    ruinCoordinates = (ruinCoordinates as string).split(' ');
-    
-    const lngRuin = parseFloat(ruinCoordinates[1]);
-    const latRuin = parseFloat(ruinCoordinates[0]);
-
-    const ruinCoords: [lng: number, lat: number] = [lngRuin, latRuin]
-    
-    console.log('Coordenadas: ', ruinCoords, typeof(ruinCoords));
-
-    const store = useStore();
-    console.log('Store: ', store?.state?.places);
-   
-    const mapElement = ref<HTMLDivElement>();
-
-    const initMap = async (userLocationFromWatcher: [number, number]) => {
+    setLngLatCoordinates(){
+      let ruinCoords: [number, number][] = [];
+      ruinCoords = this.allRuinsCoords;
       
+      const ruinCoordsMarkers: { [key: string]: LngLatLike } = {};
+
+      for (let i = 0; i < ruinCoords.length; i += 1){
+        const separatedRuinCoordinatesString = (ruinCoords[i][0] as unknown as string).split(' ');
+        
+        const lngRuin = parseFloat(separatedRuinCoordinatesString[1]);
+        const latRuin = parseFloat(separatedRuinCoordinatesString[0]);
+
+        const ruinCoordsMarker: LngLatLike = { lng: lngRuin, lat: latRuin };
+        ruinCoordsMarkers[`ruinCoordsMarker${i}`] = ruinCoordsMarker;
+      }
+
+      console.log('RuinCoordsMarkers:', ruinCoordsMarkers);
+      return ruinCoordsMarkers;
+    },
+
+
+    async initMap(allRuinsCoords: [number, number][]) {
+
       await Promise.resolve();
-      
-      const userLocation = userLocationFromWatcher;
-      
-      if (!mapElement.value) throw new Error('Div Element no existe');
-      if (!userLocation) throw new Error('User Location no existe');
-      if (!ruinCoords) console.log('No hay coordenadas de ruinas');
+      await this.$nextTick(); 
+      // if (!mapElement) return;
+      console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
-      console.log('Se ha resuelto la promesa del mapa', userLocation);
+      const bounds: [[number, number], [number, number]] = [
+        [-9.465087353810635, 35.31818720563167], // [west, south]
+        // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+        [5.1948353404399747, 44.48518712768742]  // [east, north]
+      ];
 
       const map = new mapboxgl.Map({
-        container: mapElement.value, // container ID
-        style: 'mapbox://styles/mapbox/streets-v12', // style URL
-        center: userLocation, // starting position [lng, lat]
-        zoom: 13, // starting zoom
-        }); 
-      
+      container: 'mapElementId',
+      style: 'mapbox://styles/mapbox/streets-v12', 
+      center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
+      zoom: 1, 
+      }); 
+
       map.scrollZoom.enable();
       map.boxZoom.enable();
       map.dragPan.enable();
+      map.setMaxBounds(bounds);
 
-      const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
-      .setLngLat(ruinCoords)
-      .setHTML(`
-      <h4> Aquí se encuentra la ruina </h4>
-      <p> ${ruinCoords} </p>
-      `);
-      
-      const myLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
-      .setLngLat(userLocation)
-      .setHTML(`
-      <h4> Aquí estoy </h4>
-      <p>${userLocation}</p>
-      `);
+      // Marcadores
 
-      
+      const markerCoords = this.setLngLatCoordinates();
+      const markers: mapboxgl.Marker[] = [];
+      for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
+        console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
+        
+        markers[i] = new mapboxgl.Marker()
+          .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+          .addTo(map);
+      }
+    },
 
-      const ruinLocationMarker = new mapboxgl.Marker()
-      .setLngLat(ruinCoords)
-      .setPopup(ruinLocationPopup)
-      .addTo(map);
+    async initializeMap() {
+      await Promise.resolve(); // Wait for the DOM to update
+      console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
 
-      const myLocationMarker = new mapboxgl.Marker()
-      .setLngLat(userLocation)
-      .setPopup(myLocationPopup)
-      .addTo(map);
-
-      console.log('Marcadores:', 'Ruina:', ruinLocationMarker, 'Usuario:', myLocationMarker);
-      console.log('Popups: ', 'Ruina:', ruinLocationPopup, 'Usuario:', myLocationPopup);
-    }
-
-    return { 
-      mapElement,
-      initMap
+      this.initMap(this.allRuinsCoords);
     }
   },
 
+  setup() {
+    const route = useRoute();
+    const store = useStore();
+    console.log('Store: ', store?.state?.places);
+   
+    return {  }
+  },
+
   mounted() {
-    const test = this.isUserlocationReady; 
-    if (test){
-      return this.initMap(this.places.userLocation);
+    const datosRuinas = this.ruins?.allRuinsData;
+
+    console.log('Se llama a mounted()', datosRuinas);
+    this.allRuinsCoords = [];
+
+    for (let i = 0; i < datosRuinas?.length; i+=1){
+      if ('coords' in datosRuinas[i]) {
+        const coords = datosRuinas[i].coords;
+
+        if (datosRuinas[i].coords.length >= 1){
+          this.allRuinsCoords.push(coords);
+          console.log('4: ', this.allRuinsCoords);
+        }
+      }
     }
-    return console.log('No se ha montado el mapa en OnMounted():', test);
+
+    this.initializeMap();
+   
+    return {
+      allRuinsCoords: this.allRuinsCoords,
+    }
   },
 
   watch:{
@@ -143,11 +163,11 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        this.initMap(this.places.userLocation);
+        console.log('Se llama a initalizeMap desde el watch:', this.allRuinsCoords);
+        this.initializeMap();
       }
     }, 
-  }
-
+  },
 });
 </script>
 
@@ -175,8 +195,9 @@ export default defineComponent({
 .map {
   display: flex;
   align-items: center;
-  width: 80vw;
+  width: 60vw;
   height: 80vh;
+  margin-right: 1%;
 }
 
 </style>
