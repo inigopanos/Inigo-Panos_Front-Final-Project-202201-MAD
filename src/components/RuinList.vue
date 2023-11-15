@@ -19,7 +19,10 @@
                 <div class="ruin-card__left-item"></div>
               </div>
               <div class="ruin-card__right">
-                <div class="ruin-card__right__image"></div>
+                <div class="ruin-card__right__image">
+                  <img v-bind:src="ruin.images" alt="imagen-ruina">
+                 
+                </div>
               </div>
             </div>
            
@@ -72,6 +75,12 @@ ul {
   list-style-type: none;
 }
 
+img{
+  width: 150px;
+  height: 100px;
+  border: 1px solid #000;
+}
+
 .main__body {
 
   display: flex;
@@ -106,24 +115,16 @@ ul {
     .ruin-list__card {
       min-width: 454px;
       max-width: 754px;
-      -webkit-box-orient: vertical;
-      -ms-flex-direction: column;
-      flex-direction: column;
-      -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
+     flex-direction: column;   
       flex-grow: 1;
-      -ms-flex-preferred-size: 575px;
       flex-basis: 575px;
       width: 100%;
       margin: 0 15px 8px;
       border-radius: 6px;
       min-height: 187px;
-
       background-color: white;
       opacity: 0.8;
-
       border-radius: 3px;
-
       box-shadow: 0px 3px 8px 0px rgba(0,0,0,0.5);
       transition: 0.3s;
       text-decoration: none;
@@ -134,6 +135,13 @@ ul {
         @extend .ruin-list__card;
         height: 120px;
         background-color: red;
+      }
+
+      .ruin-card__right__image {
+        flex-shrink: 5;
+        max-width: 100%;
+        height: auto;
+        object-fit: fill;
       }
 
     }
