@@ -9,8 +9,9 @@
   </div>
   
   <div
-  v-show="isUserlocationReady"
-  class="map" ref="mapElement"/>
+  v-dom-ready="initializeMap"
+  class="map" 
+  ref="mapElement"/>
 
 </template>
 
@@ -56,8 +57,8 @@ export default defineComponent({
 
 
     async initMap(allRuinsCoords: [number, number][]) {
-      await this.$nextTick(); // Wait for the DOM to update
-
+      await Promise.resolve();
+      await this.$nextTick(); 
       if (!this.mapElement) return;
       console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
