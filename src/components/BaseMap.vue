@@ -1,14 +1,16 @@
 <template>
-  <!-- <div
+  <div
   v-if="!isUserlocationReady"
   class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
       </div>
-  </div> -->
+  </div>
   
-  <div class="map" ref="mapElement"/>
+  <div
+  v-show="isUserlocationReady"
+  class="map" ref="mapElement"/>
 
 </template>
 
@@ -26,8 +28,8 @@ export default defineComponent({
     return {
       isLoading: false,
       userLocation: [],
-      allRuinsCoords: [] as any[], // Specify the data type explicitly
-      mapElement: ref(null), // Define mapElement here
+      allRuinsCoords: [] as any[],
+      mapElement: ref<HTMLDivElement>(),
     }
   },
 
@@ -56,7 +58,7 @@ export default defineComponent({
     async initMap(allRuinsCoords: [number, number][]) {
       await this.$nextTick(); // Wait for the DOM to update
 
-      if (!this.mapElement) throw new Error('Div Element no existe');
+      if (!this.mapElement) return;
       console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
@@ -90,16 +92,17 @@ export default defineComponent({
 
   setup() {
     const route = useRoute();
-
     const store = useStore();
     console.log('Store: ', store?.state?.places);
    
-    return { }
+    return {  }
   },
 
   mounted() {
 
     const datosRuinas = this.ruins?.allRuinsData;
+
+    console.log('Se llama a mounted()', datosRuinas);
 
     // No need to redefine allRuinsCoords here, just assign it a new value
     this.allRuinsCoords = [];
@@ -116,18 +119,15 @@ export default defineComponent({
         if (datosRuinas[i].coords.length >= 1){
 
           console.log('3: ', coords);
-          
-          if ('x' in coords && 'y' in coords) 
-            {
-              this.allRuinsCoords.push(coords);
-              console.log('4: ', this.allRuinsCoords);
-            }
+               
+          this.allRuinsCoords.push(coords);
+          console.log('4: ', this.allRuinsCoords);
         }
       }
     }
 
     if (this.allRuinsCoords.length > 0){
-      console.log('Se llama a initMap desde mounted:', this.allRuinsCoords);
+      console.log('Se llama a initalizeMap desde mounted:', this.allRuinsCoords);
       this.initializeMap();
     } 
     
@@ -145,7 +145,7 @@ export default defineComponent({
       console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        console.log('Se llama a initMap desde el watch:', this.allRuinsCoords);
+        console.log('Se llama a initalizeMap desde el watch:', this.allRuinsCoords);
         this.initializeMap();
       }
     }, 
