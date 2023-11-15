@@ -50,20 +50,10 @@ export default defineComponent({
 
     ...mapGetters('ruins', ['listOfRuinsData']),
     ...mapState(['ruins']),
-  },
 
-  setup() {
-    const route = useRoute();
 
-    const store = useStore();
-    console.log('Store: ', store?.state?.places);
-   
-    const mapElement = ref<HTMLDivElement>();
-
-    // CREACIÓN DEL MAPA
-
-    const initMap = async (allRuinsCoords: [number, number][]) => {
-      
+    initMap: async (allRuinsCoords: [number, number][]) => {
+      const mapElement = ref<HTMLDivElement>();
       await Promise.resolve();
           
       if (!mapElement.value) throw new Error('Div Element no existe');
@@ -99,11 +89,15 @@ export default defineComponent({
       // .setPopup(ruinLocationPopup)
       // .addTo(map);
     }
+  },
 
-    return { 
-      mapElement,
-      initMap
-    }
+  setup() {
+    const route = useRoute();
+
+    const store = useStore();
+    console.log('Store: ', store?.state?.places);
+   
+    return { }
   },
 
   mounted() {
