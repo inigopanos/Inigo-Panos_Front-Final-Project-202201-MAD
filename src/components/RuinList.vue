@@ -25,9 +25,6 @@
                 </div>
               </div>
             </div>
-           
-            
-           
           </router-link>
         </div>
       </li>
@@ -103,7 +100,14 @@ img{
   // }
 
   .ruin-list__wrapper{
-    display: block;
+    display: flex;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+    align-items: center;
+    
     &:hover {
       cursor: pointer;
     }
@@ -143,11 +147,7 @@ img{
         height: auto;
         object-fit: fill;
       }
-
     }
   }
-
 }
-
-
 </style>

@@ -1,17 +1,17 @@
 <template>
-  <div
+  <!-- <div
   v-if="!isUserlocationReady"
   class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
       </div>
-  </div>
+  </div> -->
   
   <div
-  v-dom-ready="initializeMap"
-  class="map" 
-  ref="mapElement"/>
+    class="map" 
+    ref="mapElement"
+    id = "mapElementId"> </div>
 
 </template>
 
@@ -26,11 +26,11 @@ export default defineComponent({
   components: { },
 
   data() {
+    console.log('Data');
     return {
       isLoading: false,
       userLocation: [],
       allRuinsCoords: [] as any[],
-      mapElement: ref<HTMLDivElement>(),
     }
   },
 
@@ -57,9 +57,10 @@ export default defineComponent({
 
 
     async initMap(allRuinsCoords: [number, number][]) {
+
       await Promise.resolve();
       await this.$nextTick(); 
-      if (!this.mapElement) return;
+      // if (!mapElement) return;
       console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
@@ -69,22 +70,25 @@ export default defineComponent({
       ];
 
       const map = new mapboxgl.Map({
-        container: this.mapElement,
-        style: 'mapbox://styles/mapbox/streets-v12', 
-        center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
-        zoom: 1, 
-        }); 
+      container: 'mapElementId',
+      style: 'mapbox://styles/mapbox/streets-v12', 
+      center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
+      zoom: 1, 
+      }); 
       
+
       map.scrollZoom.enable();
       map.boxZoom.enable();
       map.dragPan.enable();
       map.setMaxBounds(bounds);
+
+      console.log('Se crea el mapa0');
     },
 
     async initializeMap() {
-      await this.$nextTick(); // Wait for the DOM to update
-
-      if (!this.mapElement) throw new Error('Div Element no existe');
+      await Promise.resolve(); // Wait for the DOM to update
+      
+      // if (!this.mapElement) throw new Error('Div Element no existe');
       console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
 
       this.initMap(this.allRuinsCoords);
@@ -100,29 +104,27 @@ export default defineComponent({
   },
 
   mounted() {
-
+    
     const datosRuinas = this.ruins?.allRuinsData;
 
     console.log('Se llama a mounted()', datosRuinas);
-
-    // No need to redefine allRuinsCoords here, just assign it a new value
     this.allRuinsCoords = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
 
-      console.log('1:', datosRuinas[i].name, datosRuinas[i].coords); 
+      // console.log('1:', datosRuinas[i].name, datosRuinas[i].coords); 
 
       if ('coords' in datosRuinas[i]) {
         
-        console.log('2: ', datosRuinas[i].coords.length);
+        // console.log('2: ', datosRuinas[i].coords.length);
         const coords = datosRuinas[i].coords;
 
         if (datosRuinas[i].coords.length >= 1){
 
-          console.log('3: ', coords);
+          // console.log('3: ', coords);
                
           this.allRuinsCoords.push(coords);
-          console.log('4: ', this.allRuinsCoords);
+          // console.log('4: ', this.allRuinsCoords);
         }
       }
     }
