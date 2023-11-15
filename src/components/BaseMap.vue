@@ -26,7 +26,8 @@ export default defineComponent({
     return {
       isLoading: false,
       userLocation: [],
-      allRuinsCoords: [] // Moved the definition here
+      allRuinsCoords: [] as any[], // Specify the data type explicitly
+      mapElement: ref(null), // Define mapElement here
     }
   },
 
@@ -52,12 +53,10 @@ export default defineComponent({
     ...mapState(['ruins']),
 
 
-    initMap: async (allRuinsCoords: [number, number][]) => {
-      const mapElement = ref<HTMLDivElement>();
-      await Promise.resolve();
-      await this.$nextTick();
+    async initMap(allRuinsCoords: [number, number][]) {
+      await this.$nextTick(); // Wait for the DOM to update
 
-      if (!mapElement.value) throw new Error('Div Element no existe');
+      if (!this.mapElement) throw new Error('Div Element no existe');
       console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
@@ -67,7 +66,7 @@ export default defineComponent({
       ];
 
       const map = new mapboxgl.Map({
-        container: mapElement.value,
+        container: this.mapElement,
         style: 'mapbox://styles/mapbox/streets-v12', 
         center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
         zoom: 1, 
@@ -77,18 +76,15 @@ export default defineComponent({
       map.boxZoom.enable();
       map.dragPan.enable();
       map.setMaxBounds(bounds);
+    },
 
-      // const ruinLocationPopup = new mapboxgl.Popup({offset:[0, -45]})
-      // .setLngLat(ruinCoords)
-      // .setHTML(`
-      // <h4> Aquí se encuentra la ruina </h4>
-      // <p> ${ruinCoords} </p>
-      // `);
-      
-      // const ruinLocationMarker = new mapboxgl.Marker()
-      // .setLngLat(ruinCoords)
-      // .setPopup(ruinLocationPopup)
-      // .addTo(map);
+    async initializeMap() {
+      await this.$nextTick(); // Wait for the DOM to update
+
+      if (!this.mapElement) throw new Error('Div Element no existe');
+      console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
+
+      this.initMap(this.allRuinsCoords);
     }
   },
 
@@ -132,7 +128,7 @@ export default defineComponent({
 
     if (this.allRuinsCoords.length > 0){
       console.log('Se llama a initMap desde mounted:', this.allRuinsCoords);
-      return this.initMap(this.allRuinsCoords);
+      this.initializeMap();
     } 
     
     return {
@@ -150,7 +146,7 @@ export default defineComponent({
       if (newValue)
       {
         console.log('Se llama a initMap desde el watch:', this.allRuinsCoords);
-        this.initMap(this.allRuinsCoords);
+        this.initializeMap();
       }
     }, 
   },
