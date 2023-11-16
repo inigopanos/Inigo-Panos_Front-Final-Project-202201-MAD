@@ -33,12 +33,14 @@
       <footer>
         <a :href="'https://www.linkedin.com/in/iñigo-paños-basterra-040021197/'" target="_blank">
           <img
+            class="logo"
             src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/linkedin.png?alt=media&token=97094566-c7dd-4780-8df7-63c2fd788478"
             alt="linkedinLogo"
           />
         </a>
         <a :href="'https://github.com/inigopanos'" target="_blank">
           <img
+            class="logo"
             src="https://firebasestorage.googleapis.com/v0/b/inig-panos-pfinal.appspot.com/o/github.png?alt=media&token=82317cd3-1295-497e-8875-143fa6180345"
             alt="linkedinLogo"
           />
@@ -126,6 +128,13 @@ export default {
     justify-content: space-evenly;
     opacity: 0.5;
     // margin-top:auto;
+
+    a {
+      .logo{
+        height: 100%;
+        width: 100%; 
+      }
+    }
   }
 
   font-family: Cinzel, sans-serif;

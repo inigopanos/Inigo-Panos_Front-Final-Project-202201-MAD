@@ -26,6 +26,7 @@ export default defineComponent({
   components: { },
 
   data() {
+    console.log('Prueba');
     return {
       isLoading: false,
       userLocation: [],
