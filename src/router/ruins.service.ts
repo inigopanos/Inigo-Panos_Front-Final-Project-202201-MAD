@@ -59,6 +59,7 @@ export function addToVisitedToggle(id: string) {
 }
 
 export function createNewRuin(ruin: CreateRuinI) {
+  console.log('Datos en createNewRuin:', ruin);
   return axios.post(`${RUINS_API}/add`, ruin, {
     headers: {
       Authorization: `Bearer ${getToken()}`,

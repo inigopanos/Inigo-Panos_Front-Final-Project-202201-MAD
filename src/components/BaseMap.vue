@@ -80,7 +80,6 @@ export default defineComponent({
 
       await Promise.resolve();
       await this.$nextTick(); 
-      // if (!mapElement) return;
       console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
@@ -105,12 +104,19 @@ export default defineComponent({
 
       const markerCoords = this.setLngLatCoordinates();
       const markers: mapboxgl.Marker[] = [];
+      const popups: mapboxgl.Popup[] = [];
+
       for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
         console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
         
         markers[i] = new mapboxgl.Marker()
           .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
           .addTo(map);
+
+        popups[i] = new mapboxgl.Popup()
+        .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+        .setHTML(`${markerCoords[i]}`)
+        .addTo(map)
       }
     },
 
