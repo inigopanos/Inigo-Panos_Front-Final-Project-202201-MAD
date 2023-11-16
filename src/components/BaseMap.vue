@@ -26,7 +26,6 @@ export default defineComponent({
   components: { },
 
   data() {
-    console.log('Data');
     return {
       isLoading: false,
       userLocation: [],
