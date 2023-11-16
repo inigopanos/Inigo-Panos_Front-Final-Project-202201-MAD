@@ -34,6 +34,19 @@
       </div>
 
       <div class="form-group">
+        <label for="link">
+          <input
+            type="link"
+            v-model="ruin.link"
+            name="link"
+            placeholder="Link de interés"
+        /></label>
+        <div v-show="submitted && !ruin.link" class="invalid-feedback">
+          Es necesario que introduzca una descripción
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="images">
           <input
             type="file"
@@ -85,8 +98,9 @@ export default defineComponent({
         name: '',
         location: '',
         description: '',
+        link: '',
         images: '',
-        coords: [Number, Number]
+        coords: '',
       },
       isAdmin: false,
       id: '',
