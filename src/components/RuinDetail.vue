@@ -9,6 +9,9 @@
       <li><span class="bold">Nombre:</span> {{ ruinDetails?.name }}</li>
       <li><span class="bold">Localización:</span> {{ ruinDetails?.location }}</li>
       <li><span class="bold">Descripción:</span> {{ ruinDetails?.description }}</li>
+      <li><span class="bold">Links de interés:</span> {{ ruinDetails?.link }}</li>
+
+
 
       <li class="ruinImage">
         <span class="bold">Imágenes:</span>

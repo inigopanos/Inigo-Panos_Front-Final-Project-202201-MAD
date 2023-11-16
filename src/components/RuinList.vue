@@ -72,7 +72,7 @@ ul {
   list-style-type: none;
 }
 
-img{
+.ruin-card__right__image > img{
   width: 150px;
   height: 100px;
   border: 1px solid #000;
