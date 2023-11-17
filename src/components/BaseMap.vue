@@ -19,7 +19,7 @@
   import 'mapbox-gl/dist/mapbox-gl.css';
   import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
-  import { defineComponent, ref } from 'vue';
+  import { computed, defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
 
 export default defineComponent({
@@ -132,16 +132,17 @@ export default defineComponent({
   },
 
   setup(props) {
-    const route = useRoute();
-    const store = useStore();
-    
+    const store = useStore()
 
     function setLngLatCoordinates(){
       let ruinCoords: [number, number][] = [];
-      ruinCoords = props.allRuinsCoordsSetup;
+     
+      ruinCoords = props.allRuinsCoordsSetup; // Undefined
+      console.log('RuinCoords.Length:', ruinCoords);
       
       const ruinCoordsMarkers: { [key: string]: LngLatLike } = {};
 
+      
       for (let i = 0; i < ruinCoords.length; i += 1){
         const separatedRuinCoordinatesString = (ruinCoords[i][0] as unknown as string).split(' ');
         
@@ -160,7 +161,6 @@ export default defineComponent({
     async function initMap(allRuinsCoords: [number, number][]) {
 
       await Promise.resolve();
-      // console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
         [-9.465087353810635, 35.31818720563167], // [west, south]
@@ -171,7 +171,7 @@ export default defineComponent({
       const map = new mapboxgl.Map({
       container: 'mapElementId',
       style: 'mapbox://styles/mapbox/streets-v12', 
-      center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
+      center: [-4.739859783755799, 40.110300848632406], 
       zoom: 1, 
       }); 
 
@@ -180,7 +180,6 @@ export default defineComponent({
       map.dragPan.enable();
       map.setMaxBounds(bounds);
 
-      // Marcadores
 
       const markerCoords = setLngLatCoordinates();
       const markers: mapboxgl.Marker[] = [];
@@ -188,7 +187,6 @@ export default defineComponent({
 
       for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
         // console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
-        
         markers[i] = new mapboxgl.Marker()
           .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
           .addTo(map);
@@ -202,20 +200,36 @@ export default defineComponent({
 
     async function initializeMap() {
       await Promise.resolve(); 
-      // console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
+      const datosRuinas = store.getters.allRuinsData;
+      const prueba = ref(props.allRuinsCoordsSetup);
 
-      initMap(props.allRuinsCoordsSetup);
+      console.log('Se llama dentro de initalizeMap de setup()', prueba);
+
+      for (let i = 0; i < datosRuinas?.length; i+=1){
+        if ('coords' in datosRuinas[i]) {
+          const coords = datosRuinas[i].coords;
+
+          if (datosRuinas[i].coords.length >= 1){
+            prueba.value.push(coords);
+            console.log('4: ', prueba.value, typeof(prueba.value)); // No se llama
+          }
+        }
+      }
+    
+      console.log('Se llama InitalizeMap en setup(): ', prueba.value);
+      initMap(props.allRuinsCoordsSetup); 
     }
-
+  
     initializeMap();
 
+    return {
+      ruins: computed(() => store.getters.getAllRuins)
+    }
     
   },
 
   mounted() {
     const datosRuinas = this.ruins?.allRuinsData;
-
-    // console.log('Se llama a mounted()', datosRuinas);
     this.allRuinsCoords = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
@@ -224,7 +238,6 @@ export default defineComponent({
 
         if (datosRuinas[i].coords.length >= 1){
           this.allRuinsCoords.push(coords);
-          // console.log('4: ', this.allRuinsCoords);
         }
       }
     }
@@ -242,11 +255,8 @@ export default defineComponent({
     ]),
       
     isUserlocationReady(newValue) {
-      // console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
-      {
-        // console.log('Se llama a initalizeMap desde el watch:', this.allRuinsCoords);
-        this.initializeMap();
+      {        this.initializeMap();
       }
     }, 
   },
