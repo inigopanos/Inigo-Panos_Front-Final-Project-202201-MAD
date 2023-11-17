@@ -21,10 +21,8 @@
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { computed, defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
-import { ruins } from '@/store/ruins.modules';
 
-export default defineComponent({
-  components: { },
+export default defineComponent({ // Options API
 
   data() {
     return {
@@ -199,11 +197,11 @@ export default defineComponent({
     }
 
     function initializeMap() {
-      const datosRuinas = computed(() => store.getters.listOfRuinsData);
-      const prueba = ref(props.allRuinsCoordsSetup);
+      const datosRuinas = store.getters['ruins/listOfRuinsData'];
+      console.log('En InitalizeMap()', datosRuinas.value);
       
-      console.log('En InitalizeMap()', datosRuinas);
-
+      
+      const prueba = ref(props.allRuinsCoordsSetup);
       for (let i = 0; i < datosRuinas.value?.length; i+=1){
         if ('coords' in datosRuinas.value[i]) {
           const coords = datosRuinas.value[i].coords;
@@ -254,7 +252,8 @@ export default defineComponent({
       
     isUserlocationReady(newValue) {
       if (newValue)
-      {        this.initializeMap();
+      {       
+         this.initializeMap();
       }
     }, 
   },

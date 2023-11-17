@@ -191,7 +191,7 @@ const mutations = {
 };
 
 const getters = {
-  listOfRuinsData(state: any) {
+  listOfRuinsData(state: any, rootGetters: true) {
     return state.allRuinsData;
   },
   ruinDetails(state: any) {

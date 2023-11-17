@@ -23,7 +23,6 @@ const actions = {
 
 const mutations: MutationTree<PlacesStateI> = {
     setLngLat(state: PlacesStateI, {lng, lat}: {lng: number, lat: number}){
-        console.log('Coordenadas usuario:', typeof{lat, lng});
         state.userLocation = [lng, lat];
         state.isLoading = false;
     }
