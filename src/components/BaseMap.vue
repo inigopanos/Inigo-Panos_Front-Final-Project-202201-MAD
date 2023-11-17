@@ -130,10 +130,11 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const store = useStore();
+    
 
     function setLngLatCoordinates(){
       let ruinCoords: [number, number][] = [];
-      ruinCoords = this.allRuinsCoords;
+      ruinCoords = allRuinsCoords;
       
       const ruinCoordsMarkers: { [key: string]: LngLatLike } = {};
 
@@ -155,7 +156,6 @@ export default defineComponent({
     async function initMap(allRuinsCoords: [number, number][]) {
 
       await Promise.resolve();
-      await this.$nextTick(); 
       // console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
@@ -178,7 +178,7 @@ export default defineComponent({
 
       // Marcadores
 
-      const markerCoords = this.setLngLatCoordinates();
+      const markerCoords = setLngLatCoordinates();
       const markers: mapboxgl.Marker[] = [];
       const popups: mapboxgl.Popup[] = [];
 
@@ -197,15 +197,19 @@ export default defineComponent({
     }
 
     async function initializeMap() {
-      await Promise.resolve(); // Wait for the DOM to update
+      await Promise.resolve(); 
       // console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
 
-      this.initMap(this.allRuinsCoords);
+      initMap(allRuinsCoords);
     }
 
+    initializeMap();
 
-
-    return {  }
+    return { 
+      allRuinsCoords: [] as any[],
+      initalizeMap(),
+      initMap()
+     }
   },
 
   mounted() {
