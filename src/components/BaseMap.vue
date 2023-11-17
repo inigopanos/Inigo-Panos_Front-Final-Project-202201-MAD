@@ -18,7 +18,7 @@
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
   import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
-  import {mapActions, mapState, mapGetters, useStore} from 'vuex';
+  import {mapActions, mapState, mapGetters} from 'vuex';
   import { computed, defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
 
@@ -43,16 +43,33 @@ export default defineComponent({ // Options API
     ...mapState(['ruins']),
   },
 
+
+  mounted() {
+    const datosRuinas = this.ruins?.listOfRuinsData;
+    this.allRuinsCoords = [];
+    console.log('Hola Mundo', datosRuinas);
+
+    for (let i = 0; i < datosRuinas?.length; i+=1){
+
+      const coords = datosRuinas[i].coords;
+
+      if (datosRuinas[i].coords.length >= 1){
+        this.allRuinsCoords.push(coords);
+      }
+
+      if ('coords' in datosRuinas[i]) {
+        console.log('Datos Ruinss en for ', datosRuinas[i]); 
+      }
+    }
+
+    this.initializeMap();
+   
+    return {
+      allRuinsCoords: this.allRuinsCoords,
+    }
+  },
+
   methods:{
-    ...mapActions('places', [
-      'isUserlocationReady'
-    ]),
-    ...mapGetters('places', ['isUserlocationReady']),
-    ...mapState(['places']),
-
-    ...mapGetters('ruins', ['listOfRuinsData']),
-    ...mapState(['ruins']),
-
     setLngLatCoordinates(){
       let ruinCoords: [number, number][] = [];
       ruinCoords = this.allRuinsCoords;
@@ -69,7 +86,6 @@ export default defineComponent({ // Options API
         ruinCoordsMarkers[`ruinCoordsMarker${i}`] = ruinCoordsMarker;
       }
 
-      // console.log('RuinCoordsMarkers:', ruinCoordsMarkers);
       return ruinCoordsMarkers;
     },
 
@@ -78,7 +94,6 @@ export default defineComponent({ // Options API
 
       await Promise.resolve();
       await this.$nextTick(); 
-      // console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
         [-9.465087353810635, 35.31818720563167], // [west, south]
@@ -105,7 +120,6 @@ export default defineComponent({ // Options API
       const popups: mapboxgl.Popup[] = [];
 
       for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
-        // console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
         
         markers[i] = new mapboxgl.Marker()
           .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
@@ -120,34 +134,11 @@ export default defineComponent({ // Options API
 
     async initializeMap() {
       await Promise.resolve(); // Wait for the DOM to update
-      // console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
-
       this.initMap(this.allRuinsCoords);
     }
   },
 
-  mounted() {
-    const datosRuinas = this.ruins?.allRuinsData;
-    this.allRuinsCoords = [];
-
-    console.log('datosRuinas', datosRuinas);
-
-    for (let i = 0; i < datosRuinas?.length; i+=1){
-      if ('coords' in datosRuinas[i]) {
-        const coords = datosRuinas[i].coords;
-
-        if (datosRuinas[i].coords.length >= 1){
-          this.allRuinsCoords.push(coords);
-        }
-      }
-    }
-
-    this.initializeMap();
-   
-    return {
-      allRuinsCoords: this.allRuinsCoords,
-    }
-  },
+  
 
   watch:{
     ...mapGetters('places', [
