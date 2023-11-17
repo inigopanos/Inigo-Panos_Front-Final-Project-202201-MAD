@@ -26,7 +26,6 @@ export default defineComponent({
   components: { },
 
   data() {
-    console.log('Prueba');
     return {
       isLoading: false,
       userLocation: [],
@@ -71,7 +70,7 @@ export default defineComponent({
         ruinCoordsMarkers[`ruinCoordsMarker${i}`] = ruinCoordsMarker;
       }
 
-      console.log('RuinCoordsMarkers:', ruinCoordsMarkers);
+      // console.log('RuinCoordsMarkers:', ruinCoordsMarkers);
       return ruinCoordsMarkers;
     },
 
@@ -80,7 +79,7 @@ export default defineComponent({
 
       await Promise.resolve();
       await this.$nextTick(); 
-      console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
+      // console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
 
       const bounds: [[number, number], [number, number]] = [
         [-9.465087353810635, 35.31818720563167], // [west, south]
@@ -107,7 +106,7 @@ export default defineComponent({
       const popups: mapboxgl.Popup[] = [];
 
       for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
-        console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
+        // console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
         
         markers[i] = new mapboxgl.Marker()
           .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
@@ -122,7 +121,7 @@ export default defineComponent({
 
     async initializeMap() {
       await Promise.resolve(); // Wait for the DOM to update
-      console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
+      // console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
 
       this.initMap(this.allRuinsCoords);
     }
@@ -131,15 +130,88 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const store = useStore();
-    console.log('Store: ', store?.state?.places);
-   
+
+    function setLngLatCoordinates(){
+      let ruinCoords: [number, number][] = [];
+      ruinCoords = this.allRuinsCoords;
+      
+      const ruinCoordsMarkers: { [key: string]: LngLatLike } = {};
+
+      for (let i = 0; i < ruinCoords.length; i += 1){
+        const separatedRuinCoordinatesString = (ruinCoords[i][0] as unknown as string).split(' ');
+        
+        const lngRuin = parseFloat(separatedRuinCoordinatesString[1]);
+        const latRuin = parseFloat(separatedRuinCoordinatesString[0]);
+
+        const ruinCoordsMarker: LngLatLike = { lng: lngRuin, lat: latRuin };
+        ruinCoordsMarkers[`ruinCoordsMarker${i}`] = ruinCoordsMarker;
+      }
+
+      // console.log('RuinCoordsMarkers:', ruinCoordsMarkers);
+      return ruinCoordsMarkers;
+    }
+
+
+    async function initMap(allRuinsCoords: [number, number][]) {
+
+      await Promise.resolve();
+      await this.$nextTick(); 
+      // console.log('Coordenadas ruinas dentro de map:', allRuinsCoords);
+
+      const bounds: [[number, number], [number, number]] = [
+        [-9.465087353810635, 35.31818720563167], // [west, south]
+        // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+        [5.1948353404399747, 44.48518712768742]  // [east, north]
+      ];
+
+      const map = new mapboxgl.Map({
+      container: 'mapElementId',
+      style: 'mapbox://styles/mapbox/streets-v12', 
+      center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
+      zoom: 1, 
+      }); 
+
+      map.scrollZoom.enable();
+      map.boxZoom.enable();
+      map.dragPan.enable();
+      map.setMaxBounds(bounds);
+
+      // Marcadores
+
+      const markerCoords = this.setLngLatCoordinates();
+      const markers: mapboxgl.Marker[] = [];
+      const popups: mapboxgl.Popup[] = [];
+
+      for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
+        // console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
+        
+        markers[i] = new mapboxgl.Marker()
+          .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+          .addTo(map);
+
+        popups[i] = new mapboxgl.Popup()
+        .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+        .setHTML(`${markerCoords[i]}`)
+        .addTo(map)
+      }
+    }
+
+    async function initializeMap() {
+      await Promise.resolve(); // Wait for the DOM to update
+      // console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
+
+      this.initMap(this.allRuinsCoords);
+    }
+
+
+
     return {  }
   },
 
   mounted() {
     const datosRuinas = this.ruins?.allRuinsData;
 
-    console.log('Se llama a mounted()', datosRuinas);
+    // console.log('Se llama a mounted()', datosRuinas);
     this.allRuinsCoords = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
@@ -148,7 +220,7 @@ export default defineComponent({
 
         if (datosRuinas[i].coords.length >= 1){
           this.allRuinsCoords.push(coords);
-          console.log('4: ', this.allRuinsCoords);
+          // console.log('4: ', this.allRuinsCoords);
         }
       }
     }
@@ -156,7 +228,7 @@ export default defineComponent({
     this.initializeMap();
    
     return {
-      allRuinsCoords: this.allRuinsCoords,
+      // allRuinsCoords: this.allRuinsCoords,
     }
   },
 
@@ -166,10 +238,10 @@ export default defineComponent({
     ]),
       
     isUserlocationReady(newValue) {
-      console.log('Valor de isUserLocationReady en el watcher', {newValue});
+      // console.log('Valor de isUserLocationReady en el watcher', {newValue});
       if (newValue)
       {
-        console.log('Se llama a initalizeMap desde el watch:', this.allRuinsCoords);
+        // console.log('Se llama a initalizeMap desde el watch:', this.allRuinsCoords);
         this.initializeMap();
       }
     }, 
