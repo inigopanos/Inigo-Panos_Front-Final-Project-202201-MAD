@@ -21,6 +21,7 @@
   import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { computed, defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
+import { ruins } from '@/store/ruins.modules';
 
 export default defineComponent({
   components: { },
@@ -132,7 +133,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const store = useStore()
+    const store = useStore();
 
     function setLngLatCoordinates(){
       let ruinCoords: [number, number][] = [];
@@ -159,7 +160,6 @@ export default defineComponent({
 
 
     async function initMap(allRuinsCoords: [number, number][]) {
-
       await Promise.resolve();
 
       const bounds: [[number, number], [number, number]] = [
@@ -198,32 +198,30 @@ export default defineComponent({
       }
     }
 
-    async function initializeMap() {
-      await Promise.resolve(); 
-      const datosRuinas = store.getters.allRuinsData;
+    function initializeMap() {
+      const datosRuinas = computed(() => store.getters.listOfRuinsData);
       const prueba = ref(props.allRuinsCoordsSetup);
+      
+      console.log('En InitalizeMap()', datosRuinas);
 
-      console.log('Se llama dentro de initalizeMap de setup()', prueba);
+      for (let i = 0; i < datosRuinas.value?.length; i+=1){
+        if ('coords' in datosRuinas.value[i]) {
+          const coords = datosRuinas.value[i].coords;
 
-      for (let i = 0; i < datosRuinas?.length; i+=1){
-        if ('coords' in datosRuinas[i]) {
-          const coords = datosRuinas[i].coords;
-
-          if (datosRuinas[i].coords.length >= 1){
+          if (datosRuinas.value[i].coords.length >= 1){
             prueba.value.push(coords);
-            console.log('4: ', prueba.value, typeof(prueba.value)); // No se llama
+            // console.log('4: ', prueba.value, typeof(prueba.value)); // No se llama
           }
         }
       }
     
-      console.log('Se llama InitalizeMap en setup(): ', prueba.value);
       initMap(props.allRuinsCoordsSetup); 
     }
   
     initializeMap();
 
     return {
-      ruins: computed(() => store.getters.getAllRuins)
+      ruinsData: computed(() => store.getters.listOfRuinsData)
     }
     
   },
