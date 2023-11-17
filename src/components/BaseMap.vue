@@ -29,8 +29,11 @@ export default defineComponent({
     return {
       isLoading: false,
       userLocation: [],
-      allRuinsCoords: [] as any[],
     }
+  },
+
+  props: {
+    allRuinsCoords: [] as any[],
   },
 
   computed:{
@@ -127,14 +130,14 @@ export default defineComponent({
     }
   },
 
-  setup() {
+  setup(props) {
     const route = useRoute();
     const store = useStore();
     
 
     function setLngLatCoordinates(){
       let ruinCoords: [number, number][] = [];
-      ruinCoords = allRuinsCoords;
+      ruinCoords = props.allRuinsCoords;
       
       const ruinCoordsMarkers: { [key: string]: LngLatLike } = {};
 
@@ -200,16 +203,12 @@ export default defineComponent({
       await Promise.resolve(); 
       // console.log('Coordenadas ruinas dentro de map:', this.allRuinsCoords);
 
-      initMap(allRuinsCoords);
+      initMap(props.allRuinsCoords);
     }
 
     initializeMap();
 
-    return { 
-      allRuinsCoords: [] as any[],
-      initalizeMap(),
-      initMap()
-     }
+    
   },
 
   mounted() {
