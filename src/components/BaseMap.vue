@@ -1,14 +1,15 @@
 <template>
-  <!-- <div
-  v-if="!isUserlocationReady"
+  <div
+  v-if="!listOfRuinsData"
   class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
       </div>
-  </div> -->
+  </div>
   
   <div
+    v-if="listOfRuinsData"
     class="map" 
     ref="mapElement"
     id = "mapElementId"> </div>
@@ -49,20 +50,20 @@ export default defineComponent({ // Options API
 
     this.allRuinsCoords = [];
     console.log('Hola Mundo', this.ruins?.allRuinsData); 
-    for (let i = 0; i < datosRuinas?.length; i+=1){
 
+    for (let i = 0; i < datosRuinas?.length; i+=1){
       const coords = datosRuinas[i].coords;
 
       if (datosRuinas[i].coords.length >= 1){
         this.allRuinsCoords.push(coords);
       }
 
-      // if ('coords' in datosRuinas[i]) {
-      //   console.log('Datos Ruinss en for ', datosRuinas[i]); 
-      // }
+      if ('coords' in datosRuinas[i]) {
+        console.log('Datos Ruinss en for ', datosRuinas[i]); 
+      }
     }
 
-    if (this.allRuinsCoords.length >= 1){
+    if (this.allRuinsCoords?.length >= 1){
       this.initializeMap();
     } 
     return {
