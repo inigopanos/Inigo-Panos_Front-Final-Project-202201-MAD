@@ -3,7 +3,6 @@
     <h1>Lista de ruinas</h1>
   </div>
   <main class="main__body">
-   
     <ul v-if="listOfRuinsData">
       <li v-for="ruin in listOfRuinsData" :key="ruin._id" class="ruin-list__wrapper">
         <div class="ruin-list__card">
@@ -32,7 +31,7 @@
     </ul> 
 
      <div class="map">
-       <BaseMap :ruinsData="listOfRuinsData"/>
+       <BaseMap :ruinsData="listOfRuinsData2"/>
      </div>
   </main> 
 </template>
@@ -47,7 +46,6 @@ export default defineComponent({
     name: 'ruins-list',
     props: {
       ruinsData: {
-        type: Array, // Ajusta el tipo de datos según corresponda
         required: true,
       },
     },
@@ -55,7 +53,7 @@ export default defineComponent({
     data() {
         return {
             name: '',
-            listOfRuinsData: null,
+            listOfRuinsData2: [],
         };
     },
     computed: {
@@ -63,10 +61,11 @@ export default defineComponent({
     },
     mounted() {
         this.getAllRuins();
+        this.listOfRuinsData2 = this.listOfRuinsData;
 
-        const {list, containerProps, wrapperProps } = useVirtualList(this.listOfRuinsData, {
-          itemHeight: 96
-        })
+        // const {list, containerProps, wrapperProps } = useVirtualList(this.listOfRuinsData, {
+        //   itemHeight: 96
+        // })
     },
     methods: {
         ...mapActions('ruins', ['getAllRuins']),
