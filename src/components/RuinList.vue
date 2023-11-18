@@ -3,6 +3,7 @@
     <h1>Lista de ruinas</h1>
   </div>
   <main class="main__body">
+   
     <ul v-if="listOfRuinsData">
       <li v-for="ruin in listOfRuinsData" :key="ruin._id" class="ruin-list__wrapper">
         <div class="ruin-list__card">
@@ -31,8 +32,8 @@
     </ul> 
 
      <div class="map">
-      <BaseMap/>
-    </div>
+       <BaseMap :ruinsData="listOfRuinsData"/>
+     </div>
   </main> 
 </template>
 
@@ -44,9 +45,17 @@ import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
     name: 'ruins-list',
+    props: {
+      ruinsData: {
+        type: Array, // Ajusta el tipo de datos según corresponda
+        required: true,
+      },
+    },
+
     data() {
         return {
             name: '',
+            listOfRuinsData: null,
         };
     },
     computed: {

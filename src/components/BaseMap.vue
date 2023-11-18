@@ -1,20 +1,16 @@
 <template>
-
-  
   <div
-    v-if="listOfRuinsData"
     class="map" 
     ref="mapElement"
     id = "mapElementId"/>
 
-  <div
-    v-else
+  <!-- <div
     class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
       </div>
-  </div>
+  </div> -->
 
 </template>
 
@@ -26,6 +22,12 @@
   import { useRoute } from 'vue-router';
 
 export default defineComponent({ // Options API
+  props: {
+    ruinsData: {
+      type: Array, // Ajusta el tipo de datos según corresponda
+      required: true,
+    },
+},
 
   data() {
     return {
@@ -36,8 +38,6 @@ export default defineComponent({ // Options API
   },
 
   computed:{
-   
-
     ...mapGetters('places', ['isUserlocationReady']),
     ...mapGetters('ruins', ['listOfRuinsData']),
 
@@ -49,13 +49,8 @@ export default defineComponent({ // Options API
   async mounted() {
     await this.getAllRuins(); 
     
-    // if (!this.ruins?.allRuinsData){
-    //   console.log('Hola Mundo', this.ruins?.allRuinsData);
-    //   location.reload();
-    // }
-
-    console.log('Hola Mundo', this.ruins?.allRuinsData);
     const datosRuinas = this.ruins?.allRuinsData; 
+    console.log('Hola Mundo', datosRuinas?.allRuinsData);
 
     this.allRuinsCoords = [];
 
@@ -70,9 +65,6 @@ export default defineComponent({ // Options API
     if (this.allRuinsCoords?.length >= 1){
       this.initializeMap();
     } 
-    return {
-      allRuinsCoords: this.allRuinsCoords,
-    }
   },
 
   methods:{
