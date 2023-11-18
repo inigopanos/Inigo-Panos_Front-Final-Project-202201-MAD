@@ -62,10 +62,6 @@ export default defineComponent({
     mounted() {
         this.getAllRuins();
         this.listOfRuinsData2 = this.listOfRuinsData;
-
-        // const {list, containerProps, wrapperProps } = useVirtualList(this.listOfRuinsData, {
-        //   itemHeight: 96
-        // })
     },
     methods: {
         ...mapActions('ruins', ['getAllRuins']),

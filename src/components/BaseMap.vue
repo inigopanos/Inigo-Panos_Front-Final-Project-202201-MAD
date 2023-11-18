@@ -4,6 +4,9 @@
     ref="mapElement"
     id = "mapElementId"/>
 
+  <div>
+    Datos: {{ ruinsData }}
+  </div>
   <!-- <div
     class="loading-map">
       <div class="loading-text">
@@ -17,14 +20,15 @@
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
   import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
-  import {mapActions, mapState, mapGetters} from 'vuex';
+  import {mapActions, mapState, mapGetters, useStore} from 'vuex';
   import { VueElement, computed, defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
+import { resolveConfig } from 'prettier';
 
-export default defineComponent({ // Options API
+export default defineComponent({
   props: {
     ruinsData: {
-      type: Array, // Ajusta el tipo de datos según corresponda
+      type: Array, 
       required: true,
     },
 },
@@ -46,12 +50,14 @@ export default defineComponent({ // Options API
   },
 
 
-  async mounted() {
-    await this.getAllRuins(); 
-    
-    const datosRuinas = this.ruins?.allRuinsData; 
-    console.log('Hola Mundo', datosRuinas?.allRuinsData);
+  async mounted() { 
 
+    await this.getAllRuins();
+    console.log(this.$store.state.ruins.allRuinsData);
+
+    const datosRuinas = this.$store.state.ruins.allRuinsData;
+
+    console.log('Hola Mundo', datosRuinas);
     this.allRuinsCoords = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
@@ -140,11 +146,11 @@ export default defineComponent({ // Options API
   },
 
   watch:{
-    ...mapGetters('places', [
-      'isUserlocationReady'
+    ...mapGetters('ruins', [
+      'listOfRuinsData'
     ]),
       
-    isUserlocationReady(newValue) {
+    listOfRuinsData(newValue) {
       if (newValue)
       {       
         this.initializeMap();

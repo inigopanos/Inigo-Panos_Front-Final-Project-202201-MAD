@@ -21,6 +21,7 @@ const actions = {
     ruinsServices.getAllRuins().then(
       (listOfRuinsData) => {
         commit('getAllRuinsSucess', listOfRuinsData);
+        return listOfRuinsData;
       },
 
       (error) => {
