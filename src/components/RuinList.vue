@@ -39,6 +39,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
+import { useVirtualList } from '@vueuse/core';
 import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
@@ -53,6 +54,10 @@ export default defineComponent({
     },
     mounted() {
         this.getAllRuins();
+
+        const {list, containerProps, wrapperProps } = useVirtualList(this.listOfRuinsData, {
+          itemHeight: 96
+        })
     },
     methods: {
         ...mapActions('ruins', ['getAllRuins']),

@@ -22,7 +22,7 @@
   import 'mapbox-gl/dist/mapbox-gl.css';
   import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
   import {mapActions, mapState, mapGetters} from 'vuex';
-  import { computed, defineComponent, ref } from 'vue';
+  import { VueElement, computed, defineComponent, ref } from 'vue';
   import { useRoute } from 'vue-router';
 
 export default defineComponent({ // Options API
@@ -47,9 +47,14 @@ export default defineComponent({ // Options API
 
 
   async mounted() {
+    await this.getAllRuins(); 
+    
+    // if (!this.ruins?.allRuinsData){
+    //   console.log('Hola Mundo', this.ruins?.allRuinsData);
+    //   location.reload();
+    // }
 
-    await this.getAllRuins();
-    console.log('Hola Mundo', this.ruins);
+    console.log('Hola Mundo', this.ruins?.allRuinsData);
     const datosRuinas = this.ruins?.allRuinsData; 
 
     this.allRuinsCoords = [];
