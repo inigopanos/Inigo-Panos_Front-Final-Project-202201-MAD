@@ -1,18 +1,20 @@
 <template>
+
+  
   <div
-  v-if="!listOfRuinsData"
-  class="loading-map">
+    v-if="listOfRuinsData"
+    class="map" 
+    ref="mapElement"
+    id = "mapElementId"/>
+
+  <div
+    v-else
+    class="loading-map">
       <div class="loading-text">
         <h3>Espere por favor</h3>
         <span>Localizando</span>
       </div>
   </div>
-  
-  <div
-  v-if="listOfRuinsData"
-    class="map" 
-    ref="mapElement"
-    id = "mapElementId"/>
 
 </template>
 
@@ -44,9 +46,10 @@ export default defineComponent({ // Options API
   },
 
 
-  mounted() {
-    this.getAllRuins();
-    console.log('Hola Mundo', this.listOfRuinsData);
+  async mounted() {
+
+    await this.getAllRuins();
+    console.log('Hola Mundo', this.ruins);
     const datosRuinas = this.ruins?.allRuinsData; 
 
     this.allRuinsCoords = [];
