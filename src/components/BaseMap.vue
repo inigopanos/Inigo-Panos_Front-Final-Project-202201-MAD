@@ -45,10 +45,10 @@ export default defineComponent({ // Options API
 
 
   mounted() {
-    const datosRuinas = this.ruins?.allRuinsData;
-    this.allRuinsCoords = [];
-    console.log('Hola Mundo', datosRuinas);
+    const datosRuinas = this.ruins?.allRuinsData; // Undefined en primera carga, con valor en la segunda. 
 
+    this.allRuinsCoords = [];
+    console.log('Hola Mundo', this.ruins?.allRuinsData); 
     for (let i = 0; i < datosRuinas?.length; i+=1){
 
       const coords = datosRuinas[i].coords;
@@ -57,13 +57,14 @@ export default defineComponent({ // Options API
         this.allRuinsCoords.push(coords);
       }
 
-      if ('coords' in datosRuinas[i]) {
-        console.log('Datos Ruinss en for ', datosRuinas[i]); 
-      }
+      // if ('coords' in datosRuinas[i]) {
+      //   console.log('Datos Ruinss en for ', datosRuinas[i]); 
+      // }
     }
 
-    this.initializeMap();
-   
+    if (this.allRuinsCoords.length >= 1){
+      this.initializeMap();
+    } 
     return {
       allRuinsCoords: this.allRuinsCoords,
     }
@@ -86,11 +87,12 @@ export default defineComponent({ // Options API
         ruinCoordsMarkers[`ruinCoordsMarker${i}`] = ruinCoordsMarker;
       }
 
+      // console.log('Hola mundo: ', ruinCoordsMarkers);
       return ruinCoordsMarkers;
     },
 
 
-    async initMap(allRuinsCoords: [number, number][]) {
+    async initMap() {
 
       await Promise.resolve();
       await this.$nextTick(); 
@@ -134,7 +136,7 @@ export default defineComponent({ // Options API
 
     async initializeMap() {
       await Promise.resolve(); // Wait for the DOM to update
-      this.initMap(this.allRuinsCoords);
+      this.initMap();
     }
   },
 
