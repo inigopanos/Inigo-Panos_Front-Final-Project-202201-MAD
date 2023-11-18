@@ -45,7 +45,7 @@ export default defineComponent({ // Options API
 
 
   mounted() {
-    const datosRuinas = this.ruins?.listOfRuinsData;
+    const datosRuinas = this.ruins?.allRuinsData;
     this.allRuinsCoords = [];
     console.log('Hola Mundo', datosRuinas);
 
@@ -138,7 +138,98 @@ export default defineComponent({ // Options API
     }
   },
 
+  //   const store = useStore();
+
+  //   function setLngLatCoordinates(){
+  //     let ruinCoords: [number, number][] = [];
+     
+  //     ruinCoords = props.allRuinsCoordsSetup; // Undefined
+  //     console.log('RuinCoords.Length:', ruinCoords);
+      
+  //     const ruinCoordsMarkers: { [key: string]: LngLatLike } = {};
+
+      
+  //     for (let i = 0; i < ruinCoords.length; i += 1){
+  //       const separatedRuinCoordinatesString = (ruinCoords[i][0] as unknown as string).split(' ');
+        
+  //       const lngRuin = parseFloat(separatedRuinCoordinatesString[1]);
+  //       const latRuin = parseFloat(separatedRuinCoordinatesString[0]);
+
+  //       const ruinCoordsMarker: LngLatLike = { lng: lngRuin, lat: latRuin };
+  //       ruinCoordsMarkers[`ruinCoordsMarker${i}`] = ruinCoordsMarker;
+  //     }
+
+  //     // console.log('RuinCoordsMarkers:', ruinCoordsMarkers);
+  //     return ruinCoordsMarkers;
+  //   }
+
+
+  //   async function initMap(allRuinsCoords: [number, number][]) {
+  //     await Promise.resolve();
+
+  //     const bounds: [[number, number], [number, number]] = [
+  //       [-9.465087353810635, 35.31818720563167], // [west, south]
+  //       // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+  //       [5.1948353404399747, 44.48518712768742]  // [east, north]
+  //     ];
+
+  //     const map = new mapboxgl.Map({
+  //     container: 'mapElementId',
+  //     style: 'mapbox://styles/mapbox/streets-v12', 
+  //     center: [-4.739859783755799, 40.110300848632406], 
+  //     zoom: 1, 
+  //     }); 
+
+  //     map.scrollZoom.enable();
+  //     map.boxZoom.enable();
+  //     map.dragPan.enable();
+  //     map.setMaxBounds(bounds);
+
+
+  //     const markerCoords = setLngLatCoordinates();
+  //     const markers: mapboxgl.Marker[] = [];
+  //     const popups: mapboxgl.Popup[] = [];
+
+  //     for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
+  //       // console.log(markerCoords[`ruinCoordsMarker${i}`], ' de tipo: ', typeof(markerCoords[`ruinCoordsMarker${i}`]));
+  //       markers[i] = new mapboxgl.Marker()
+  //         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+  //         .addTo(map);
+
+  //       popups[i] = new mapboxgl.Popup()
+  //       .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+  //       .setHTML(`${markerCoords[i]}`)
+  //       .addTo(map)
+  //     }
+  //   }
+
+  //   function initializeMap() {
+  //     const datosRuinas = store.getters['ruins/listOfRuinsData'];
+  //     console.log('En InitalizeMap()', datosRuinas.value);
+      
+      
+  //     const prueba = ref(props.allRuinsCoordsSetup);
+  //     for (let i = 0; i < datosRuinas.value?.length; i+=1){
+  //       if ('coords' in datosRuinas.value[i]) {
+  //         const coords = datosRuinas.value[i].coords;
+
+  //         if (datosRuinas.value[i].coords.length >= 1){
+  //           prueba.value.push(coords);
+  //           // console.log('4: ', prueba.value, typeof(prueba.value)); // No se llama
+  //         }
+  //       }
+  //     }
+    
+  //     initMap(props.allRuinsCoordsSetup); 
+  //   }
   
+  //   initializeMap();
+
+  //   return {
+  //     ruinsData: computed(() => store.getters.listOfRuinsData)
+  //   }
+    
+  // },
 
   watch:{
     ...mapGetters('places', [
@@ -148,7 +239,7 @@ export default defineComponent({ // Options API
     isUserlocationReady(newValue) {
       if (newValue)
       {       
-         this.initializeMap();
+        this.initializeMap();
       }
     }, 
   },
