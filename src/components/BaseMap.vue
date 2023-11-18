@@ -53,7 +53,7 @@ export default defineComponent({
   async mounted() { 
 
     await this.getAllRuins();
-    console.log(this.$store.state.ruins.allRuinsData);
+    console.log(this.$store.state.ruins);
 
     const datosRuinas = this.$store.state.ruins.allRuinsData;
 
