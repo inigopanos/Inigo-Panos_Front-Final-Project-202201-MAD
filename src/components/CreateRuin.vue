@@ -143,8 +143,7 @@ export default defineComponent({
 
         uploadBytes(newRef, this.fileToUpload[i] as any).then(() => {
           getDownloadURL(newRef).then((url: string) => {
-            this.ruin.images.push(url as string); // Agregar la URL al final del array de imágenes
-            
+            this.ruin.images[i] = url;            
           })
         });
       }
