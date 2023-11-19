@@ -128,7 +128,7 @@ export default defineComponent({
     ...mapActions('ruins', ['createNewRuin']),
 
     handleImageChange(e: any) {      
-      this.imageFiles = e.target.files;
+      this.fileToUpload = e.target.files;
       console.log('Lista de archivos', this.imageFiles);
     },
 
@@ -138,7 +138,7 @@ export default defineComponent({
       // Por cada imagen crea una referencia y una url. Luego crea la ruina.
       // El backend es un array de strings que son referencias a los links de imagenes en firebase ARRAY DE STRINGS
 
-      for( let i = 0; i < this.imageFiles.length; i +=1){
+      for( let i = 0; i < this.fileToUpload.length; i +=1){
         const newRef = ref(storage, uuid() + this.fileToUpload[i].fileName);
 
         uploadBytes(newRef, this.fileToUpload[i] as any).then(() => {
