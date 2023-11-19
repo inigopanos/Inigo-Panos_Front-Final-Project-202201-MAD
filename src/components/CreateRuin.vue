@@ -147,7 +147,7 @@ export default defineComponent({
           })
         });
       }
-
+      console.log('Ruina a crear:', this.ruin);
       this.createNewRuin(this.ruin);
     },
 
