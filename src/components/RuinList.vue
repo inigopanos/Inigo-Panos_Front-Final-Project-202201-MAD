@@ -30,9 +30,12 @@
       </li>
     </ul> 
 
-     <div class="map">
-       <BaseMap :ruinsData="listOfRuinsData2"/>
-     </div>
+    <div v-if="listOfRuinsData">
+       <div class="map">
+        <BaseMap :ruinsData="listOfRuinsData2"/>
+      </div>
+    </div>
+    
   </main> 
 </template>
 
