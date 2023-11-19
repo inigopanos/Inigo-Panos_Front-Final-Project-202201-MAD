@@ -108,6 +108,7 @@ export default defineComponent({
         images: [''],
         coords: '',
       },
+      imageFiles: [],
       isAdmin: false,
       id: '',
       idRuina: '',
@@ -126,32 +127,31 @@ export default defineComponent({
   methods: {
     ...mapActions('ruins', ['createNewRuin']),
 
-    handleImageChange(e: any) {
-      // eslint-disable-next-line prefer-destructuring
-      console.log('Lista de archivos', e.target.files);
-      this.ruin.images = e.target.files;
+    handleImageChange(e: any) {      
+      this.imageFiles = e.target.files;
+      console.log('Lista de archivos', this.imageFiles);
     },
 
     handleSubmit() {
       this.submitted = true;
 
       // Por cada imagen crea una referencia y una url. Luego crea la ruina.
-      // El backend es un array de strings que son referencias a los links de imagenes en firebase
+      // El backend es un array de strings que son referencias a los links de imagenes en firebase ARRAY DE STRINGS
 
+      for( let i = 0; i < this.imageFiles.length; i +=1){
+        const newRef = ref(storage, uuid() + this.fileToUpload[i].fileName);
 
+        uploadBytes(newRef, this.fileToUpload[i] as any).then(() => {
+          getDownloadURL(newRef).then((url: string) => {
+            this.ruin.images.push(url as string); // Agregar la URL al final del array de imágenes
+            
+          })
+        });
+      }
 
-      const newRef = ref(storage, uuid() + this.fileToUpload.fileName);
-      console.log('1', newRef);
-
-      uploadBytes(newRef, this.fileToUpload as any).then(() => {
-        getDownloadURL(newRef).then((url: string) => {
-          this.ruin.images.push(url as string); // Agregar la URL al final del array de imágenes
-          this.createNewRuin(this.ruin);
-        })
-      });
+      this.createNewRuin(this.ruin);
     },
 
-    
   },
 
   mounted() {
