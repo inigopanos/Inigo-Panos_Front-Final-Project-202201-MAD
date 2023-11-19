@@ -32,6 +32,7 @@
     "uuid": "^8.3.2",
     "vee-validate": "^4.5.10",
     "vue": "^3.3.8",
+    "vue-carousel": "^0.18.0",
     "vue-lazyload": "^3.0.0",
     "vue-mapbox-gl": "^0.0.1",
     "vue-router": "^4.0.3",

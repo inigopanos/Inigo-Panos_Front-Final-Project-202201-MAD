@@ -12,13 +12,16 @@
       <li><span class="bold">Links de interés:</span> {{ ruinDetails?.link }}</li>
 
 
-
-      <li class="ruinImage">
+      <li class="ruinImage"> 
         <span class="bold">Imágenes:</span>
-        <div v-for="image in ruinDetails.images" :key="image" >
-          <p>{{ image }} imagen</p>
-          <img v-bind:src="image"  alt="ruin-image" />
+        <carousel>
+        <div>
+          <slide v-for="image in ruinDetails.images" :key="image">
+            <img v-bind:src="image"  alt="ruin-image" />
+          </slide>
         </div>
+        </carousel>
+       
       </li>
 
       <div class="map-link">
@@ -134,9 +137,14 @@
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
+import { Carousel, Slide } from 'vue-carousel';
 
 export default defineComponent({
   name: 'ruin-data',
+  components: {
+    Carousel,
+    Slide,
+  },
 
   data() {
     return {
