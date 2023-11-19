@@ -15,8 +15,10 @@
 
       <li class="ruinImage">
         <span class="bold">Imágenes:</span>
-        
-        <img v-bind:src="ruinDetails?.images"  alt="" />
+        <div v-for="image in ruinDetails.images" :key="image" >
+          <p>{{ image }} imagen</p>
+          <img v-bind:src="image"  alt="ruin-image" />
+        </div>
       </li>
 
       <div class="map-link">
@@ -143,7 +145,7 @@ export default defineComponent({
         name: '',
         location: '',
         description: '',
-        images: '',
+        images: [''],
         coords: ['', ''],
         score: '',
         comments: [],
