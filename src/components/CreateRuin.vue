@@ -105,7 +105,7 @@ export default defineComponent({
         location: '',
         description: '',
         link: '',
-        images: '',
+        images: [''],
         coords: '',
       },
       isAdmin: false,
@@ -132,15 +132,15 @@ export default defineComponent({
 
       uploadBytes(newRef, this.fileToUpload as any).then(() => {
         getDownloadURL(newRef).then((url: string) => {
-          this.ruin.images = url;
+          this.ruin.images.push(url as string); // Agregar la URL al final del array de imágenes
           this.createNewRuin(this.ruin);
-        });
+        })
       });
     },
     handleImageChange(e: any) {
       // eslint-disable-next-line prefer-destructuring
       console.log(e.target.files[0]);
-      this.fileToUpload = e.target.files[0];
+      this.fileToUpload = e.target.files;
     },
 
   },

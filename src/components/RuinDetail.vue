@@ -15,7 +15,8 @@
 
       <li class="ruinImage">
         <span class="bold">Imágenes:</span>
-        <img v-bind:src="ruinDetails?.images" alt="" />
+        
+        <img v-bind:src="ruinDetails?.images"  alt="" />
       </li>
 
       <div class="map-link">
