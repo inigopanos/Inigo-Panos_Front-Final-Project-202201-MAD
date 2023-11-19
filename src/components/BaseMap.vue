@@ -19,11 +19,9 @@
 
 <script lang="ts">
   import 'mapbox-gl/dist/mapbox-gl.css';
-  import mapboxgl, { LngLat, LngLatLike, Marker } from 'mapbox-gl';
-  import {mapActions, mapState, mapGetters, useStore} from 'vuex';
-  import { VueElement, computed, defineComponent, ref } from 'vue';
-  import { useRoute } from 'vue-router';
-import { resolveConfig } from 'prettier';
+  import mapboxgl, { LngLatLike } from 'mapbox-gl';
+  import {mapActions, mapState, mapGetters} from 'vuex';
+  import { defineComponent } from 'vue';
 
 export default defineComponent({
   props: {
@@ -107,7 +105,7 @@ export default defineComponent({
 
       const map = new mapboxgl.Map({
       container: 'mapElementId',
-      style: 'mapbox://styles/mapbox/outdoors-v11', 
+      style: 'mapbox://styles/mapbox/streets-v12', 
       center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
       zoom: 1, 
       }); 
@@ -116,9 +114,7 @@ export default defineComponent({
       map.boxZoom.enable();
       map.dragPan.enable();
       map.setMaxBounds(bounds);
-      map.setProjection('equalEarth');
-
-      // Marcadores
+      map.setProjection('mercator');
 
       const markerCoords = this.setLngLatCoordinates();
       const markers: mapboxgl.Marker[] = [];
@@ -130,14 +126,14 @@ export default defineComponent({
 
         popups[i] = new mapboxgl.Popup()
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
-        .setHTML(`Hola mundo`)
-        // .setHTML(`${markerCoords[`ruinCoordsMarker${i}`]}`)
-        .addTo(map)
+        .setHTML(JSON.stringify(markerCoords[`ruinCoordsMarker${i}`]))
+        .addTo(map);
 
         markers[i] = new mapboxgl.Marker()
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+        .setPopup(new mapboxgl.Popup().setHTML('Tu texto aquí'))
         .setPitchAlignment('map')
-        .addTo(map)
+        .addTo(map);
       }
     },
 
@@ -146,19 +142,6 @@ export default defineComponent({
       this.initMap();
     }
   },
-
-  // watch:{
-  //   ...mapGetters('ruins', [
-  //     'listOfRuinsData'
-  //   ]),
-      
-  //   listOfRuinsData(newValue) {
-  //     if (newValue)
-  //     {       
-  //       this.initializeMap();
-  //     }
-  //   }, 
-  // },
 });
 </script>
 
