@@ -9,7 +9,7 @@ interface RuinsStateI {
     comments: [];
     description: '';
     link: '';
-    images: [];
+    images: [''];
     location: '';
     name: '';
     score: 0;
