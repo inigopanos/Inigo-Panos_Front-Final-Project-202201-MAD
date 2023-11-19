@@ -14,14 +14,16 @@
 
       <li class="ruinImage"> 
         <span class="bold">Imágenes:</span>
-        <carousel>
-        <div>
-          <slide v-for="image in ruinDetails.images" :key="image">
-            <img v-bind:src="image"  alt="ruin-image" />
+        <carousel :items-to-show="1.5">
+          <slide class="slide" v-for="image in ruinDetails.images" :key="image">
+            <img v-bind:src="image" class="ruin-image" alt="ruin-image" />
           </slide>
-        </div>
+
+          <template #addons>
+            <navigation />
+            <pagination />
+         </template>
         </carousel>
-       
       </li>
 
       <div class="map-link">
@@ -137,13 +139,17 @@
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
-import { Carousel, Slide } from 'vue-carousel';
+
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
 export default defineComponent({
   name: 'ruin-data',
   components: {
     Carousel,
     Slide,
+    Pagination,
+    Navigation,
   },
 
   data() {
@@ -299,6 +305,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+
 button {
   all: unset;
 }
@@ -346,7 +353,7 @@ h1 {
     margin: 1rem 0;
   }
 
-  .ruinImage {
+  .ruin-image {
     width: 95%;
     height: auto;
     margin: 0 auto;

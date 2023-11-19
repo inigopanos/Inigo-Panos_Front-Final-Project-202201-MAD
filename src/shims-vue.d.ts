@@ -9,3 +9,5 @@ declare module 'vue-upload-multiple-image' {
   import { VueUploadMultipleImage } from 'vue-upload-multiple-image'
   export { VueUploadMultipleImage }
 }
+
+declare module 'vue-carousel';

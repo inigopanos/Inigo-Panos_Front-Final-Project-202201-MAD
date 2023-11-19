@@ -37,6 +37,7 @@
     "vue-mapbox-gl": "^0.0.1",
     "vue-router": "^4.0.3",
     "vue-upload-multiple-image": "^1.1.6",
+    "vue3-carousel": "^0.3.1",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
