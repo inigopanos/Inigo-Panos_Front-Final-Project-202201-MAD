@@ -87,7 +87,7 @@
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { useRoute } from 'vue-router';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage';
 import { v4 as uuid } from 'uuid';
 import { storage } from '@/firebase';
 
@@ -112,9 +112,9 @@ export default defineComponent({
       id: '',
       idRuina: '',
       submitted: false,
-      fileToUpload: {
+      fileToUpload: [{
         fileName: '',
-      },
+      }],
     };
   },
 
@@ -126,27 +126,34 @@ export default defineComponent({
   methods: {
     ...mapActions('ruins', ['createNewRuin']),
 
+    handleImageChange(e: any) {
+      // eslint-disable-next-line prefer-destructuring
+      console.log('Lista de archivos', e.target.files);
+      this.ruin.images = e.target.files;
+    },
+
     handleSubmit() {
       this.submitted = true;
+
+      // Por cada imagen crea una referencia y una url. Luego crea la ruina.
+      // El backend es un array de strings que son referencias a los links de imagenes en firebase
+
+
+
       const newRef = ref(storage, uuid() + this.fileToUpload.fileName);
+      console.log('1', newRef);
 
       uploadBytes(newRef, this.fileToUpload as any).then(() => {
         getDownloadURL(newRef).then((url: string) => {
-          for(let i = 0; i < this.ruin.images.length; i += 1){
-            this.ruin.images[i] = url[i] as string;
-          }
-          
+          this.ruin.images.push(url as string); // Agregar la URL al final del array de imágenes
           this.createNewRuin(this.ruin);
-        });
+        })
       });
     },
-    handleImageChange(e: any) {
-      // eslint-disable-next-line prefer-destructuring
-      console.log(e.target.files);
-      this.fileToUpload = e.target.files;
-    },
 
+    
   },
+
   mounted() {
     const route = useRoute();
     const { id } = route.params;
