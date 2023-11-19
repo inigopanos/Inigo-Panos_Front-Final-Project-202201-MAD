@@ -56,8 +56,6 @@ export default defineComponent({
     console.log(this.$store.state.ruins);
 
     const datosRuinas = this.$store.state.ruins.allRuinsData;
-
-    console.log('Hola Mundo', datosRuinas);
     this.allRuinsCoords = [];
 
     for (let i = 0; i < datosRuinas?.length; i+=1){
@@ -110,7 +108,7 @@ export default defineComponent({
 
       const map = new mapboxgl.Map({
       container: 'mapElementId',
-      style: 'mapbox://styles/mapbox/streets-v12', 
+      style: 'mapbox://styles/mapbox/outdoors-v11', 
       center: [-4.739859783755799, 40.110300848632406], // starting position [lng, lat]
       zoom: 1, 
       }); 
@@ -119,6 +117,7 @@ export default defineComponent({
       map.boxZoom.enable();
       map.dragPan.enable();
       map.setMaxBounds(bounds);
+      map.setProjection('equalEarth');
 
       // Marcadores
 
@@ -127,14 +126,15 @@ export default defineComponent({
       const popups: mapboxgl.Popup[] = [];
 
       for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
-        
-        markers[i] = new mapboxgl.Marker()
-          .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
-          .addTo(map);
 
         popups[i] = new mapboxgl.Popup()
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
         .setHTML(`${markerCoords[i]}`)
+        .addTo(map)
+
+        markers[i] = new mapboxgl.Marker()
+        .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+        .setPitchAlignment('map')
         .addTo(map)
       }
     },
