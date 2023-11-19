@@ -351,19 +351,14 @@ h1 {
 
   li {
     margin: 1rem 0;
-  }
-
-  .ruin-image {
-    width: 95%;
-    height: auto;
-    margin: 0 auto;
-
-    img {
-      margin: 0 auto;
-      width: 100%;
-      height: 100%;
+  
+    .ruin-image {
+      height: 50vh;
+      width: 50vw;
     }
   }
+
+ 
   .ruin-details {
     &__comment-card-container {
       background-color: rgb(165, 158, 158);
