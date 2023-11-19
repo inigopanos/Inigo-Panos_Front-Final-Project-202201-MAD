@@ -4,9 +4,6 @@
     ref="mapElement"
     id = "mapElementId"/>
 
-  <div>
-    Datos: {{ ruinsData }}
-  </div>
   <!-- <div
     class="loading-map">
       <div class="loading-text">
@@ -14,7 +11,6 @@
         <span>Localizando</span>
       </div>
   </div> -->
-
 </template>
 
 <script lang="ts">
@@ -93,7 +89,6 @@ export default defineComponent({
 
 
     async initMap() {
-
       await Promise.resolve();
       await this.$nextTick(); 
 
@@ -124,14 +119,21 @@ export default defineComponent({
 
         console.log('Hola mundo:', markerCoords[`ruinCoordsMarker${i}`]);
 
-        popups[i] = new mapboxgl.Popup()
+        popups[i] = new mapboxgl.Popup({offset: 25})
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
-        .setHTML(JSON.stringify(markerCoords[`ruinCoordsMarker${i}`]))
+        .setHTML(JSON.stringify(this.listOfRuinsData[i].name))
         .addTo(map);
+
+        popups[i].on('open', () => {
+          console.log('Se ha clickado en el popup');
+        });
+
+        const el = document.createElement('div');
+        el.className = 'marker';
 
         markers[i] = new mapboxgl.Marker()
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
-        .setPopup(new mapboxgl.Popup().setHTML('Tu texto aquí'))
+        .setPopup(new mapboxgl.Popup().setHTML(this.listOfRuinsData[i].name))
         .setPitchAlignment('map')
         .addTo(map);
       }
@@ -172,6 +174,15 @@ export default defineComponent({
   width: 60vw;
   height: 80vh;
   margin-right: 1%;
+}
+
+.marker {
+  background-image: url('../../public/marker-icon.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 </style>

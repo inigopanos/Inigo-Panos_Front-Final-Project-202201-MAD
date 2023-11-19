@@ -54,6 +54,7 @@
             @change="handleImageChange"
             name="images"
             placeholder="Imágenes"
+            multiple
         /></label>
         <div v-show="submitted && !ruin.images" class="invalid-feedback">
           Es necesario que introduzca al menos una imagen
@@ -90,8 +91,13 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuid } from 'uuid';
 import { storage } from '@/firebase';
 
+
 export default defineComponent({
   name: 'register-form',
+  components:
+  {
+  },
+
   data() {
     return {
       ruin: {
@@ -122,7 +128,6 @@ export default defineComponent({
 
     handleSubmit() {
       this.submitted = true;
-
       const newRef = ref(storage, uuid() + this.fileToUpload.fileName);
 
       uploadBytes(newRef, this.fileToUpload as any).then(() => {
@@ -134,8 +139,10 @@ export default defineComponent({
     },
     handleImageChange(e: any) {
       // eslint-disable-next-line prefer-destructuring
+      console.log(e.target.files[0]);
       this.fileToUpload = e.target.files[0];
     },
+
   },
   mounted() {
     const route = useRoute();
