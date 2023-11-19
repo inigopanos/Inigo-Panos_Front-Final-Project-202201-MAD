@@ -132,14 +132,17 @@ export default defineComponent({
 
       uploadBytes(newRef, this.fileToUpload as any).then(() => {
         getDownloadURL(newRef).then((url: string) => {
-          this.ruin.images.push(url as string); // Agregar la URL al final del array de imágenes
+          for(let i = 0; i < this.ruin.images.length; i += 1){
+            this.ruin.images[i] = url[i] as string;
+          }
+          
           this.createNewRuin(this.ruin);
-        })
+        });
       });
     },
     handleImageChange(e: any) {
       // eslint-disable-next-line prefer-destructuring
-      console.log(e.target.files[0]);
+      console.log(e.target.files);
       this.fileToUpload = e.target.files;
     },
 
