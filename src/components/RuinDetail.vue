@@ -6,14 +6,16 @@
 
   <main>
     <ul v-if="ruinDetails" class="ul-ruin-details">
-      <li><span class="bold">Nombre:</span> {{ ruinDetails?.name }}</li>
-      <li><span class="bold">Localización:</span> {{ ruinDetails?.location }}</li>
-      <li><span class="bold">Descripción:</span> {{ ruinDetails?.description }}</li>
-      <li><span class="bold">Links de interés:</span> {{ ruinDetails?.link }}</li>
+      <li><span class="bold">Nombre: <br>
+      </span> {{ ruinDetails?.name }}</li>
+      <li><span class="bold">Localización: <br>
+      </span> {{ ruinDetails?.location }}</li>
+      <li><span class="bold">Descripción: <br> </span> {{ ruinDetails?.description }}</li>
+      <li><span class="bold">Links de interés: <br> </span > <a href="url">{{ ruinDetails?.link }}</a></li>
 
 
       <li class="ruinImage"> 
-        <span class="bold">Imágenes:</span>
+        <span class="bold">Imágenes: <br> </span>
         <carousel :items-to-show="1.5">
           <slide class="slide" v-for="image in ruinDetails.images" :key="image">
             <img v-bind:src="image" class="ruin-image" alt="ruin-image" />
@@ -32,7 +34,7 @@
       </router-link >
       </div>
 
-      <template v-if="ruinDetails">
+      <template v-if="ruinDetails?.comments">
         <span class="bold" v-if="ruinDetails.comments > 1"> Comentarios:</span>
         <ul class="ruin-details__comment-card-container">
           <div
@@ -358,7 +360,6 @@ h1 {
     }
   }
 
- 
   .ruin-details {
     &__comment-card-container {
       background-color: rgb(165, 158, 158);

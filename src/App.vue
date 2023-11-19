@@ -4,7 +4,6 @@
     <div ref="" class="app-template">
       <nav>
         <router-link to="/ruins">Lista de ruinas</router-link> |
-        <router-link to="/map">MapBox</router-link> |
         <router-link to="/addRuin" v-if="userData?.userFound?.isAdmin"
           >Crear Ruinas</router-link
         >
@@ -92,7 +91,7 @@ export default {
 }
 #app {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
 
   position: relative;
   nav {
