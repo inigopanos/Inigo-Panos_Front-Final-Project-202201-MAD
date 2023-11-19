@@ -53,7 +53,6 @@ export default defineComponent({
   async mounted() { 
 
     await this.getAllRuins();
-    console.log(this.$store.state.ruins);
 
     const datosRuinas = this.$store.state.ruins.allRuinsData;
     this.allRuinsCoords = [];
@@ -127,9 +126,12 @@ export default defineComponent({
 
       for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
 
+        console.log('Hola mundo:', markerCoords[`ruinCoordsMarker${i}`]);
+
         popups[i] = new mapboxgl.Popup()
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
-        .setHTML(`${markerCoords[i]}`)
+        .setHTML(`Hola mundo`)
+        // .setHTML(`${markerCoords[`ruinCoordsMarker${i}`]}`)
         .addTo(map)
 
         markers[i] = new mapboxgl.Marker()
@@ -145,18 +147,18 @@ export default defineComponent({
     }
   },
 
-  watch:{
-    ...mapGetters('ruins', [
-      'listOfRuinsData'
-    ]),
+  // watch:{
+  //   ...mapGetters('ruins', [
+  //     'listOfRuinsData'
+  //   ]),
       
-    listOfRuinsData(newValue) {
-      if (newValue)
-      {       
-        this.initializeMap();
-      }
-    }, 
-  },
+  //   listOfRuinsData(newValue) {
+  //     if (newValue)
+  //     {       
+  //       this.initializeMap();
+  //     }
+  //   }, 
+  // },
 });
 </script>
 
