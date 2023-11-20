@@ -30,11 +30,6 @@
       </li>
     </ul> 
 
-    <div v-if="listOfRuinsData">
-       <div class="map">
-        <BaseMap :ruinsData="listOfRuinsData2"/>
-      </div>
-    </div>
     
   </main> 
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
@@ -44,7 +39,6 @@
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { useVirtualList } from '@vueuse/core';
-import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
     name: 'ruins-list',
@@ -70,7 +64,7 @@ export default defineComponent({
     methods: {
         ...mapActions('ruins', ['getAllRuins']),
     },
-    components: { BaseMap }
+    
 });
 </script>
 <style lang="scss">

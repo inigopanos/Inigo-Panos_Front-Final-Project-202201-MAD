@@ -134,6 +134,13 @@
         />
       </button>
     </div>
+
+    
+    <div v-if="listOfRuinsData">
+       <div class="map">
+        <BaseMap :ruinsData="listOfRuinsData2"/>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -144,6 +151,7 @@ import { useRoute } from 'vue-router';
 
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
   name: 'ruin-data',
@@ -152,6 +160,7 @@ export default defineComponent({
     Slide,
     Pagination,
     Navigation,
+    BaseMap 
   },
 
   data() {
@@ -172,6 +181,7 @@ export default defineComponent({
       newComment: '',
       favorited: false,
       visited: false,
+      listOfRuinsData2: [],
     };
   },
 
@@ -297,6 +307,7 @@ export default defineComponent({
     console.log(id, 'id ruina', route.params);
     this.getRuinDetails(id);
     this.getAllRuins();
+    this.listOfRuinsData2 = this.listOfRuinsData;
    
     console.log('The component is now mounted', this.ruinDetails);
     console.log(this.userData?.userFound, 'Datos del usuario');
