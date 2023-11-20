@@ -361,8 +361,8 @@ h1 {
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 30rem;
+  padding-left: 30rem;
 
   li {
     margin: 1rem 0;
