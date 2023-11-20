@@ -11,9 +11,6 @@ export const userPlacesStore = () => {
             store.dispatch('places/getInitialLocation');
         }
     })
-
-    console.log('En userPlacesStore:', {...store.state.userLocation});
-    // Devuelve un objeto vacío Prototipo
     return{
         isLoading: computed(() => store.state.isLoading),
         userLocation: computed(() => store.state.userLocation),

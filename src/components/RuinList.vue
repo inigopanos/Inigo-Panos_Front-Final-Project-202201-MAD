@@ -3,7 +3,8 @@
     <h1>Lista de ruinas</h1>
   </div>
   <main class="main__body">
-    <ul v-if="listOfRuinsData">
+    <div class="main-list">
+      <ul v-if="listOfRuinsData">
       <li v-for="ruin in listOfRuinsData" :key="ruin._id" class="ruin-list__wrapper">
         <div class="ruin-list__card">
           <router-link :to="`/ruinDetails/${ruin._id}`">
@@ -28,24 +29,38 @@
           </router-link>
         </div>
       </li>
-    </ul> 
-
-     <div class="map">
-      <BaseMap/>
+     </ul> 
     </div>
+   
+
+    <div v-if="listOfRuinsData">
+       <div class="main-map">
+        <BaseMap :ruinsData="listOfRuinsData2"/>
+      </div>
+    </div>
+    
   </main> 
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
+import { useVirtualList } from '@vueuse/core';
 import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
     name: 'ruins-list',
+    props: {
+      ruinsData: {
+        required: true,
+      },
+    },
+
     data() {
         return {
             name: '',
+            listOfRuinsData2: [],
         };
     },
     computed: {
@@ -53,6 +68,7 @@ export default defineComponent({
     },
     mounted() {
         this.getAllRuins();
+        this.listOfRuinsData2 = this.listOfRuinsData;
     },
     methods: {
         ...mapActions('ruins', ['getAllRuins']),
@@ -72,7 +88,7 @@ ul {
   list-style-type: none;
 }
 
-img{
+.ruin-card__right__image > img{
   width: 150px;
   height: 100px;
   border: 1px solid #000;
@@ -98,6 +114,12 @@ img{
   //       box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   //   }
   // }
+  .main-list{
+    flex: 5 0 0;
+  }
+  .main-map{
+    flex: 5 0 0;
+  }
 
   .ruin-list__wrapper{
     display: flex;

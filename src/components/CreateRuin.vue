@@ -4,7 +4,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label for="name">
-          <input type="text" id="name" v-model="ruin.name" name="name" placeholder="Nombre" />
+          <input  class="data-input" type="text" id="name" v-model="ruin.name" name="name" placeholder="Nombre" />
         </label>
         <div v-show="submitted && !ruin.name" class="invalid-feedback">
           Es necesario que introduzca un nombre
@@ -13,7 +13,7 @@
 
       <div class="form-group">
         <label for="location">
-          <input type="location" v-model="ruin.location" name="location" placeholder="Localización"
+          <input  class="data-input" type="location" v-model="ruin.location" name="location" placeholder="Localización"
         /></label>
         <div v-show="submitted && !ruin.location" class="invalid-feedback">
           Es necesario que introduzca una localización
@@ -22,11 +22,12 @@
 
       <div class="form-group">
         <label for="description">
-          <input
-            type="description"
-            v-model="ruin.description"
-            name="description"
-            placeholder="Descripción"
+          <input 
+          class="textarea" 
+          type="description"
+          v-model="ruin.description"
+          name="description"
+          placeholder="Descripción"
         /></label>
         <div v-show="submitted && !ruin.description" class="invalid-feedback">
           Es necesario que introduzca una descripción
@@ -34,13 +35,29 @@
       </div>
 
       <div class="form-group">
+        <label for="link">
+          <input
+          class="data-input"
+            type="link"
+            v-model="ruin.link"
+            name="link"
+            placeholder="Link de interés"
+        /></label>
+        <div v-show="submitted && !ruin.link" class="invalid-feedback">
+          Es necesario que introduzca un link de interés
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="images">
           <input
+            class="data-input"
             type="file"
             accept="image/*"
             @change="handleImageChange"
             name="images"
             placeholder="Imágenes"
+            multiple
         /></label>
         <div v-show="submitted && !ruin.images" class="invalid-feedback">
           Es necesario que introduzca al menos una imagen
@@ -50,6 +67,7 @@
       <div class="form-group">
         <label for="coords">
           <input
+          class="data-input"
             type="coords"
             v-model="ruin.coords"
             name="coords"
@@ -73,28 +91,35 @@
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { useRoute } from 'vue-router';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage';
 import { v4 as uuid } from 'uuid';
 import { storage } from '@/firebase';
 
+
 export default defineComponent({
   name: 'register-form',
+  components:
+  {
+  },
+
   data() {
     return {
       ruin: {
         name: '',
         location: '',
         description: '',
-        images: '',
-        coords: [Number, Number]
+        link: '',
+        images: [''],
+        coords: '',
       },
+      imageFiles: [],
       isAdmin: false,
       id: '',
       idRuina: '',
       submitted: false,
-      fileToUpload: {
+      fileToUpload: [{
         fileName: '',
-      },
+      }],
     };
   },
 
@@ -106,23 +131,32 @@ export default defineComponent({
   methods: {
     ...mapActions('ruins', ['createNewRuin']),
 
+    handleImageChange(e: any) {      
+      this.fileToUpload = e.target.files;
+      console.log('Lista de archivos', this.imageFiles);
+    },
+
     handleSubmit() {
       this.submitted = true;
 
-      const newRef = ref(storage, uuid() + this.fileToUpload.fileName);
+      // Por cada imagen crea una referencia y una url. Luego crea la ruina.
+      // El backend es un array de strings que son referencias a los links de imagenes en firebase ARRAY DE STRINGS
 
-      uploadBytes(newRef, this.fileToUpload as any).then(() => {
-        getDownloadURL(newRef).then((url: string) => {
-          this.ruin.images = url;
-          this.createNewRuin(this.ruin);
+      for( let i = 0; i < this.fileToUpload.length; i +=1){
+        const newRef = ref(storage, uuid() + this.fileToUpload[i].fileName);
+
+        uploadBytes(newRef, this.fileToUpload[i] as any).then(() => {
+          getDownloadURL(newRef).then((url: string) => {
+            this.ruin.images[i] = url;            
+          })
         });
-      });
+      }
+      console.log('Ruina a crear:', this.ruin);
+      this.createNewRuin(this.ruin);
     },
-    handleImageChange(e: any) {
-      // eslint-disable-next-line prefer-destructuring
-      this.fileToUpload = e.target.files[0];
-    },
+
   },
+
   mounted() {
     const route = useRoute();
     const { id } = route.params;
@@ -131,13 +165,15 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-input,
-input::before,
-input::after {
-  box-sizing: border-box;
-}
+// input,
+// input::before,
+// input::after {
+//   box-sizing: border-box;
+// }
 
-input {
+
+
+.data-input {
   border: none;
   -webkit-appearance: none;
   -ms-appearance: none;
@@ -149,6 +185,12 @@ input {
   width: 250px;
   font-size: 14px;
 }
+
+.textarea {
+  resize: both;
+  overflow: scroll;
+}
+
 h2 {
   text-align: center;
 }

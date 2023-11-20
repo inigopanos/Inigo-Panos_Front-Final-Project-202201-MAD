@@ -29,6 +29,24 @@
         /></label>
       </div>
 
+      <div class="form-group">
+        <p><span class="bold">Link de interés:</span> {{ ruinDetails?.link }}</p>
+
+        <label for="link">
+          <input type="link" v-model="ruinDetails.link" name="link"
+        /></label>
+      </div>
+
+      
+      <div class="form-group">
+        <p><span class="bold">Coordenadas:</span> {{ ruinDetails?.coords }}</p>
+
+        <label for="coords">
+          <input type="coords" v-model="ruinDetails.coords" name="coords"
+        /></label>
+      </div>
+
+
       <div class="ruinImage">
         <img v-bind:src="ruinDetails?.images" alt="ruin" />
         <label for="images">
@@ -63,8 +81,10 @@ export default defineComponent({
           name: '',
           location: '',
           description: '',
+          link: '',
           images: [],
           score: 5,
+          coords: [],
         },
       },
 
@@ -80,7 +100,7 @@ export default defineComponent({
     handleSubmit() {
       this.submitted = true;
       this.payload.ruin = this.ruinDetails;
-
+      console.log('Payload:', this.payload); // Pasa link
       this.modifyExistingRuin(this.payload);
     },
   },

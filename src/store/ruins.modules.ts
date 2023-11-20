@@ -8,7 +8,8 @@ interface RuinsStateI {
     _id: '';
     comments: [];
     description: '';
-    images: [];
+    link: '';
+    images: [''];
     location: '';
     name: '';
     score: 0;
@@ -20,6 +21,7 @@ const actions = {
     ruinsServices.getAllRuins().then(
       (listOfRuinsData) => {
         commit('getAllRuinsSucess', listOfRuinsData);
+        return listOfRuinsData;
       },
 
       (error) => {
@@ -190,7 +192,7 @@ const mutations = {
 };
 
 const getters = {
-  listOfRuinsData(state: any) {
+  listOfRuinsData(state: any, rootGetters: true) {
     return state.allRuinsData;
   },
   ruinDetails(state: any) {

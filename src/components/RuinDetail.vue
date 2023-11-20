@@ -5,14 +5,30 @@
   </div>
 
   <main>
-    <ul v-if="ruinDetails" class="ul-ruin-details">
-      <li><span class="bold">Nombre:</span> {{ ruinDetails?.name }}</li>
-      <li><span class="bold">Localización:</span> {{ ruinDetails?.location }}</li>
-      <li><span class="bold">Descripción:</span> {{ ruinDetails?.description }}</li>
+    <div>
 
-      <li class="ruinImage">
-        <span class="bold">Imágenes:</span>
-        <img v-bind:src="ruinDetails?.images" alt="" />
+    
+    <ul v-if="ruinDetails" class="ul-ruin-details">
+      <li><span class="bold">Nombre: <br>
+      </span> {{ ruinDetails?.name }}</li>
+      <li><span class="bold">Localización: <br>
+      </span> {{ ruinDetails?.location }}</li>
+      <li><span class="bold">Descripción: <br> </span> {{ ruinDetails?.description }}</li>
+      <li><span class="bold">Links de interés: <br> </span > <a href="url">{{ ruinDetails?.link }}</a></li>
+
+
+      <li class="ruinImage"> 
+        <span class="bold">Imágenes: <br> </span>
+        <carousel :items-to-show="1.5">
+          <slide class="slide" v-for="image in ruinDetails.images" :key="image">
+            <img v-bind:src="image" class="ruin-image" alt="ruin-image" />
+          </slide>
+
+          <template #addons>
+            <navigation />
+            <pagination />
+         </template>
+        </carousel>
       </li>
 
       <div class="map-link">
@@ -21,7 +37,7 @@
       </router-link >
       </div>
 
-      <template v-if="ruinDetails">
+      <template v-if="ruinDetails?.comments">
         <span class="bold" v-if="ruinDetails.comments > 1"> Comentarios:</span>
         <ul class="ruin-details__comment-card-container">
           <div
@@ -108,7 +124,7 @@
       </div>
     </div>
 
-    <div v-if="userData?.userFound?.isAdmin" class="update-delete">
+      <div v-if="userData?.userFound?.isAdmin" class="update-delete">
       <router-link :to="`/ruinUpdate/${ruinDetails?._id}`">
         <a>Actualizar datos</a>
       </router-link>
@@ -121,6 +137,15 @@
         />
       </button>
     </div>
+  </div>
+  <div>
+    <div v-if="listOfRuinsData">
+       <div class="map">
+        <BaseMap :ruinsData="listOfRuinsData2"/>
+      </div>
+    </div>
+  </div>
+    
   </main>
 </template>
 
@@ -129,8 +154,17 @@ import { defineComponent } from 'vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { useRoute } from 'vue-router';
 
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+
 export default defineComponent({
   name: 'ruin-data',
+  components: {
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,
+  },
 
   data() {
     return {
@@ -139,7 +173,7 @@ export default defineComponent({
         name: '',
         location: '',
         description: '',
-        images: '',
+        images: [''],
         coords: ['', ''],
         score: '',
         comments: [],
@@ -150,6 +184,7 @@ export default defineComponent({
       newComment: '',
       favorited: false,
       visited: false,
+      listOfRuinsData2: '',
     };
   },
 
@@ -285,6 +320,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+
 button {
   all: unset;
 }
@@ -325,33 +361,27 @@ h1 {
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding-right: 2rem;
-  padding-left: 2rem;
+  padding-right: 30rem;
+  padding-left: 30rem;
 
   li {
     margin: 1rem 0;
-  }
-
-  .ruinImage {
-    width: 95%;
-    height: auto;
-    margin: 0 auto;
-
-    img {
-      margin: 0 auto;
-      width: 100%;
-      height: 100%;
+  
+    .ruin-image {
+      height: 50vh;
+      width: 50vw;
     }
   }
+
   .ruin-details {
     &__comment-card-container {
       background-color: rgb(165, 158, 158);
 
       width: 90%;
-      margin: 10px auto;
+      margin: 0 auto;
       padding-top: 1rem;
       padding-bottom: 1rem;
-
+      
       border-radius: 30px;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       transition: 0.3s;
