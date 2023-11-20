@@ -148,39 +148,20 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.loading-map {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  height: 100vh;
-  left: 0;
-  position: fixed;
-  top: 0px;
-  width: 100vw;
-  z-index: 9999;
-  display:flex;
-  justify-content: center;
-  align-items: center;
 
-  .loading-text {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
- }
-}
 .map {
   display: flex;
   align-items: center;
   width: 60vw;
   height: 80vh;
-  margin-right: 1%;
+  margin-right: 5rem;
 }
 
 .marker {
   background-image: url('../../public/marker-icon.png');
   background-size: cover;
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   cursor: pointer;
 }

@@ -3,7 +3,8 @@
     <h1>Lista de ruinas</h1>
   </div>
   <main class="main__body">
-    <ul v-if="listOfRuinsData">
+    <div class="main-list">
+      <ul v-if="listOfRuinsData">
       <li v-for="ruin in listOfRuinsData" :key="ruin._id" class="ruin-list__wrapper">
         <div class="ruin-list__card">
           <router-link :to="`/ruinDetails/${ruin._id}`">
@@ -28,10 +29,12 @@
           </router-link>
         </div>
       </li>
-    </ul> 
+     </ul> 
+    </div>
+   
 
     <div v-if="listOfRuinsData">
-       <div class="map">
+       <div class="main-map">
         <BaseMap :ruinsData="listOfRuinsData2"/>
       </div>
     </div>
@@ -111,6 +114,12 @@ ul {
   //       box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   //   }
   // }
+  .main-list{
+    flex: 5 0 0;
+  }
+  .main-map{
+    flex: 5 0 0;
+  }
 
   .ruin-list__wrapper{
     display: flex;

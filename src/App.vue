@@ -5,8 +5,8 @@
       <nav>
         <router-link to="/ruins">Lista de ruinas</router-link> |
         <router-link to="/addRuin" v-if="userData?.userFound?.isAdmin"
-          >Crear Ruinas</router-link
-        > |
+          >Crear Ruinas |</router-link
+        > 
         <div v-if="userLoggedStatus?.loggedIn === true">
           <router-link to="/userData">
             <img
