@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "jest": {
     "testPathIgnorePatterns": [
-      "src/registerServiceWorker.ts"
+      "./src/registerServiceWorker.ts"
     ]
   },
   "private": true,
