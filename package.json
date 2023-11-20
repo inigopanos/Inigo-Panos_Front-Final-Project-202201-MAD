@@ -6,6 +6,10 @@
       "./src/registerServiceWorker.ts"
     ]
   },
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "maintained node versions"
+  ],
   "private": true,
   "scripts": {
     "build": "webpack --mode production",
