@@ -378,10 +378,10 @@ h1 {
       background-color: rgb(165, 158, 158);
 
       width: 90%;
-      margin: 10px auto;
+      margin: 0 auto;
       padding-top: 1rem;
       padding-bottom: 1rem;
-
+      
       border-radius: 30px;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       transition: 0.3s;
