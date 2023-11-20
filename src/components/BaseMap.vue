@@ -119,7 +119,7 @@ export default defineComponent({
 
         console.log('Hola mundo:', markerCoords[`ruinCoordsMarker${i}`]);
 
-        popups[i] = new mapboxgl.Popup({offset: 25})
+        popups[i] = new mapboxgl.Popup()
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
         .setHTML(JSON.stringify(this.listOfRuinsData[i].name))
         .addTo(map);
@@ -131,11 +131,11 @@ export default defineComponent({
         const el = document.createElement('div');
         el.className = 'marker';
 
-        markers[i] = new mapboxgl.Marker()
-        .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
-        .setPopup(new mapboxgl.Popup().setHTML(this.listOfRuinsData[i].name))
-        .setPitchAlignment('map')
-        .addTo(map);
+        // markers[i] = new mapboxgl.Marker()
+        // .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
+        // .setPopup(new mapboxgl.Popup().setHTML(this.listOfRuinsData[i].name))
+        // .setPitchAlignment('map')
+        // .addTo(map);
       }
     },
 
