@@ -3,12 +3,9 @@
   "version": "0.1.0",
   "jest": {
     "testPathIgnorePatterns": [
-      "/src/registerServiceWorker.ts"
+      "src\registerServiceWorker.ts"
     ]
   },
-  "browserslist": [
-    "maintained node versions"
-  ],
   "private": true,
   "scripts": {
     "build": "webpack --mode production",
@@ -27,6 +24,7 @@
     "@zakerxa/vue-multiple-image-upload": "^1.0.8",
     "axios": "^0.26.1",
     "core-js": "^3.8.3",
+    "crypto-browserify": "^3.12.0",
     "dotenv": "^16.3.1",
     "eslint-config-prettier": "^8.5.0",
     "firebase": "^9.6.10",
