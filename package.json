@@ -8,7 +8,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "vue-cli-service build",
     "serve": "vue-cli-service serve",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service serve http://127.0.0.1:5050/ 'cypress open'",
