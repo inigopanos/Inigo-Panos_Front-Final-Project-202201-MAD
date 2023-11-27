@@ -21,8 +21,7 @@
               </div>
               <div class="ruin-card__right">
                 <div class="ruin-card__right__image">
-                  <img v-bind:src="ruin.images[0]" alt="imagen-ruina">
-                 
+                  <img v-bind:src="ruin.images.length > 1 ? ruin.images[0] : ruin.images" alt="imagen-ruina">
                 </div>
               </div>
             </div>
