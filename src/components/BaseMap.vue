@@ -4,13 +4,6 @@
     ref="mapElement"
     id = "mapElementId"/>
 
-  <!-- <div
-    class="loading-map">
-      <div class="loading-text">
-        <h3>Espere por favor</h3>
-        <span>Localizando</span>
-      </div>
-  </div> -->
 </template>
 
 <script lang="ts">

@@ -20,21 +20,11 @@
                 <div class="ruin-card__left-item"></div>
               </div>
               <div class="ruin-card__right">
-                <!-- <div class="ruin-card__right__image">
-                  <carousel :items-to-show="1.5">
-                    <slide class="slide" v-for="image in ruin.images" :key="image">
-                      <img v-bind:src="image" class="ruin-image" alt="ruin-image" />
-                    </slide>
-
-                    <template #addons>
-                      <navigation />
-                      <pagination />
-                    </template>
-                  </carousel>
-                </div> -->
-                <!-- <div class="ruin-card__right__image">
+                
+                <div class="ruin-card__right__image">
                   <img v-bind:src="ruin.images" alt="imagen-ruina">
-                </div> -->
+                 
+                </div>
               </div>
             </div>
           </router-link>
