@@ -21,7 +21,7 @@
               </div>
               <div class="ruin-card__right">
                 <div class="ruin-card__right__image">
-                  <img v-bind:src="ruin.images" alt="imagen-ruina">
+                  <img v-bind:src="ruin.images[0]" alt="imagen-ruina">
                  
                 </div>
               </div>
