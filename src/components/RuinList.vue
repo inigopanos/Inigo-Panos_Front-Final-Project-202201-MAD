@@ -20,9 +20,21 @@
                 <div class="ruin-card__left-item"></div>
               </div>
               <div class="ruin-card__right">
-                <div class="ruin-card__right__image">
-                  <img v-bind:src="ruin.images.length > 1 ? ruin.images[0] : ruin.images" alt="imagen-ruina">
-                </div>
+                <!-- <div class="ruin-card__right__image">
+                  <carousel :items-to-show="1.5">
+                    <slide class="slide" v-for="image in ruin.images" :key="image">
+                      <img v-bind:src="image" class="ruin-image" alt="ruin-image" />
+                    </slide>
+
+                    <template #addons>
+                      <navigation />
+                      <pagination />
+                    </template>
+                  </carousel>
+                </div> -->
+                <!-- <div class="ruin-card__right__image">
+                  <img v-bind:src="ruin.images" alt="imagen-ruina">
+                </div> -->
               </div>
             </div>
           </router-link>
@@ -45,34 +57,38 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import { useVirtualList } from '@vueuse/core';
+
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
-    name: 'ruins-list',
-    props: {
-      ruinsData: {
-        required: true,
-      },
+  name: 'ruins-list',
+  props: {
+    ruinsData: {
+      required: true,
     },
+  },
 
-    data() {
-        return {
-            name: '',
-            listOfRuinsData2: [],
-        };
-    },
-    computed: {
-        ...mapGetters('ruins', ['listOfRuinsData']),
-    },
-    mounted() {
-        this.getAllRuins();
-        this.listOfRuinsData2 = this.listOfRuinsData;
-    },
-    methods: {
-        ...mapActions('ruins', ['getAllRuins']),
-    },
-    components: { BaseMap }
+  data() {
+      return {
+          name: '',
+          listOfRuinsData2: [],
+      };
+  },
+  computed: {
+      ...mapGetters('ruins', ['listOfRuinsData']),
+  },
+  mounted() {
+      this.getAllRuins();
+      this.listOfRuinsData2 = this.listOfRuinsData;
+  },
+  methods: {
+      ...mapActions('ruins', ['getAllRuins']),
+  },
+  components: { 
+    BaseMap,
+  }
 });
 </script>
 <style lang="scss">
