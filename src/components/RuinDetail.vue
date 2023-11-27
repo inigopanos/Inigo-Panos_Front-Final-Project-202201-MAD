@@ -6,8 +6,6 @@
 
   <main>
     <div>
-
-    
     <ul v-if="ruinDetails" class="ul-ruin-details">
       <li><span class="bold">Nombre: <br>
       </span> {{ ruinDetails?.name }}</li>
@@ -19,6 +17,7 @@
 
       <li class="ruinImage"> 
         <span class="bold">Imágenes: <br> </span>
+       
         <carousel :items-to-show="1.5">
           <slide class="slide" v-for="image in ruinDetails.images" :key="image">
             <img v-bind:src="image" class="ruin-image" alt="ruin-image" />
@@ -138,14 +137,7 @@
       </button>
     </div>
   </div>
-  <div>
-    <div v-if="listOfRuinsData">
-       <div class="map">
-        <BaseMap :ruinsData="listOfRuinsData2"/>
-      </div>
-    </div>
-  </div>
-    
+  
   </main>
 </template>
 
@@ -184,7 +176,6 @@ export default defineComponent({
       newComment: '',
       favorited: false,
       visited: false,
-      listOfRuinsData2: '',
     };
   },
 
@@ -312,11 +303,7 @@ export default defineComponent({
     this.getAllRuins();
    
     console.log('The component is now mounted', this.ruinDetails);
-    console.log(this.userData?.userFound, 'Datos del usuario');
   },
-
- 
-
 });
 </script>
 <style lang="scss">
