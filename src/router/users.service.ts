@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UserLoginI, UserRegisterI } from '@/_helpers/interfaces';
 
-const USERS_API = 'http://localhost:4500';
+const USERS_API = 'https://proyect-final-inigo-panos.herokuapp.com';
 
 export const usersService = {
   login,

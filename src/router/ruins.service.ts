@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CreateRuinI } from '@/_helpers/interfaces';
 
-const RUINS_API = 'http://localhost:4500/ruins';
+const RUINS_API = 'https://proyect-final-inigo-panos.herokuapp.com/ruins';
 
 export const ruinsServices = {
   createNewRuin,
