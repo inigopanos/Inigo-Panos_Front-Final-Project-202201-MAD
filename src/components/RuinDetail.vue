@@ -12,7 +12,7 @@
       <li><span class="bold">Localización: <br>
       </span> {{ ruinDetails?.location }}</li>
       <li><span class="bold">Descripción: <br> </span> {{ ruinDetails?.description }}</li>
-      <li><span class="bold">Links de interés: <br> </span > <a href="url">{{ ruinDetails?.link }}</a></li>
+      <li><span class="bold">Links de interés: <br> </span > <a href="">{{ ruinDetails?.link }}</a></li>
 
 
       <li class="ruinImage"> 
