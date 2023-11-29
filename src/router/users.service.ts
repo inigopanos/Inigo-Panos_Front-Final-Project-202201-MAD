@@ -12,7 +12,6 @@ export const usersService = {
 };
 
 function getToken() {
-  console.log('Token = ', localStorage.getItem('token'), typeof(localStorage.getItem('token')));
   return localStorage.getItem('token'); 
 }
 
