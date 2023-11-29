@@ -133,7 +133,6 @@ export default defineComponent({
 
     handleImageChange(e: any) {      
       this.fileToUpload = e.target.files;
-      console.log('Lista de archivos', this.imageFiles);
     },
 
     handleSubmit() {
@@ -151,7 +150,6 @@ export default defineComponent({
           })
         });
       }
-      console.log('Ruina a crear:', this.ruin);
       this.createNewRuin(this.ruin);
     },
 
@@ -165,13 +163,6 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-// input,
-// input::before,
-// input::after {
-//   box-sizing: border-box;
-// }
-
-
 
 .data-input {
   border: none;
