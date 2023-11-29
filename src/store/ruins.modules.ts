@@ -33,7 +33,6 @@ const actions = {
   getRuinDetails({ dispatch, commit }: { dispatch: any; commit: any }, id: string) {
     ruinsServices.getRuinDetails(id).then(
       (ruinsDetails) => {
-        console.log('getRuinDetailsSuccess:', ruinsDetails);
         commit('getRuinDetailsSuccess', ruinsDetails);
       },
 
@@ -136,7 +135,6 @@ const actions = {
 const mutations = {
 
   addRuinToFavoritesSuccess(state: any, user: any) {
-    console.log('Ruina modificado en visitados', user);
     state.userInformation = {
       userName: user.data.userName,
       favorites: user.data.favorites,
@@ -144,7 +142,6 @@ const mutations = {
       comments: user.data.comments,
       isAdmin: user.data.isAdmin,
     };
-    // Aquí no se actualiza el estado de favoritos del usuario. 
   },
 
   addRuinToVisitedSuccess(state: any, data: any) {
@@ -164,7 +161,7 @@ const mutations = {
     state.allRuinsData = [];
 
     listOfRuinsData.data.forEach((e: CreateRuinI) => {
-      state.allRuinsData.push(e); // No funciona con el datainteface preguntar a Moi
+      state.allRuinsData.push(e); 
     });
   },
 

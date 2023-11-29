@@ -10,7 +10,6 @@ function estado(): PlacesStateI{
 
 const actions = {
     getInitialLocation({ commit }: {commit: Commit}) {
-        // todo: colocar loading
         navigator.geolocation.watchPosition(
             ( {coords} ) => commit('setLngLat', {lng: coords.longitude, lat: coords.latitude}), // Se llama a la mutación
             (err) => {
@@ -30,7 +29,6 @@ const mutations: MutationTree<PlacesStateI> = {
 
 const getters = {
     isUserlocationReady(state: PlacesStateI) {
-        // console.log('Is userLocationReady:',!!state.userLocation);
         return !!state.userLocation;
     },
 };
