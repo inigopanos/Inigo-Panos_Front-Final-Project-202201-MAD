@@ -49,7 +49,6 @@ import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import BaseMap from './BaseMap.vue';
 
 export default defineComponent({
@@ -109,16 +108,6 @@ ul {
   align-items: center;
   flex: 1 1 auto;
   
-
-  // wrapper {
-  //   .ruin:hover {
-  //   cursor: pointer;
-  //   }
-  //   .ruin--highlight, .ruin:hover {
-  //       border: 1px solid #dcdcdc;
-  //       box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  //   }
-  // }
   .main-list{
     flex: 5 0 0;
   }
