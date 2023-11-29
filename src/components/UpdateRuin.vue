@@ -100,7 +100,6 @@ export default defineComponent({
     handleSubmit() {
       this.submitted = true;
       this.payload.ruin = this.ruinDetails;
-      console.log('Payload:', this.payload); // Pasa link
       this.modifyExistingRuin(this.payload);
     },
   },
