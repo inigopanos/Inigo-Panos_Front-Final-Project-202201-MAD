@@ -78,8 +78,6 @@ export default defineComponent({
 
   text-decoration: none;
   list-style-type: none;
-  // width: 100%;
-  // height: 100%;
 }
 
 .register-card {
