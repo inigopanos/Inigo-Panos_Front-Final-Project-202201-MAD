@@ -113,8 +113,6 @@ export default defineComponent({
   }
 }
 .texts {
-  // display: flex;
-  // justify-content: space-evenly;
   padding-top: 4rem;
   padding-left: 3rem;
   padding-right: 3rem;
@@ -142,7 +140,4 @@ export default defineComponent({
     touch-action: manipulation;
   }
 }
-
-
-
 </style>
