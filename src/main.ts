@@ -10,6 +10,6 @@ import { store } from './store/index';
 
 dotenv.config();
 
-mapboxgl.accessToken = process.env.accessToken as string;
+mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN as string;
 
 createApp(App).use(store).use(router).use(VueLazyload).mount('#app');
