@@ -105,30 +105,19 @@ export default defineComponent({
       map.setProjection('mercator');
 
       const markerCoords = this.setLngLatCoordinates();
-      const markers: mapboxgl.Marker[] = [];
       const popups: mapboxgl.Popup[] = [];
 
       for (let i = 0; i < Object.keys(markerCoords).length; i += 1) {
 
-        console.log('Hola mundo:', markerCoords[`ruinCoordsMarker${i}`]);
 
         popups[i] = new mapboxgl.Popup()
         .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
         .setHTML(JSON.stringify(this.listOfRuinsData[i].name))
         .addTo(map);
 
-        popups[i].on('open', () => {
-          console.log('Se ha clickado en el popup');
-        });
-
         const el = document.createElement('div');
         el.className = 'marker';
 
-        // markers[i] = new mapboxgl.Marker()
-        // .setLngLat(markerCoords[`ruinCoordsMarker${i}`])
-        // .setPopup(new mapboxgl.Popup().setHTML(this.listOfRuinsData[i].name))
-        // .setPitchAlignment('map')
-        // .addTo(map);
       }
     },
 
