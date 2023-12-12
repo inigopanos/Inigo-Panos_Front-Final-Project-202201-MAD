@@ -8,15 +8,6 @@ Jest and vue testing utils, as well as Cypress for E2E testing.
 
 Work in progress!
 
-# Roadmap
-
-- Add a map for every ruin, with user and ruin location, and ability to trace the fastest route to the location.
-- Remake the web version for better readability.
-- Add more error controls and action feedback.
-- Add more images and a image carousel to any one ruin.
-- Allow the user to modify their user data, including a profile picture.
-- Update the comment field for better readibility.
-
 ## Types of Users
 
 # Users
